@@ -24,6 +24,13 @@ Ready for dev, In review, Needs retro, Done. Yellow means you, blue means an
 agent, gray means nothing pending, and every description opens with YOU or
 Agent. Merged was cut: it only ever asked for a second drag.
 
+## The merge moves the card (2026-11-04)
+
+`.github/workflows/factory-merged.yml` sets a card's Status to Needs retro
+when its pull request merges. No model call, so a merge costs nothing. It
+needs the repo secret `FACTORY_PROJECT_TOKEN`, because `GITHUB_TOKEN` cannot
+write a user-owned project.
+
 ## The five commands (2026-11-04)
 
 

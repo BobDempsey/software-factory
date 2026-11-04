@@ -31,7 +31,7 @@ Every column names the command or the person that acts on it, and the board colo
 
 **Ready for dev.** `/factory-build` refuses to start while any row says `UNANSWERED`. Otherwise it branches `<N>-<slug>` off master, implements what the spec says and nothing else, checks each acceptance criterion by name, commits with a single `Assisted-by:` trailer, opens a PR that closes the issue, and moves the card to In review.
 
-**In review.** Mine. I read the diff and merge, which closes the issue, then drag the card to Needs retro.
+**In review.** Mine. I read the diff and merge, which closes the issue. The `factory-merged` workflow then moves the card to Needs retro on its own.
 
 **Needs retro.** `/factory-retro` rebuilds the run from the issue, spec, PR and commits, writes `docs/solutions/<N>-<slug>.md`, adds a rule to `AGENTS.md` if the run earned one, and moves the card to Done. It asks me nothing, because by this point I have moved on.
 
@@ -43,7 +43,7 @@ Every column names the command or the person that acts on it, and the board colo
 - Saying a card is ready, at the end of refinement.
 - Answering the DECISIONS rows.
 - Dragging to Ready for dev. That drag is the approval of the spec.
-- Reviewing and merging the PR, then dragging the card to Needs retro.
+- Reviewing and merging the PR. The merge moves the card for me.
 
 An agent never does any of these.
 
@@ -64,7 +64,7 @@ Not built yet, on purpose. The commands run first because the rules are not sett
 | Ready for spec | `/factory-refine` | A real issue, labeled, one unit of work. Waiting on `/factory-create-spec`. |
 | Needs spec approval | `/factory-create-spec` | Brief is in the issue body. Waiting on me to answer the DECISIONS rows. |
 | Ready for dev | Me, by dragging | Spec approved, every decision answered. Waiting on `/factory-build`. |
-| In review | `/factory-build` | PR open. Waiting on me to review, merge, and drag it on. |
+| In review | `/factory-build` | PR open. Waiting on me to review and merge. The merge moves the card. |
 | Merged | Me, by dragging | PR merged, issue closed. The work is done. |
 | Needs retro | Me, by dragging | Waiting on `/factory-retro`. |
 | Done | `/factory-retro` | Retro written. The archive of finished runs, kept visible on purpose. |
