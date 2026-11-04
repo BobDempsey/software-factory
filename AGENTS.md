@@ -31,6 +31,8 @@ That is the allow-listed surface, so nothing else should call `gh project` direc
 
 ## Where things are
 
+- `handoff.md` is the cold-start brief. Read it first.
+- `tasks.md` is the remaining phases, regenerated from the handoff.
 - `docs/workflow.md` is how the board is driven. Read it before touching the board.
 - `.claude/skills/factory-sync-issues/` is piece one, the intake command.
 - `docs/outline.md` is the full design. Read it before proposing structural changes.
