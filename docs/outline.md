@@ -647,10 +647,12 @@ This replaces nothing in the pipeline. The seven stages, the three gates, and th
 One per stage, plus the gate column:
 
 ```
-Inbox -> Spec -> [Needs you] -> Build -> Verify -> [Needs you] -> Merge gate -> CI/CD -> [Needs you] -> Operate -> Done
+Draft -> Inbox -> Spec -> [Needs you] -> Build -> Verify -> [Needs you] -> Merge gate -> CI/CD -> [Needs you] -> Operate -> Done
 ```
 
-In practice that is nine columns: **Inbox, Spec, Needs you, Build, Verify, Merge gate, CI/CD, Operate, Done.** Cards return to the one Needs you column at each of the three gates rather than having three separate ones, so there is a single place that answers "is anything waiting on me."
+In practice that is ten columns: **Draft, Inbox, Spec, Needs you, Build, Verify, Merge gate, CI/CD, Operate, Done.** Cards return to the one Needs you column at each of the three gates rather than having three separate ones, so there is a single place that answers "is anything waiting on me."
+
+**Draft is the ingestion control.** It holds my own notes and half-formed ideas, carries no `factory` label, and no agent reads it. A card there does not even have to be an issue; a plain board note works until it is worth one. Admission is a deliberate two-part act: add the `factory` label, and move the card to Inbox. Until both happen the item is invisible to the factory. The setup procedure is in `docs/board-setup.md`.
 
 ### How work moves
 
@@ -745,3 +747,15 @@ The list above is the current best guess at the order, not a commitment. A piece
 ### Why the factory is its own pilot
 
 It is the repo I know best, a bad run costs an afternoon, and every piece gets exercised on the work of building the next piece. It also forces honesty: a factory too tedious to use on its own development is too tedious to use anywhere.
+
+## What standing it up actually taught us
+
+Recorded the day the bootstrap ran, because these are the things a procedure leaves out.
+
+- **`gh` needs a scope it does not have by default.** `gh auth refresh -s project,read:project`, and it opens a browser for a one-time code, so it cannot be run by an agent. The first real instance of a step the factory cannot do for itself.
+- **Replacing the board's Status options is destructive.** `updateProjectV2Field` overwrites the whole option list and mints new option IDs, so every card's status points at a deleted ID and comes back blank. There is no partial update: adding one column means re-sending all of them. Record where the cards sit first.
+- **Project views cannot be created or changed through the API.** Switching the layout to Board is a manual click path, and it is under the **View** button on the right of the filter bar, not the caret beside the view tab, which only offers rename, duplicate, delete, chart, and export.
+- **An item added to a board has no status.** It will not appear in any column until one is set, which means `gh project item-add` alone looks like it did nothing.
+- **A board card does not have to be an issue.** `gh project item-create` makes a note that lives only on the board. That is what makes the Draft column work as a scratchpad rather than a queue of half-written issues.
+
+Each of these is the kind of thing that would have cost an hour on the second install. They belong in `docs/board-setup.md`, and they are there.
