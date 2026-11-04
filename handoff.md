@@ -1,8 +1,10 @@
 # Handoff
 
-Last updated 2026-11-04. Revision trail: 2026-11-04 (created, bootstrap plus piece one), 2026-11-04 (board recut around refinement, piece 1.5 written), 2026-11-04 (first full run end to end: refine, spec, build, merge).
+Last updated 2026-11-04. Revision trail: 2026-11-04 (created, bootstrap plus piece one), 2026-11-04 (board recut around refinement, piece 1.5 written), 2026-11-04 (the loop closed: refine, spec, build, merge, retro, Done).
 
 Read this, then `docs/progress.md` for the one-line status of each piece. Everything else is detail you can fetch when you need it.
+
+**The basic loop is finished.** Draft note to Done runs on four commands, and it has run once on a real issue. What is left is hardening it: gates, isolation, and installing it somewhere other than here.
 
 ## 1. What this is
 
@@ -49,6 +51,8 @@ https://app.eraser.io/workspace/OUpb5Em92ffztvfLtLQ1
 - `.github/ISSUE_TEMPLATE/factory-work.md` is live on master.
 - One draft card left on the board, in No Status: "We need to separate the eraser I/O diagrams."
 - Issue #1 was closed as not planned when the board was cleared for a test run. Its full body is preserved and should be refiled.
+
+Commits `57bf3c3` and `25d4ce8` carry the recut and the retro. Both pushed.
 
 No CI, no gates, no spec tooling. That absence is the plan, not an omission.
 
@@ -97,6 +101,8 @@ Things that cost time once and should not cost it twice.
 
 ## 6. Not done
 
+The loop works. Nothing below blocks using it; each item makes it harder to get wrong.
+
 - The Eraser diagrams are stale. The two in `q67e2h4jiWh6V2sei87J` and the hand-drawn `P1CoupmhRdaNwXM1W7sl` canvas still show the old board. The hand-drawn one is invisible to the MCP and has to be redrawn by hand or replaced.
 - `docs/outline.md` still describes the ten-column design (Draft, Inbox, Spec, Needs you, Build, Verify, Merge gate, CI/CD, Operate, Done) and `/factory-sync-issues`. Left alone on purpose: it is the destination, not the current state. Reconcile it once the shape stops moving.
 - OpenSpec was raised as the thing that should write specs instead of the hand-rolled template in `/factory-create-spec`. Deferred until the workflow settles.
@@ -106,6 +112,8 @@ Things that cost time once and should not cost it twice.
 - The `template/` directory does not exist yet. Nothing is installable into another repo.
 - Pilot repo for real product work is still unpicked, as is the budget ceiling.
 - `Bob's Draft Notes` is named for one person and should become `Drafts` before the factory is installed anywhere else. `docs/board-setup.md` already says `Drafts`.
+- Nothing enforces the order. A card can be dragged straight from Needs refinement to Ready for dev and `/factory-build` will only catch it because the DECISIONS table is missing. A hook checking the column a card came from would close that.
+- The retro has run once, so its bar for adding an `AGENTS.md` rule is untested. Watch whether it inflates the file over the next few runs.
 
 ## 7. Working with this user
 
