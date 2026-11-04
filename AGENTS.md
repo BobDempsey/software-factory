@@ -13,6 +13,8 @@ Once `.factory/checks/` exists, run those scripts.
 - One issue is one unit of work. No `factory` label, no run.
 - Agents may propose work by filing issues into `factory:triage`. Only a human
   moves an issue to `factory`.
+- Every admitted issue carries exactly one `deliverable:*` label naming what it
+  produces, and repeats it as one bold DELIVERABLE line near the top of the body.
 - An agent never writes a `Signed-off-by` trailer. Only a human can certify the DCO.
 - Agent-authored commits carry a single `Assisted-by:` line. No banner, no emoji.
 

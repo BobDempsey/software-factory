@@ -28,6 +28,21 @@ gh label create "factory:triage" \
   --description "Agent-proposed. Needs a human label to be admitted."
 ```
 
+### Deliverable labels
+
+One per kind of thing a unit of work produces, so a card says what it builds without opening it. Every admitted issue carries exactly one.
+
+```bash
+gh label create "deliverable:skill"    --color 1D76DB --description "A Claude Code skill in .claude/skills/"
+gh label create "deliverable:hook"     --color 5319E7 --description "A hook in .claude/hooks/"
+gh label create "deliverable:workflow" --color 0052CC --description "A GitHub Actions workflow"
+gh label create "deliverable:doc"      --color 006B75 --description "Documentation only"
+gh label create "deliverable:script"   --color B60205 --description "A standalone script in .factory/checks/ or scripts/"
+gh label create "deliverable:config"   --color 5DADE2 --description "Repo or board configuration"
+```
+
+The issue body repeats it as one bold line near the top, so the deliverable is visible both on the card and in the first screen of the issue.
+
 ## 2. Create the project
 
 ```bash
