@@ -19,6 +19,8 @@ Once `.factory/checks/` exists, run those scripts.
 ## Where things are
 
 - `docs/outline.md` is the full design. Read it before proposing structural changes.
+- `docs/progress.md` is what exists today. Read it first, and update it when a piece lands.
+- `docs/board-setup.md` is the board install procedure, including the one manual step.
 - `docs/solutions/` holds learnings from completed runs. Read it during spec work.
 - `template/` will hold what gets installed into other repos. It is empty until piece two.
 
