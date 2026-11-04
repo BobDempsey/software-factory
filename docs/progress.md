@@ -18,9 +18,19 @@ What exists, and what is next. One line per thing, newest state at the top.
 
 No gates, no CI, no spec tooling. That is on purpose.
 
+## Board trimmed to four columns (2026-11-04)
+
+Bob's Draft Notes, Needs approval, Approved, Spec. The downstream columns were
+removed until the pieces that use them exist. Renamed from Triage and Inbox,
+because the action at each is approve and approved, not triage and queueing.
+
 ## Piece one: issue sync, in progress
 
-**Not started.** Waiting on issue #1 being promoted from `factory:triage` to `factory`.
+**Built, not yet used.** `/factory-sync-issues` exists as a skill at
+`.claude/skills/factory-sync-issues/SKILL.md`, backed by `scripts/board.sh` and
+`.factory/board.json`. It is done when three real issues have gone through it.
+
+Issue #1 was closed when the board was cleared for a test run; its content is preserved.
 
 Scope: read the board, find `factory` issues in Inbox, confirm each is one unit of work, move the card to Spec. It does not write a spec, create a branch, or touch code.
 

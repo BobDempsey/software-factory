@@ -20,9 +20,19 @@ Once `.factory/checks/` exists, run those scripts.
 - An agent never writes a `Signed-off-by` trailer. Only a human can certify the DCO.
 - Agent-authored commits carry a single `Assisted-by:` line. No banner, no emoji.
 
+## The board
+
+Config is `.factory/board.json`. Never hardcode project or option ids; the option
+ids change every time the column list is replaced, so `scripts/board.sh` looks them
+up by name at call time.
+
+Board operations go through `scripts/board.sh` (list, ids, move, convert, check).
+That is the allow-listed surface, so nothing else should call `gh project` directly.
+
 ## Where things are
 
 - `docs/workflow.md` is how the board is driven. Read it before touching the board.
+- `.claude/skills/factory-sync-issues/` is piece one, the intake command.
 - `docs/outline.md` is the full design. Read it before proposing structural changes.
 - `docs/progress.md` is what exists today. Read it first, and update it when a piece lands.
 - `docs/board-setup.md` is the board install procedure, including the one manual step.

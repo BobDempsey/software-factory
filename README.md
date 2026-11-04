@@ -10,12 +10,14 @@ Eraser: the pipeline, and the build order.
 
 1. Jot the idea as a card in **Bob's Draft Notes**. No issue, no labels.
 2. Convert it to an issue, add `factory` and one `deliverable:*` label.
-3. Drag it to **Inbox**. That drag is the admission act.
-4. Agents move it from there. Watch **Needs you**: it is the only column that
-   means you are blocking something.
+3. Drag it to **Approved**. That drag is the admission act.
+4. Run `/factory-sync-issues` in the terminal. It moves the card to Spec.
 
-Agents propose work by filing issues labeled `factory:triage` into **Triage**.
-Approving one is swapping that label for `factory`.
+Agents propose work by filing issues labeled `factory:triage`, which land in
+**Needs approval**. Approving one is swapping that label for `factory` and
+dragging the card to Approved.
+
+A scheduled GitHub Action will do step 4 on its own later. Not yet.
 
 Full detail in [docs/workflow.md](docs/workflow.md).
 

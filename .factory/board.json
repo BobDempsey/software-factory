@@ -1,0 +1,13 @@
+{
+  "owner": "BobDempsey",
+  "repo": "BobDempsey/software-factory",
+  "projectNumber": 4,
+  "projectUrl": "https://github.com/users/BobDempsey/projects/4",
+  "projectId": "PVT_kwHOAS5FRs4BqNyb",
+  "statusFieldId": "PVTSSF_lAHOAS5FRs4BqNybzhol4i0",
+  "columns": ["Bob's Draft Notes", "Needs approval", "Approved", "Spec"],
+  "readColumn": "Approved",
+  "targetColumn": "Spec",
+  "privateColumn": "Bob's Draft Notes",
+  "note": "Option ids are not stored here on purpose: they change every time the column list is replaced. scripts/board.sh looks them up by name at call time."
+}
