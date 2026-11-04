@@ -4,10 +4,10 @@ The board is meant to be driven by dragging. A card moves one column at a time, 
 
 ```
 Bob's Draft Notes -> Needs refinement -> Ready for spec -> Needs spec approval
-  -> Ready for dev -> In review -> Merged -> Needs retro
+  -> Ready for dev -> In review -> Merged -> Needs retro -> Done
 ```
 
-Columns exist only once something acts on them. `Needs retro` is the exception: it is there, and `/factory-retro` is not written yet.
+Every column names the command or the person that acts on it. A column nobody acts on should not exist.
 
 ## The three ways work arrives
 
@@ -31,7 +31,9 @@ Columns exist only once something acts on them. `Needs retro` is the exception: 
 
 **Merged.** Mine, by dragging. The work is done and the lesson has not been written yet.
 
-**Needs retro.** Where `/factory-retro` will write what the run taught us into `docs/solutions/`. Not built.
+**Needs retro.** `/factory-retro` rebuilds the run from the issue, spec, PR and commits, writes `docs/solutions/<N>-<slug>.md`, adds a rule to `AGENTS.md` if the run earned one, and moves the card to Done. It asks me nothing, because by this point I have moved on.
+
+**Done.** The archive of finished runs, kept visible on purpose. Archiving a card is mine, and there is no hurry.
 
 ## The gestures that are mine
 
@@ -62,7 +64,8 @@ Not built yet, on purpose. The commands run first because the rules are not sett
 | Ready for dev | Me, by dragging | Spec approved, every decision answered. Waiting on `/factory-build`. |
 | In review | `/factory-build` | PR open. Waiting on me to review and merge. |
 | Merged | Me, by dragging | PR merged, issue closed. The work is done. |
-| Needs retro | Me, by dragging | Waiting on `/factory-retro`, which does not exist yet. |
+| Needs retro | Me, by dragging | Waiting on `/factory-retro`. |
+| Done | `/factory-retro` | Retro written. The archive of finished runs, kept visible on purpose. |
 | No Status | Nobody, on purpose | GitHub's catch-all for cards with no Status. Should be empty; anything here is a mistake worth noticing. |
 
 ## Labels

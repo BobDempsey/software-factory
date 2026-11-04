@@ -21,6 +21,7 @@ Local-only means agents run on the developer's machine. No hosted agent runners,
 | `.claude/skills/factory-refine/` | The intake command, and the admission gate. |
 | `.claude/skills/factory-create-spec/` | Writes the spec and the DECISIONS table. |
 | `.claude/skills/factory-build/` | Implements an approved spec, stops at the PR. |
+| `.claude/skills/factory-retro/` | Closes out a finished run, writes `docs/solutions/`. |
 | `specs/<N>-<slug>/` | `spec.md` and `spec-brief.md` for issue N. |
 | `scripts/board.sh` | Every board operation. The allow-listed surface. |
 | `.factory/board.json` | Project ids and column names. |
@@ -39,12 +40,12 @@ https://app.eraser.io/workspace/OUpb5Em92ffztvfLtLQ1
 ## 3. State, verified 2026-11-04
 
 - Repo public at https://github.com/BobDempsey/software-factory, pushed, master.
-- Board at https://github.com/users/BobDempsey/projects/4, eight columns plus No Status: **Bob's Draft Notes, Needs refinement, Ready for spec, Needs spec approval, Ready for dev, In review, Merged, Needs retro**, board layout saved.
+- Board at https://github.com/users/BobDempsey/projects/4, nine columns plus No Status: **Bob's Draft Notes, Needs refinement, Ready for spec, Needs spec approval, Ready for dev, In review, Merged, Needs retro, Done**, board layout saved.
 - Labels: `factory`, `factory:triage`, and six `deliverable:*` (skill, hook, workflow, doc, script, config).
-- Four commands exist as skills. Three have run: `/factory-refine`, `/factory-create-spec`, `/factory-build`. `/factory-retro` is not written.
+- Four commands exist as skills, and all four have run: `/factory-refine`, `/factory-create-spec`, `/factory-build`, `/factory-retro`.
 - `/factory-sync-issues` was deleted. Its checks live in `/factory-refine` now, because two commands reading the same column was the confusing part.
 - `scripts/board.sh` list, ids, move and convert have all run clean against the live board.
-- **The first run went end to end.** Issue #2, the factory-work issue template: draft note, refined, specced, decisions answered, built on branch `2-issue-template`, PR #3, merged. The card sits in Merged.
+- **The first run went end to end.** Issue #2, the factory-work issue template: draft note, refined, specced, decisions answered, built on branch `2-issue-template`, PR #3, merged, retro written to `docs/solutions/2-issue-template.md`. The card sits in Done.
 - `.github/ISSUE_TEMPLATE/factory-work.md` is live on master.
 - One draft card left on the board, in No Status: "We need to separate the eraser I/O diagrams."
 - Issue #1 was closed as not planned when the board was cleared for a test run. Its full body is preserved and should be refiled.
@@ -69,7 +70,9 @@ The full ledger is in `docs/outline.md`. The ones that shape day-to-day work:
 - **The spec brief lives in the issue body, not a comment.** A comment scrolls away. The body is what a reader sees first.
 - **Approval is the `## DECISIONS` table** at the bottom of the issue body: one row per flag, every answer starting as the literal word `UNANSWERED`. The human replaces each one. An agent never fills in an answer, and `/factory-build` refuses to run while a row still says `UNANSWERED`. This stands in for `spec.json` for now.
 - **Dragging to Ready for dev is the approval of the spec.** The build command trusts that drag plus the answered table.
-- **Every column names the command or the person that acts on it.** A column nobody acts on should not exist, with Needs retro the one deliberate exception.
+- **Every column names the command or the person that acts on it.** A column nobody acts on should not exist.
+- **The retro does not ask the human anything.** By the time a card reaches Needs retro they have moved on, and a question they cannot answer makes a worse retro than silence. The friction is on disk: amended commits, unverified PR sections, files the spec never named.
+- **The retro applies its own rule changes to `AGENTS.md`** rather than proposing them, and says in its report what it added so one edit reverts it. A proposal the human skims is the same as no rule.
 - **Bob's Draft Notes is private.** Agents do not read it.
 
 ## 5. Gotchas
@@ -94,7 +97,6 @@ Things that cost time once and should not cost it twice.
 
 ## 6. Not done
 
-- `/factory-retro` does not exist. The Needs retro column is waiting on it, and so is `docs/solutions/`, which is still empty. This is the current piece.
 - The Eraser diagrams are stale. The two in `q67e2h4jiWh6V2sei87J` and the hand-drawn `P1CoupmhRdaNwXM1W7sl` canvas still show the old board. The hand-drawn one is invisible to the MCP and has to be redrawn by hand or replaced.
 - `docs/outline.md` still describes the ten-column design (Draft, Inbox, Spec, Needs you, Build, Verify, Merge gate, CI/CD, Operate, Done) and `/factory-sync-issues`. Left alone on purpose: it is the destination, not the current state. Reconcile it once the shape stops moving.
 - OpenSpec was raised as the thing that should write specs instead of the hand-rolled template in `/factory-create-spec`. Deferred until the workflow settles.

@@ -21,6 +21,9 @@ Once `.factory/checks/` exists, run those scripts.
   table at the bottom. An agent never fills in an answer; `UNANSWERED` blocks the build.
 - An agent never writes a `Signed-off-by` trailer. Only a human can certify the DCO.
 - Agent-authored commits carry a single `Assisted-by:` line. No banner, no emoji.
+- Before committing on a factory branch, check `git diff --cached --stat` against the
+  spec's file table. `/factory-build` branches in place, so anything staged earlier in
+  the session rides along.
 
 ## The board
 
@@ -65,5 +68,8 @@ not a commitment.
 ## Rules hygiene
 
 A new rule here must be non-obvious, hit more than once, and specific enough to
-act on. Rules are traps to avoid, not maps to follow. Propose additions in the PR
-description rather than editing this file inline.
+act on. Rules are traps to avoid, not maps to follow.
+
+`/factory-retro` adds a rule directly when a run earns one, and says in its report
+what it added so it can be reverted in one edit. Every other run proposes additions
+in the PR description rather than editing this file inline.

@@ -18,7 +18,9 @@ Eraser: the pipeline, and the build order.
    **Ready for dev**.
 5. Run `/factory-build`. It implements the spec, opens a PR, and moves the card
    to **In review**.
-6. Merge the PR, then drag the card to **Merged**.
+6. Merge the PR, then drag the card to **Merged**, then to **Needs retro**.
+7. Run `/factory-retro`. It writes what the run taught us into
+   `docs/solutions/` and moves the card to **Done**.
 
 Agents propose work by filing issues labeled `factory:triage`. Only a human
 applies `factory`, and only a human drags a card onward.
@@ -34,4 +36,4 @@ Full detail in [docs/workflow.md](docs/workflow.md).
 - [docs/board-setup.md](docs/board-setup.md) is how to set up the Kanban board.
 - [docs/progress.md](docs/progress.md) is what exists today and what is next.
 
-Nothing here is installable yet. Current piece: the retro command.
+Nothing here is installable yet. The whole loop has run once, on issue #2.

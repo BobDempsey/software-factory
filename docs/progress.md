@@ -17,13 +17,14 @@ What exists, and what is next. One line per thing, newest state at the top.
 
 No gates, no CI, no spec tooling. That is on purpose.
 
-## Board recut to eight columns (2026-11-04)
+## Board recut to nine columns (2026-11-04)
 
 Bob's Draft Notes, Needs refinement, Ready for spec, Needs spec approval,
-Ready for dev, In review, Merged, Needs retro. Each column names the command
-that acts on it, and every column a human owns says so.
+Ready for dev, In review, Merged, Needs retro, Done. Each column names the
+command that acts on it, and every column a human owns says so.
 
 ## The four commands (2026-11-04)
+
 
 - `/factory-refine` works a card in Needs refinement with the human, converts
   it, applies `factory` plus one `deliverable:*` label, and leaves it in
@@ -33,7 +34,9 @@ that acts on it, and every column a human owns says so.
   `## DECISIONS` table, and parks the card in Needs spec approval.
 - `/factory-build` refuses while any DECISIONS row says `UNANSWERED`, then
   branches, implements, opens a PR, and moves the card to In review.
-- `/factory-retro` does not exist. Needs retro is waiting on it.
+- `/factory-retro` rebuilds a finished run from the issue, spec, PR and
+  commits, writes `docs/solutions/<N>-<slug>.md`, applies any rule the run
+  earned to `AGENTS.md`, and moves the card to Done. It asks the human nothing.
 
 `/factory-sync-issues` was deleted. Its checks moved into `/factory-refine`,
 because two commands reading the same column was the confusing part.
@@ -50,9 +53,10 @@ Omitting them mints new ids and blanks every card.
 
 ## Not started
 
-`/factory-retro`, the first CI gate, red-first replay, `agent-approval-check`,
-`docs/solutions/`, worktree isolation, the weekly monitor, and `template/`. The
-order is in `docs/outline.md` and is a best guess rather than a commitment.
+The first CI gate, red-first replay, `agent-approval-check`, worktree isolation,
+OpenSpec in place of the hand-rolled spec template, the weekly monitor, and
+`template/`. The order is in `docs/outline.md` and is a best guess rather than a
+commitment.
 
 On the shelf, decided but not built: parallel agents, mutation testing, fiberplane/drift, a second reviewer, the cost guard, the test-tamper hook, post-merge verification.
 
