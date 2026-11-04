@@ -11,8 +11,10 @@ Once `.factory/checks/` exists, run those scripts.
 
 - Prose rules live in the user-level CLAUDE.md. Follow them for every markdown file here.
 - One issue is one unit of work. No `factory` label, no run.
-- Agents may propose work by filing issues into `factory:triage`. Only a human
-  moves an issue to `factory`.
+- Agents may propose work by filing real issues labeled `factory:triage`, which land
+  in the Triage column. The sync skill ignores that column. Only a human applies
+  `factory`, and only a human drags a card into Inbox.
+- Bob's Draft Notes is a private scratchpad. Never read it, never act on it.
 - Every admitted issue carries exactly one `deliverable:*` label naming what it
   produces, and repeats it as one bold DELIVERABLE line near the top of the body.
 - An agent never writes a `Signed-off-by` trailer. Only a human can certify the DCO.
@@ -20,6 +22,7 @@ Once `.factory/checks/` exists, run those scripts.
 
 ## Where things are
 
+- `docs/workflow.md` is how the board is driven. Read it before touching the board.
 - `docs/outline.md` is the full design. Read it before proposing structural changes.
 - `docs/progress.md` is what exists today. Read it first, and update it when a piece lands.
 - `docs/board-setup.md` is the board install procedure, including the one manual step.

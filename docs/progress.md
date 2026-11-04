@@ -6,13 +6,15 @@ What exists, and what is next. One line per thing, newest state at the top.
 
 - Repo created, public: https://github.com/BobDempsey/software-factory
 - `factory` and `factory:triage` labels created
-- Project board created with ten stage columns (Draft first), board layout saved:
+- Project board created with eleven columns (Bob's Draft Notes, Triage, then the
+  nine stages), board layout saved:
   https://github.com/users/BobDempsey/projects/4
 - `docs/outline.md` holds the full design, moved off the desktop
 - `docs/board-setup.md` is the board install procedure
 - `AGENTS.md` under 40 lines, with an 11-byte `CLAUDE.md` importing it
 - Issue #1 filed into `factory:triage`, sitting in Inbox
-- One board-only card in Draft, demonstrating the un-admitted state
+- Six `deliverable:*` labels created
+- `docs/workflow.md` written: how the board is driven by dragging
 
 No gates, no CI, no spec tooling. That is on purpose.
 
