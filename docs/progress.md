@@ -24,6 +24,11 @@ Bob's Draft Notes, Needs approval, Approved, Spec. The downstream columns were
 removed until the pieces that use them exist. Renamed from Triage and Inbox,
 because the action at each is approve and approved, not triage and queueing.
 
+## Issue template landed (2026-11-04)
+
+`.github/ISSUE_TEMPLATE/factory-work.md` is the one template offered when filing an
+issue here. Seven labelled sections, bullets only, no labels applied on filing.
+
 ## Piece one: issue sync, in progress
 
 **Built, not yet used.** `/factory-sync-issues` exists as a skill at
