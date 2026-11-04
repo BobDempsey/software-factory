@@ -36,7 +36,7 @@ gh project create --owner YOUR_USERNAME --title "Software Factory"
 
 Note the project number it returns. Everything below uses it.
 
-## 3. Replace the Status options with the nine stages
+## 3. Replace the Status options with the ten stages
 
 A new project ships with Status options of Todo, In Progress, and Done. Those become the board's columns, so replacing them is what creates the factory's columns. There is no `gh project` subcommand for this, so it goes through the GraphQL API.
 
@@ -48,13 +48,16 @@ gh project field-list PROJECT_NUMBER --owner YOUR_USERNAME --format json
 
 Look for the entry whose type is `ProjectV2SingleSelectField`. Its id starts with `PVTSSF_`.
 
-Then replace the options in one call. **This overwrites every existing option**, which is what you want on a new project and is destructive on a board already in use:
+Then replace the options in one call.
+
+> **This overwrites the entire option list and mints new option IDs.** Every card whose status pointed at an old ID comes back blank, and the cards do not move back on their own. Harmless on a new project. On a board already in use, record every card's current column first and put them back afterwards. There is no partial update: adding one column means re-sending all of them.
 
 ```bash
 gh api graphql -F fid=PVTSSF_YOUR_FIELD_ID -f query='
 mutation($fid:ID!){
  updateProjectV2Field(input:{fieldId:$fid, singleSelectOptions:[
-  {name:"Inbox",      color:GRAY,   description:"Filed, not yet admitted"},
+  {name:"Draft",      color:GRAY,   description:"My notes. Not admitted, agents never touch these."},
+  {name:"Inbox",      color:GRAY,   description:"Labeled factory, ready to admit"},
   {name:"Spec",       color:PURPLE, description:"Writing spec.md and spec-brief.md"},
   {name:"Needs you",  color:YELLOW, description:"Blocked on a human gate"},
   {name:"Build",      color:BLUE,   description:"Implementing in a worktree"},
@@ -66,7 +69,19 @@ mutation($fid:ID!){
  {projectV2Field{ ... on ProjectV2SingleSelectField { options { name } } }}}'
 ```
 
-The response lists the nine names back. That is the confirmation.
+The response lists the ten names back, each with its new ID. That is the confirmation, and those IDs are what `gh project item-edit` needs, so keep them.
+
+### Changing columns later
+
+Re-run the same mutation with the full list, then put the cards back:
+
+```bash
+# before: record where everything sits
+gh project item-list PROJECT_NUMBER --owner YOUR_USERNAME --format json > /tmp/cards.json
+
+# run the mutation with the new full list, then for each card:
+gh project item-edit --id ITEM_ID --project-id PROJECT_ID   --field-id FIELD_ID --single-select-option-id NEW_OPTION_ID
+```
 
 ## 4. Switch the view to a board
 
@@ -78,7 +93,7 @@ The response lists the nine names back. That is the confirmation.
 4. Confirm **Column by** is set to **Status**.
 5. Click **Save view**, then **Save to current view**.
 
-The nine stages appear as columns, each showing the description set in step 3.
+The ten stages appear as columns, each showing the description set in step 3.
 
 ## 5. Add an issue and place it
 
@@ -112,7 +127,8 @@ Dragging the card in the UI does the same thing.
 
 | Column | Who moves the card in | What it means |
 | --- | --- | --- |
-| Inbox | You | Filed, not yet admitted. Needs the `factory` label to move on. |
+| Draft | You | Your own notes and half-formed ideas. No `factory` label, and agents never read this column. Cards here can be board-only notes rather than issues. |
+| Inbox | You | Labeled `factory` and ready to admit. |
 | Spec | Agent | Writing `spec.md`, `spec-brief.md`, and `spec.json`. |
 | Needs you | Agent | A human gate. All three gates park the card here. |
 | Build | Agent | Implementing in a worktree. |
@@ -123,6 +139,12 @@ Dragging the card in the UI does the same thing.
 | Done | Merge | Merged and closed. |
 
 Cards return to the single "Needs you" column at each of the three gates rather than having three separate columns, so there is one place that answers whether you are blocking anything.
+
+## Draft versus Inbox
+
+These two columns exist to separate thinking from committing. Draft is where you write yourself notes, paste half-formed ideas, and leave things unfinished. Nothing in Draft is admitted, nothing in Draft has the `factory` label, and no agent reads it.
+
+Admission is a deliberate act with two parts: add the `factory` label, and move the card to Inbox. Until both happen, the item is invisible to the factory. A card in Draft does not even have to be an issue; a plain board note works, and it becomes an issue when it is worth one.
 
 ## The board is not the record
 
