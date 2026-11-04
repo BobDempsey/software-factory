@@ -102,7 +102,7 @@ The body says `Closes #<N>`, links the spec directory, and lists each acceptance
 
 **Verify the move by reading the board again.** Replacing the board's Status options in the past has left API writes reporting success while the card rendered in the wrong column. If the read-back disagrees, say so plainly and tell the human to drag the card, rather than retrying.
 
-Nothing exists past In review. Reviewing and merging the PR is the human's, and this command stops here.
+Reviewing and merging the PR is the human's, and so is the drag to Needs retro that follows it. This command stops at In review.
 
 ### 10. Report
 

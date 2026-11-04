@@ -45,7 +45,7 @@ https://app.eraser.io/workspace/OUpb5Em92ffztvfLtLQ1
 ## 3. State, verified 2026-11-04
 
 - Repo public at https://github.com/BobDempsey/software-factory, pushed, master.
-- Board at https://github.com/users/BobDempsey/projects/4, nine columns plus No Status: **Bob's Draft Notes, Needs refinement, Ready for spec, Needs spec approval, Ready for dev, In review, Merged, Needs retro, Done**, board layout saved.
+- Board at https://github.com/users/BobDempsey/projects/4, eight columns plus No Status: **Bob's Draft Notes, Needs refinement, Ready for spec, Needs spec approval, Ready for dev, In review, Needs retro, Done**, board layout saved. Yellow is a column waiting on the human, blue is one waiting on a command, gray is neither, and every description opens with YOU or Agent.
 - Labels: `factory`, `factory:triage`, and six `deliverable:*` (skill, hook, workflow, doc, script, config).
 - Five commands exist as skills. Four have run: `/factory-refine`, `/factory-create-spec`, `/factory-build`, `/factory-retro`. `/factory-start` is written and untested.
 - `/factory-sync-issues` was deleted. Its checks live in `/factory-refine` now, because two commands reading the same column was the confusing part.
@@ -77,7 +77,7 @@ The full ledger is in `docs/outline.md`. The ones that shape day-to-day work:
 - **The spec brief lives in the issue body, not a comment.** A comment scrolls away. The body is what a reader sees first.
 - **Approval is the `## DECISIONS` table** at the bottom of the issue body: one row per flag, every answer starting as the literal word `UNANSWERED`. The human replaces each one. An agent never fills in an answer, and `/factory-build` refuses to run while a row still says `UNANSWERED`. This stands in for `spec.json` for now.
 - **Dragging to Ready for dev is the approval of the spec.** The build command trusts that drag plus the answered table.
-- **Every column names the command or the person that acts on it.** A column nobody acts on should not exist.
+- **Every column names the command or the person that acts on it.** A column nobody acts on should not exist. Merged was cut for exactly that: it asked for a second drag and nothing else.
 - **The retro does not ask the human anything.** By the time a card reaches Needs retro they have moved on, and a question they cannot answer makes a worse retro than silence. The friction is on disk: amended commits, unverified PR sections, files the spec never named.
 - **A session opens on the board, not the handoff.** `/factory-start` is one `board.sh list` call and a question. The handoff grows every session and reading it at the top of every one was the cost that prompted this.
 - **The retro applies its own rule changes to `AGENTS.md`** rather than proposing them, and says in its report what it added so one edit reverts it. A proposal the human skims is the same as no rule.

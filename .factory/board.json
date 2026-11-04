@@ -12,7 +12,6 @@
     "Needs spec approval",
     "Ready for dev",
     "In review",
-    "Merged",
     "Needs retro",
     "Done"
   ],
@@ -22,12 +21,11 @@
   "note": "Option ids are not stored here on purpose: they change every time the column list is replaced. scripts/board.sh looks them up by name at call time.",
   "refineColumn": "Needs refinement",
   "readyColumn": "Ready for spec",
-  "targetColumnNote": "/factory-build stops at In review. You merge, drag to Merged, then /factory-retro moves the card to Done.",
+  "targetColumnNote": "/factory-build stops at In review. You merge the PR and drag the card to Needs retro, then /factory-retro moves it to Done.",
   "specColumn": "Ready for spec",
   "approvalColumn": "Needs spec approval",
   "buildColumn": "Ready for dev",
   "reviewColumn": "In review",
-  "mergedColumn": "Merged",
   "retroColumn": "Needs retro",
   "doneColumn": "Done"
 }

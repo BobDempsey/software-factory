@@ -17,11 +17,12 @@ What exists, and what is next. One line per thing, newest state at the top.
 
 No gates, no CI, no spec tooling. That is on purpose.
 
-## Board recut to nine columns (2026-11-04)
+## Board recut to eight columns (2026-11-04)
 
 Bob's Draft Notes, Needs refinement, Ready for spec, Needs spec approval,
-Ready for dev, In review, Merged, Needs retro, Done. Each column names the
-command that acts on it, and every column a human owns says so.
+Ready for dev, In review, Needs retro, Done. Yellow means you, blue means an
+agent, gray means nothing pending, and every description opens with YOU or
+Agent. Merged was cut: it only ever asked for a second drag.
 
 ## The five commands (2026-11-04)
 

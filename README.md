@@ -21,7 +21,7 @@ everything sits, and offers the first card waiting on refinement.
    **Ready for dev**.
 5. Run `/factory-build`. It implements the spec, opens a PR, and moves the card
    to **In review**.
-6. Merge the PR, then drag the card to **Merged**, then to **Needs retro**.
+6. Merge the PR, then drag the card to **Needs retro**.
 7. Run `/factory-retro`. It writes what the run taught us into
    `docs/solutions/` and moves the card to **Done**.
 
