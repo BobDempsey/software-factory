@@ -31,6 +31,14 @@ when it is written. Current piece: issue sync. Nothing after it starts until
 that has run on real work. The order is in `docs/outline.md`; it is a best guess,
 not a commitment.
 
+## Standing chores
+
+- **Keep the README current and short.** It must always answer "how do I drive this
+  from GitHub issues" in a few lines: file a card in Draft, convert it to an issue,
+  add the `factory` label, drag it to Inbox. Check it whenever a piece lands, and
+  cut anything that has grown past that.
+- **Update `docs/progress.md` when a piece lands.** It is what the next session reads first.
+
 ## Rules hygiene
 
 A new rule here must be non-obvious, hit more than once, and specific enough to

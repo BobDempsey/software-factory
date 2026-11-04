@@ -30,6 +30,12 @@ Pieces two through nine, in order: `/spec`, `/build`, the first CI gate, `/pr`, 
 
 On the shelf, decided but not built: parallel agents, mutation testing, fiberplane/drift, a second reviewer, the cost guard, the test-tamper hook, post-merge verification.
 
+## Standing chores
+
+- Keep the README answering "how do I drive this from GitHub issues" in a few lines,
+  and keep it short. Review it whenever a piece lands.
+- Update this file when a piece lands.
+
 ## The rule
 
 A piece is done when it has been used on a real issue, not when it is written. Never build three pieces before using any of them.
