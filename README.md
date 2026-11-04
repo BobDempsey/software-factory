@@ -9,15 +9,21 @@ Eraser: the pipeline, and the build order.
 ## Driving it from GitHub
 
 1. Jot the idea as a card in **Bob's Draft Notes**. No issue, no labels.
-2. Convert it to an issue, add `factory` and one `deliverable:*` label.
-3. Drag it to **Approved**. That drag is the admission act.
-4. Run `/factory-sync-issues` in the terminal. It moves the card to Spec.
+2. Drag it to **Needs refinement** and run `/factory-refine`. It sharpens the
+   card with you, converts it to an issue, labels it, and moves it to
+   **Ready for spec**.
+3. Run `/factory-create-spec`. It writes the spec, puts the brief in the issue
+   body, and parks the card in **Needs spec approval**.
+4. Answer the `DECISIONS` rows in the issue body, then drag the card to
+   **Ready for dev**.
+5. Run `/factory-build`. It implements the spec, opens a PR, and moves the card
+   to **In review**.
+6. Merge the PR, then drag the card to **Merged**.
 
-Agents propose work by filing issues labeled `factory:triage`, which land in
-**Needs approval**. Approving one is swapping that label for `factory` and
-dragging the card to Approved.
+Agents propose work by filing issues labeled `factory:triage`. Only a human
+applies `factory`, and only a human drags a card onward.
 
-A scheduled GitHub Action will do step 4 on its own later. Not yet.
+A scheduled GitHub Action will run the commands on its own later. Not yet.
 
 Full detail in [docs/workflow.md](docs/workflow.md).
 
@@ -28,4 +34,4 @@ Full detail in [docs/workflow.md](docs/workflow.md).
 - [docs/board-setup.md](docs/board-setup.md) is how to set up the Kanban board.
 - [docs/progress.md](docs/progress.md) is what exists today and what is next.
 
-Nothing here is installable yet. Current piece: issue sync.
+Nothing here is installable yet. Current piece: the retro command.

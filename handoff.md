@@ -1,6 +1,6 @@
 # Handoff
 
-Last updated 2026-11-04. Revision trail: 2026-11-04 (created, bootstrap plus piece one).
+Last updated 2026-11-04. Revision trail: 2026-11-04 (created, bootstrap plus piece one), 2026-11-04 (board recut around refinement, piece 1.5 written), 2026-11-04 (first full run end to end: refine, spec, build, merge).
 
 Read this, then `docs/progress.md` for the one-line status of each piece. Everything else is detail you can fetch when you need it.
 
@@ -18,7 +18,10 @@ Local-only means agents run on the developer's machine. No hosted agent runners,
 | `docs/workflow.md` | How the board is driven day to day. Read before touching the board. |
 | `docs/board-setup.md` | Board install procedure, including the step that has no API. |
 | `docs/progress.md` | What exists today, one line per thing. |
-| `.claude/skills/factory-sync-issues/` | Piece one. The intake command. |
+| `.claude/skills/factory-refine/` | The intake command, and the admission gate. |
+| `.claude/skills/factory-create-spec/` | Writes the spec and the DECISIONS table. |
+| `.claude/skills/factory-build/` | Implements an approved spec, stops at the PR. |
+| `specs/<N>-<slug>/` | `spec.md` and `spec-brief.md` for issue N. |
 | `scripts/board.sh` | Every board operation. The allow-listed surface. |
 | `.factory/board.json` | Project ids and column names. |
 | `AGENTS.md` | Agent instructions. `CLAUDE.md` is an 11-byte import of it. |
@@ -26,14 +29,25 @@ Local-only means agents run on the developer's machine. No hosted agent runners,
 Two Eraser diagrams, in one workspace: the pipeline, and the build order.
 https://app.eraser.io/workspace/q67e2h4jiWh6V2sei87J
 
+A third diagram lives in its own workspace, Github Issues Flow, drawn by hand on the
+canvas rather than through the MCP: https://app.eraser.io/workspace/P1CoupmhRdaNwXM1W7sl
+It is the board flow, and it is the picture to read before changing a column.
+**Both are stale as of 2026-11-04**: they still show the old three-column board.
+A fourth diagram, made through the MCP and current with the eight columns, is at
+https://app.eraser.io/workspace/OUpb5Em92ffztvfLtLQ1
+
 ## 3. State, verified 2026-11-04
 
 - Repo public at https://github.com/BobDempsey/software-factory, pushed, master.
-- Board at https://github.com/users/BobDempsey/projects/4, four columns: **Bob's Draft Notes, Needs approval, Approved, Spec**, board layout saved.
+- Board at https://github.com/users/BobDempsey/projects/4, eight columns plus No Status: **Bob's Draft Notes, Needs refinement, Ready for spec, Needs spec approval, Ready for dev, In review, Merged, Needs retro**, board layout saved.
 - Labels: `factory`, `factory:triage`, and six `deliverable:*` (skill, hook, workflow, doc, script, config).
-- `scripts/board.sh list` and `ids` both run clean against the live board. `move` and `convert` are written but **not yet exercised**.
-- Two draft cards on the board, one in Bob's Draft Notes and one stranded in No Status.
-- Issue #1 was closed as not planned when the board was cleared for a test run. Its full body is preserved and should be refiled when piece one is exercised.
+- Four commands exist as skills. Three have run: `/factory-refine`, `/factory-create-spec`, `/factory-build`. `/factory-retro` is not written.
+- `/factory-sync-issues` was deleted. Its checks live in `/factory-refine` now, because two commands reading the same column was the confusing part.
+- `scripts/board.sh` list, ids, move and convert have all run clean against the live board.
+- **The first run went end to end.** Issue #2, the factory-work issue template: draft note, refined, specced, decisions answered, built on branch `2-issue-template`, PR #3, merged. The card sits in Merged.
+- `.github/ISSUE_TEMPLATE/factory-work.md` is live on master.
+- One draft card left on the board, in No Status: "We need to separate the eraser I/O diagrams."
+- Issue #1 was closed as not planned when the board was cleared for a test run. Its full body is preserved and should be refiled.
 
 No CI, no gates, no spec tooling. That absence is the plan, not an omission.
 
@@ -50,6 +64,12 @@ The full ledger is in `docs/outline.md`. The ones that shape day-to-day work:
 - **`Assisted-by:` trailer, one line.** An agent never writes `Signed-off-by`.
 - **The board shows state; git holds the truth.** Approval is a committed `spec.json` flag plus `agent-approval-check`, never a column.
 - **Only a human admits work.** Agents may file `factory:triage`; they never apply `factory`.
+- **Refinement is its own column and its own command.** A draft that is not ready goes to Needs refinement, and `/factory-refine` sharpens it with the human until it is one unit of work. Not refined means it stays in that column rather than moving on.
+- **Refinement is also the admission gate.** There is no second pass behind it. `/factory-refine` applies `factory` once the human says the card is ready.
+- **The spec brief lives in the issue body, not a comment.** A comment scrolls away. The body is what a reader sees first.
+- **Approval is the `## DECISIONS` table** at the bottom of the issue body: one row per flag, every answer starting as the literal word `UNANSWERED`. The human replaces each one. An agent never fills in an answer, and `/factory-build` refuses to run while a row still says `UNANSWERED`. This stands in for `spec.json` for now.
+- **Dragging to Ready for dev is the approval of the spec.** The build command trusts that drag plus the answered table.
+- **Every column names the command or the person that acts on it.** A column nobody acts on should not exist, with Needs retro the one deliberate exception.
 - **Bob's Draft Notes is private.** Agents do not read it.
 
 ## 5. Gotchas
@@ -64,21 +84,33 @@ Things that cost time once and should not cost it twice.
 - **Python in this environment is native Windows.** Git Bash paths like `/c/Users/...` fail; `scripts/board.sh` runs them through `cygpath -w` first.
 - **Bash heredocs with apostrophes have failed twice here.** Write the script to a file and run it, rather than fighting the quoting.
 - **Eraser's free AI credits are exhausted.** Use `manually_create_diagram` and `manually_update_diagram` only, which write the diagram verbatim and cost nothing. Never `create_diagram` or `update_diagram`.
+- **A canvas drawn by hand is invisible to the Eraser MCP.** `get_file` and `list_diagrams` on the Github Issues Flow workspace return an empty outline and no diagrams while the canvas plainly holds a flowchart. Ask for a screenshot rather than concluding the file is empty.
+- **Eraser work has been running from a home-directory session,** `C--Users-bobde/128b214a...`, not from a software-factory one. Searching this repo's transcripts for it finds nothing.
+- **Renaming a column is safe; editing its description is safe too, if you pass the option ids back.** The description lives on the Status option. Re-sending the option list **with each existing option's `id`** preserves every card and id; omitting the ids mints new ones and blanks every card. Both behaviours were seen on 2026-11-04. `scripts/board.sh ids` prints the current ids.
+- **`convertProjectV2DraftIssueItemToIssue` no longer accepts `projectId`.** It errors with `InputObject ... doesn't accept argument 'projectId'`. Pass only `itemId` and `repositoryId`. Fixed in `scripts/board.sh` on 2026-11-04.
+- **`/tmp` does not exist for the native Windows python here.** `gh` resolves that path through Git Bash and python does not, so a file written to `/tmp` and read back by python fails while `gh --body-file /tmp/...` on the same path succeeds. Use the session scratchpad directory for both.
+- **PowerShell here-string syntax silently poisons a Bash commit message.** `git commit -m @'...'@` in Bash produced a commit whose subject was a bare `@`. Use `git commit -F -` with a heredoc.
+- **GitHub serves issue templates from the default branch only.** A template sitting on a branch cannot be confirmed in the new-issue chooser until the PR merges.
 
 ## 6. Not done
 
-- `scripts/board.sh move` and `convert` have never run. Exercising them is the whole of piece one.
-- The deliverable label still needs a human confirmation. The intent is that dragging a card to Approved and running the command should be the entire interaction.
-- No scheduled GitHub Action yet. User-owned projects emit no `projects_v2_item` webhook, so when it is built it will be a cron that polls the board. Deliberately after the command is boring.
-- Pieces two through nine untouched: `/spec`, `/build`, the first CI gate, `/pr`, red-first replay, `agent-approval-check`, `docs/solutions/`, the weekly monitor.
+- `/factory-retro` does not exist. The Needs retro column is waiting on it, and so is `docs/solutions/`, which is still empty. This is the current piece.
+- The Eraser diagrams are stale. The two in `q67e2h4jiWh6V2sei87J` and the hand-drawn `P1CoupmhRdaNwXM1W7sl` canvas still show the old board. The hand-drawn one is invisible to the MCP and has to be redrawn by hand or replaced.
+- `docs/outline.md` still describes the ten-column design (Draft, Inbox, Spec, Needs you, Build, Verify, Merge gate, CI/CD, Operate, Done) and `/factory-sync-issues`. Left alone on purpose: it is the destination, not the current state. Reconcile it once the shape stops moving.
+- OpenSpec was raised as the thing that should write specs instead of the hand-rolled template in `/factory-create-spec`. Deferred until the workflow settles.
+- No worktree isolation. `/factory-build` branches in place, so uncommitted session work rides along and has to be kept out of the commit by hand.
+- No scheduled GitHub Action yet. User-owned projects emit no `projects_v2_item` webhook, so when it is built it will be a cron that polls the board.
+- No CI gate, no red-first replay, no `agent-approval-check`, no mutation testing, no second reviewer.
 - The `template/` directory does not exist yet. Nothing is installable into another repo.
 - Pilot repo for real product work is still unpicked, as is the budget ceiling.
-- `Bob's Draft Notes` is named for one person and should become `Drafts` before the factory is installed anywhere else.
+- `Bob's Draft Notes` is named for one person and should become `Drafts` before the factory is installed anywhere else. `docs/board-setup.md` already says `Drafts`.
 
 ## 7. Working with this user
 
 - **Answer in one sentence.** Yes or no when asked for yes or no, with the qualifier after it only when the plain answer would mislead.
 - **Do not build ahead.** Asked for one piece means one piece. The build order exists to stop scope creep, and offering extras works against it.
 - **Verify before claiming.** They check the board and the repo against what you said. An API read is not proof that the UI agrees.
+- **They pin down a design with long chains of yes-or-no questions.** Answer the question asked, in one word, and add a qualifier only when the bare answer would mislead. Do not volunteer the next step.
+- **They screenshot the board and ask whether it is right.** Read the screenshot against the repo, not against memory.
 - **Prose rules are in the user's global `CLAUDE.md`** and they apply to every markdown file here. No em dashes, no padded triads, no "leverage" or "robust" or "comprehensive".
 - **No AI attribution in commits** beyond a single `Assisted-by:` line. No banner, no emoji, no co-author trailer.

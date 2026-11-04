@@ -5,9 +5,27 @@
   "projectUrl": "https://github.com/users/BobDempsey/projects/4",
   "projectId": "PVT_kwHOAS5FRs4BqNyb",
   "statusFieldId": "PVTSSF_lAHOAS5FRs4BqNybzhol4i0",
-  "columns": ["Bob's Draft Notes", "Needs approval", "Approved", "Spec"],
-  "readColumn": "Approved",
-  "targetColumn": "Spec",
+  "columns": [
+    "Bob's Draft Notes",
+    "Needs refinement",
+    "Ready for spec",
+    "Needs spec approval",
+    "Ready for dev",
+    "In review",
+    "Merged",
+    "Needs retro"
+  ],
+  "readColumn": "Ready for spec",
+  "targetColumn": "In review",
   "privateColumn": "Bob's Draft Notes",
-  "note": "Option ids are not stored here on purpose: they change every time the column list is replaced. scripts/board.sh looks them up by name at call time."
+  "note": "Option ids are not stored here on purpose: they change every time the column list is replaced. scripts/board.sh looks them up by name at call time.",
+  "refineColumn": "Needs refinement",
+  "readyColumn": "Ready for spec",
+  "targetColumnNote": "/factory-build stops at In review. You merge, drag to Merged, then /factory-retro picks it up from Needs retro.",
+  "specColumn": "Ready for spec",
+  "approvalColumn": "Needs spec approval",
+  "buildColumn": "Ready for dev",
+  "reviewColumn": "In review",
+  "mergedColumn": "Merged",
+  "retroColumn": "Needs retro"
 }

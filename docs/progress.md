@@ -6,44 +6,53 @@ What exists, and what is next. One line per thing, newest state at the top.
 
 - Repo created, public: https://github.com/BobDempsey/software-factory
 - `factory` and `factory:triage` labels created
-- Project board created with eleven columns (Bob's Draft Notes, Triage, then the
-  nine stages), board layout saved:
+- Project board created, board layout saved:
   https://github.com/users/BobDempsey/projects/4
 - `docs/outline.md` holds the full design, moved off the desktop
 - `docs/board-setup.md` is the board install procedure
 - `AGENTS.md` under 40 lines, with an 11-byte `CLAUDE.md` importing it
-- Issue #1 filed into `factory:triage`, sitting in Inbox
+- Issue #1 filed into `factory:triage`
 - Six `deliverable:*` labels created
 - `docs/workflow.md` written: how the board is driven by dragging
 
 No gates, no CI, no spec tooling. That is on purpose.
 
-## Board trimmed to four columns (2026-11-04)
+## Board recut to eight columns (2026-11-04)
 
-Bob's Draft Notes, Needs approval, Approved, Spec. The downstream columns were
-removed until the pieces that use them exist. Renamed from Triage and Inbox,
-because the action at each is approve and approved, not triage and queueing.
+Bob's Draft Notes, Needs refinement, Ready for spec, Needs spec approval,
+Ready for dev, In review, Merged, Needs retro. Each column names the command
+that acts on it, and every column a human owns says so.
 
-## Issue template landed (2026-11-04)
+## The four commands (2026-11-04)
 
-`.github/ISSUE_TEMPLATE/factory-work.md` is the one template offered when filing an
-issue here. Seven labelled sections, bullets only, no labels applied on filing.
+- `/factory-refine` works a card in Needs refinement with the human, converts
+  it, applies `factory` plus one `deliverable:*` label, and leaves it in
+  Ready for spec. It is the admission gate.
+- `/factory-create-spec` writes `specs/<N>-<slug>/spec.md` and
+  `spec-brief.md`, puts the brief in the issue body under `# SPEC`, writes the
+  `## DECISIONS` table, and parks the card in Needs spec approval.
+- `/factory-build` refuses while any DECISIONS row says `UNANSWERED`, then
+  branches, implements, opens a PR, and moves the card to In review.
+- `/factory-retro` does not exist. Needs retro is waiting on it.
 
-## Piece one: issue sync, in progress
+`/factory-sync-issues` was deleted. Its checks moved into `/factory-refine`,
+because two commands reading the same column was the confusing part.
 
-**Built, not yet used.** `/factory-sync-issues` exists as a skill at
-`.claude/skills/factory-sync-issues/SKILL.md`, backed by `scripts/board.sh` and
-`.factory/board.json`. It is done when three real issues have gone through it.
+## First run end to end (2026-11-04)
 
-Issue #1 was closed when the board was cleared for a test run; its content is preserved.
+Issue #2, the factory-work issue template, went draft note -> refine -> spec ->
+decisions answered -> build -> PR #3 -> merged. `scripts/board.sh move` and
+`convert` were both exercised. `convert` needed a fix first: GitHub no longer
+accepts `projectId` on `convertProjectV2DraftIssueItemToIssue`.
 
-Scope: read the board, find `factory` issues in Inbox, confirm each is one unit of work, move the card to Spec. It does not write a spec, create a branch, or touch code.
-
-Done when: three real issues filed by hand land in Spec with the right sizing, or get flagged to split.
+Passing option ids back to `updateProjectV2Field` preserves card statuses.
+Omitting them mints new ids and blanks every card.
 
 ## Not started
 
-Pieces two through nine, in order: `/spec`, `/build`, the first CI gate, `/pr`, red-first replay, `agent-approval-check`, `docs/solutions/`, the weekly monitor. The order is in `docs/outline.md` and is a best guess rather than a commitment.
+`/factory-retro`, the first CI gate, red-first replay, `agent-approval-check`,
+`docs/solutions/`, worktree isolation, the weekly monitor, and `template/`. The
+order is in `docs/outline.md` and is a best guess rather than a commitment.
 
 On the shelf, decided but not built: parallel agents, mutation testing, fiberplane/drift, a second reviewer, the cost guard, the test-tamper hook, post-merge verification.
 

@@ -74,7 +74,7 @@ convert)
   gh api graphql -f query="
 mutation{
   convertProjectV2DraftIssueItemToIssue(input:{
-    itemId:\"$ITEM\", projectId:\"$PROJECT_ID\", repositoryId:\"$RID\"})
+    itemId:\"$ITEM\", repositoryId:\"$RID\"})
   { item { content { ... on Issue { number url } } } }}" \
     | python -c '
 import sys, json

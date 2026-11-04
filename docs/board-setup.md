@@ -1,6 +1,6 @@
 # Setting up the factory board
 
-The factory's control plane is a GitHub Projects board. You file an issue, agents move the card from column to column, and a single "Needs you" column answers the question "is anything waiting on me."
+The factory's control plane is a GitHub Projects board. You file a card, one command acts on each column, and the columns named for a human decision answer the question "is anything waiting on me."
 
 This page is the install procedure. It takes about five minutes, and part of it cannot be automated, which is noted where it applies.
 
@@ -73,20 +73,18 @@ Then replace the options in one call.
 gh api graphql -F fid=PVTSSF_YOUR_FIELD_ID -f query='
 mutation($fid:ID!){
  updateProjectV2Field(input:{fieldId:$fid, singleSelectOptions:[
-  {name:"Draft",      color:GRAY,   description:"My notes. Not admitted, agents never touch these."},
-  {name:"Inbox",      color:GRAY,   description:"Labeled factory, ready to admit"},
-  {name:"Spec",       color:PURPLE, description:"Writing spec.md and spec-brief.md"},
-  {name:"Needs you",  color:YELLOW, description:"Blocked on a human gate"},
-  {name:"Build",      color:BLUE,   description:"Implementing in a worktree"},
-  {name:"Verify",     color:BLUE,   description:"Checks running"},
-  {name:"Merge gate", color:ORANGE, description:"Awaiting merge approval"},
-  {name:"CI/CD",      color:BLUE,   description:"Build, preview, promotion"},
-  {name:"Operate",    color:PINK,   description:"Watching errors and logs"},
-  {name:"Done",       color:GREEN,  description:"Merged and closed"}]})
+  {name:"Drafts",              color:GRAY,   description:"My notes. Not admitted, agents never read these."},
+  {name:"Needs refinement",    color:YELLOW, description:"Rough note waiting on /factory-refine."},
+  {name:"Ready for spec",      color:BLUE,   description:"Refined and waiting on /factory-create-spec"},
+  {name:"Needs spec approval", color:ORANGE, description:"Brief is in the issue body under SPEC. Waiting on you."},
+  {name:"Ready for dev",       color:GREEN,  description:"Spec approved, decisions answered. Waiting on /factory-build."},
+  {name:"In review",           color:PURPLE, description:"PR open. Waiting on you to review and merge."},
+  {name:"Merged",              color:GREEN,  description:"PR merged, issue closed. The work is done."},
+  {name:"Needs retro",         color:PINK,   description:"Waiting on /factory-retro."}]})
  {projectV2Field{ ... on ProjectV2SingleSelectField { options { name } } }}}'
 ```
 
-The response lists the ten names back, each with its new ID. That is the confirmation, and those IDs are what `gh project item-edit` needs, so keep them.
+The response lists the eight names back, each with its new ID. That is the confirmation, and those IDs are what `gh project item-edit` needs, so keep them.
 
 ### Changing columns later
 
@@ -144,25 +142,23 @@ Dragging the card in the UI does the same thing, and is more reliable right afte
 
 | Column | Who moves the card in | What it means |
 | --- | --- | --- |
-| Draft | You | Your own notes and half-formed ideas. No `factory` label, and agents never read this column. Cards here can be board-only notes rather than issues. |
-| Inbox | You | Labeled `factory` and ready to admit. |
-| Spec | Agent | Writing `spec.md`, `spec-brief.md`, and `spec.json`. |
-| Needs you | Agent | A human gate. All three gates park the card here. |
-| Build | Agent | Implementing in a worktree. |
-| Verify | Agent | Checks running. |
-| Merge gate | Agent | Awaiting merge approval. |
-| CI/CD | Agent | Build, preview, production promotion. |
-| Operate | Agent | Watching errors and logs. |
-| Done | Merge | Merged and closed. |
+| Drafts | You | Your own notes and half-formed ideas. No `factory` label, and agents never read this column. Cards here can be board-only notes rather than issues. |
+| Needs refinement | You | Worth doing, not yet one unit of work. `/factory-refine` works it with you. |
+| Ready for spec | `/factory-refine` | A real issue, labeled, one unit of work. |
+| Needs spec approval | `/factory-create-spec` | Brief is in the issue body. You answer the DECISIONS rows. |
+| Ready for dev | You | Spec approved, every decision answered. |
+| In review | `/factory-build` | PR open. You review and merge. |
+| Merged | You | PR merged, issue closed. |
+| Needs retro | You | Waiting on `/factory-retro`, which does not exist yet. |
 
-Cards return to the single "Needs you" column at each of the three gates rather than having three separate columns, so there is one place that answers whether you are blocking anything.
+Every column a human owns says so, so one scan answers whether anything is blocking on you.
 
-## Draft versus Inbox
+## Drafts versus the rest
 
-These two columns exist to separate thinking from committing. Draft is where you write yourself notes, paste half-formed ideas, and leave things unfinished. Nothing in Draft is admitted, nothing in Draft has the `factory` label, and no agent reads it.
+Drafts is where you write yourself notes, paste half-formed ideas, and leave things unfinished. Nothing there is admitted, nothing has the `factory` label, and no agent reads it.
 
-Admission is a deliberate act with two parts: add the `factory` label, and move the card to Inbox. Until both happen, the item is invisible to the factory. A card in Draft does not even have to be an issue; a plain board note works, and it becomes an issue when it is worth one.
+Admission happens at refinement: `/factory-refine` applies `factory` after you have said the card is ready. Until then the item is a note, not work. A card in Drafts does not even have to be an issue; a plain board note works, and it becomes one when it is worth one.
 
 ## The board is not the record
 
-Moving a card is a convenience, not a fact in git. A card can be dragged by accident, and a stale card can sit over a spec that has since changed. Approval is the committed `spec.json` flag plus the `agent-approval-check` action. The board shows state; git holds the truth.
+Moving a card is a convenience, not a fact in git. A card can be dragged by accident, and a stale card can sit over a spec that has since changed. Approval is the `DECISIONS` table in the issue body, which `/factory-build` reads before it will run. The board shows state; git holds the truth.

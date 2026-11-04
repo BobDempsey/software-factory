@@ -1,12 +1,11 @@
 # Remaining tasks
 
-- [ ] Exercise /factory-sync-issues on three real issues
-- [ ] Drop the deliverable-label confirmation once the guess is reliable
-- [ ] Build /spec on Spec Kit
-- [ ] Build /build with a worktree per issue
-- [ ] Add the first CI gate: lint, typecheck, branch protection
-- [ ] Build /pr
-- [ ] Add red-first replay
-- [ ] Add agent-approval-check
-- [ ] Start docs/solutions/ learning capture
-- [ ] Add the weekly monitor
+- [ ] Build /factory-retro and fill docs/solutions/
+- [ ] Redraw the Eraser board diagrams
+- [ ] Replace the hand-rolled spec template with OpenSpec
+- [ ] Give /factory-build a worktree per issue
+- [ ] Add the first CI gate
+- [ ] Add red-first replay and agent-approval-check
+- [ ] Reconcile docs/outline.md with the eight-column board
+- [ ] Build template/ so the factory is installable
+- [ ] Pick the first real pilot repo

@@ -11,12 +11,14 @@ Once `.factory/checks/` exists, run those scripts.
 
 - Prose rules live in the user-level CLAUDE.md. Follow them for every markdown file here.
 - One issue is one unit of work. No `factory` label, no run.
-- Agents may propose work by filing real issues labeled `factory:triage`, which land
-  in the Triage column. The sync skill ignores that column. Only a human applies
-  `factory`, and only a human drags a card into Inbox.
+- Agents may propose work by filing real issues labeled `factory:triage`. Only a human
+  applies `factory`, and only a human drags a card onward. `/factory-refine` applies
+  `factory` after the human has said the card is ready, and never before.
 - Bob's Draft Notes is a private scratchpad. Never read it, never act on it.
 - Every admitted issue carries exactly one `deliverable:*` label naming what it
   produces, and repeats it as one bold DELIVERABLE line near the top of the body.
+- A specced issue carries its brief in the body under `# SPEC` and a `## DECISIONS`
+  table at the bottom. An agent never fills in an answer; `UNANSWERED` blocks the build.
 - An agent never writes a `Signed-off-by` trailer. Only a human can certify the DCO.
 - Agent-authored commits carry a single `Assisted-by:` line. No banner, no emoji.
 
@@ -34,7 +36,10 @@ That is the allow-listed surface, so nothing else should call `gh project` direc
 - `handoff.md` is the cold-start brief. Read it first.
 - `tasks.md` is the remaining phases, regenerated from the handoff.
 - `docs/workflow.md` is how the board is driven. Read it before touching the board.
-- `.claude/skills/factory-sync-issues/` is piece one, the intake command.
+- `.claude/skills/factory-refine/` is the intake command. It is the admission gate.
+- `.claude/skills/factory-create-spec/` writes the spec and the DECISIONS table.
+- `.claude/skills/factory-build/` implements an approved spec and stops at the PR.
+- `specs/<N>-<slug>/` holds the spec for issue N.
 - `docs/outline.md` is the full design. Read it before proposing structural changes.
 - `docs/progress.md` is what exists today. Read it first, and update it when a piece lands.
 - `docs/board-setup.md` is the board install procedure, including the one manual step.
@@ -44,16 +49,17 @@ That is the allow-listed surface, so nothing else should call `gh project` direc
 ## Build order
 
 One piece at a time. A piece is done when it has been used on a real issue, not
-when it is written. Current piece: issue sync. Nothing after it starts until
-that has run on real work. The order is in `docs/outline.md`; it is a best guess,
+when it is written. Refine, spec and build have each run once, on issue #2.
+Current piece: `/factory-retro`. Nothing after it starts until that has run on
+real work. The order is in `docs/outline.md`; it is a best guess,
 not a commitment.
 
 ## Standing chores
 
 - **Keep the README current and short.** It must always answer "how do I drive this
-  from GitHub issues" in a few lines: file a card in Draft, convert it to an issue,
-  add the `factory` label, drag it to Inbox. Check it whenever a piece lands, and
-  cut anything that has grown past that.
+  from GitHub issues" in a few lines: the drag, the four commands, and the two
+  places a human decides. Check it whenever a piece lands, and cut anything that
+  has grown past that.
 - **Update `docs/progress.md` when a piece lands.** It is what the next session reads first.
 
 ## Rules hygiene
