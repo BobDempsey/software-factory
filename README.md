@@ -8,6 +8,9 @@ Eraser: the pipeline, and the build order.
 
 ## Driving it from GitHub
 
+Run `/factory-start` at the top of a session. It reads the board, says where
+everything sits, and offers the first card waiting on refinement.
+
 1. Jot the idea as a card in **Bob's Draft Notes**. No issue, no labels.
 2. Drag it to **Needs refinement** and run `/factory-refine`. It sharpens the
    card with you, converts it to an issue, labels it, and moves it to

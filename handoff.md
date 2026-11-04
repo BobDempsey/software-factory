@@ -1,8 +1,10 @@
 # Handoff
 
-Last updated 2026-11-04. Revision trail: 2026-11-04 (created, bootstrap plus piece one), 2026-11-04 (board recut around refinement, piece 1.5 written), 2026-11-04 (the loop closed: refine, spec, build, merge, retro, Done).
+Last updated 2026-11-04. Revision trail: 2026-11-04 (created, bootstrap plus piece one), 2026-11-04 (board recut around refinement, piece 1.5 written), 2026-11-04 (the loop closed: refine, spec, build, merge, retro, Done), 2026-11-04 (/factory-start replaces the handoff as the session opener).
 
-Read this, then `docs/progress.md` for the one-line status of each piece. Everything else is detail you can fetch when you need it.
+**Run `/factory-start` instead of reading this, unless you have never seen this repo.** It reads the board in one call and offers the first card waiting. This document is the cold-start brief, and reading it costs real context.
+
+If you do need it: read this, then `docs/progress.md` for the one-line status of each piece. Everything else is detail you can fetch when you need it.
 
 **The basic loop is finished.** Draft note to Done runs on four commands, and it has run once on a real issue. What is left is hardening it: gates, isolation, and installing it somewhere other than here.
 
@@ -20,6 +22,7 @@ Local-only means agents run on the developer's machine. No hosted agent runners,
 | `docs/workflow.md` | How the board is driven day to day. Read before touching the board. |
 | `docs/board-setup.md` | Board install procedure, including the step that has no API. |
 | `docs/progress.md` | What exists today, one line per thing. |
+| `.claude/skills/factory-start/` | Opens a session on the board. Run this first. |
 | `.claude/skills/factory-refine/` | The intake command, and the admission gate. |
 | `.claude/skills/factory-create-spec/` | Writes the spec and the DECISIONS table. |
 | `.claude/skills/factory-build/` | Implements an approved spec, stops at the PR. |
@@ -44,7 +47,7 @@ https://app.eraser.io/workspace/OUpb5Em92ffztvfLtLQ1
 - Repo public at https://github.com/BobDempsey/software-factory, pushed, master.
 - Board at https://github.com/users/BobDempsey/projects/4, nine columns plus No Status: **Bob's Draft Notes, Needs refinement, Ready for spec, Needs spec approval, Ready for dev, In review, Merged, Needs retro, Done**, board layout saved.
 - Labels: `factory`, `factory:triage`, and six `deliverable:*` (skill, hook, workflow, doc, script, config).
-- Four commands exist as skills, and all four have run: `/factory-refine`, `/factory-create-spec`, `/factory-build`, `/factory-retro`.
+- Five commands exist as skills. Four have run: `/factory-refine`, `/factory-create-spec`, `/factory-build`, `/factory-retro`. `/factory-start` is written and untested.
 - `/factory-sync-issues` was deleted. Its checks live in `/factory-refine` now, because two commands reading the same column was the confusing part.
 - `scripts/board.sh` list, ids, move and convert have all run clean against the live board.
 - **The first run went end to end.** Issue #2, the factory-work issue template: draft note, refined, specced, decisions answered, built on branch `2-issue-template`, PR #3, merged, retro written to `docs/solutions/2-issue-template.md`. The card sits in Done.
@@ -76,6 +79,7 @@ The full ledger is in `docs/outline.md`. The ones that shape day-to-day work:
 - **Dragging to Ready for dev is the approval of the spec.** The build command trusts that drag plus the answered table.
 - **Every column names the command or the person that acts on it.** A column nobody acts on should not exist.
 - **The retro does not ask the human anything.** By the time a card reaches Needs retro they have moved on, and a question they cannot answer makes a worse retro than silence. The friction is on disk: amended commits, unverified PR sections, files the spec never named.
+- **A session opens on the board, not the handoff.** `/factory-start` is one `board.sh list` call and a question. The handoff grows every session and reading it at the top of every one was the cost that prompted this.
 - **The retro applies its own rule changes to `AGENTS.md`** rather than proposing them, and says in its report what it added so one edit reverts it. A proposal the human skims is the same as no rule.
 - **Bob's Draft Notes is private.** Agents do not read it.
 
@@ -112,6 +116,8 @@ The loop works. Nothing below blocks using it; each item makes it harder to get 
 - The `template/` directory does not exist yet. Nothing is installable into another repo.
 - Pilot repo for real product work is still unpicked, as is the budget ceiling.
 - `Bob's Draft Notes` is named for one person and should become `Drafts` before the factory is installed anywhere else. `docs/board-setup.md` already says `Drafts`.
+- `/factory-start` has never run. Next session uses it.
+- The board watcher is a draft card in Needs refinement, not a decision. The shape discussed: a Node poller on `scripts/board.sh list`, which is free, spawning `claude -p "/factory-<command>"` only when a card actually sits in a command's column. A GitHub Action was rejected because a cron would burn API tokens on every tick whether or not anything moved.
 - Nothing enforces the order. A card can be dragged straight from Needs refinement to Ready for dev and `/factory-build` will only catch it because the DECISIONS table is missing. A hook checking the column a card came from would close that.
 - The retro has run once, so its bar for adding an `AGENTS.md` rule is untested. Watch whether it inflates the file over the next few runs.
 

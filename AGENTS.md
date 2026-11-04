@@ -36,12 +36,15 @@ That is the allow-listed surface, so nothing else should call `gh project` direc
 
 ## Where things are
 
-- `handoff.md` is the cold-start brief. Read it first.
+- `handoff.md` is the cold-start brief, for a session that has never seen this repo.
+  The normal start is `/factory-start`, which reads the board instead.
 - `tasks.md` is the remaining phases, regenerated from the handoff.
 - `docs/workflow.md` is how the board is driven. Read it before touching the board.
+- `.claude/skills/factory-start/` opens a session on the board instead of the handoff.
 - `.claude/skills/factory-refine/` is the intake command. It is the admission gate.
 - `.claude/skills/factory-create-spec/` writes the spec and the DECISIONS table.
 - `.claude/skills/factory-build/` implements an approved spec and stops at the PR.
+- `.claude/skills/factory-retro/` closes out a finished run and writes `docs/solutions/`.
 - `specs/<N>-<slug>/` holds the spec for issue N.
 - `docs/outline.md` is the full design. Read it before proposing structural changes.
 - `docs/progress.md` is what exists today. Read it first, and update it when a piece lands.

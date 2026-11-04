@@ -9,6 +9,10 @@ Bob's Draft Notes -> Needs refinement -> Ready for spec -> Needs spec approval
 
 Every column names the command or the person that acts on it. A column nobody acts on should not exist.
 
+## Starting a session
+
+`/factory-start` is the first thing a session runs. It reads the board, prints one line per column that has cards, and asks whether to start on the first card in Needs refinement. It deliberately does not read `handoff.md`, `docs/outline.md` or `docs/progress.md`; the board already says what is in flight, and the handoff is for a session that has never seen this repo.
+
 ## The three ways work arrives
 
 **1. I think of something.** It goes in **Bob's Draft Notes** as a draft card. No issue, no labels, no ceremony. Half a sentence is fine. Agents never read this column, so nothing can act on it while it is still an idea.

@@ -23,9 +23,12 @@ Bob's Draft Notes, Needs refinement, Ready for spec, Needs spec approval,
 Ready for dev, In review, Merged, Needs retro, Done. Each column names the
 command that acts on it, and every column a human owns says so.
 
-## The four commands (2026-11-04)
+## The five commands (2026-11-04)
 
 
+- `/factory-start` reads the board, reports it in under six lines, and offers
+  the first card in Needs refinement. It replaces reading the handoff at the
+  top of a session.
 - `/factory-refine` works a card in Needs refinement with the human, converts
   it, applies `factory` plus one `deliverable:*` label, and leaves it in
   Ready for spec. It is the admission gate.
