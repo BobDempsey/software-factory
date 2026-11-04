@@ -66,6 +66,8 @@ Look for the entry whose type is `ProjectV2SingleSelectField`. Its id starts wit
 Then replace the options in one call.
 
 > **This overwrites the entire option list and mints new option IDs.** Every card whose status pointed at an old ID comes back blank, and the cards do not move back on their own. Harmless on a new project. On a board already in use, record every card's current column first and put them back afterwards. There is no partial update: adding one column means re-sending all of them.
+>
+> **Worse, putting them back through the API does not reliably work afterwards.** Observed twice on this board: setting a card to a named option ID returns success, and the GraphQL read confirms the right option, but the board renders the card one column off, or in No Status. A saved board view appears to cache the option list by position. Reloading does not fix it. **Dragging the card in the UI does.** So after replacing options, plan on dragging the cards back by hand, and do not trust an API read as proof of where a card appears.
 
 ```bash
 gh api graphql -F fid=PVTSSF_YOUR_FIELD_ID -f query='
@@ -136,7 +138,7 @@ gh project item-edit \
   --single-select-option-id YOUR_OPTION_ID
 ```
 
-Dragging the card in the UI does the same thing.
+Dragging the card in the UI does the same thing, and is more reliable right after the option list has been replaced. See the warning in step 3.
 
 ## What the columns mean
 
