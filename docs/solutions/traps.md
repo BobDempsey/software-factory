@@ -29,3 +29,7 @@ symptom is what you meet.
 - **CodeRabbit never approves, it comments.** Anything waiting on `review.state == 'approved'` waits forever. `factory-reviewed.yml` reacts to any review that is not `changes_requested` instead.
 - **GitHub serves issue templates from the default branch only.** A template sitting on a branch cannot be confirmed in the new-issue chooser until the PR merges.
 - **A clean CodeRabbit pass submits no review.** Symptom: the PR carries only CodeRabbit's summary comment saying "No actionable comments were generated", `gh pr view --json reviews` is empty, and `factory-reviewed.yml` never runs, so the card waits in @coderabbitai forever. First hit on #19.
+- **The auto mode classifier blocks running an installer fetched from a remote URL.** Symptom: `uv tool run --from git+https://...` is denied with no explanation. The human runs it, with output redirected to the session scratchpad so the agent can read the result. First hit on #16.
+- **`uv` from winget is not on the Git Bash PATH.** Symptom: `which uv` is empty while winget says it is installed. Call `~/AppData/Local/Microsoft/WinGet/Packages/astral-sh.uv_Microsoft.Winget.Source_8wekyb3d8bbwe/uv.exe` directly.
+- **A blob for `git update-index --cacheinfo` must be LF here.** Symptom: staging one hunk of a file that carries a human's uncommitted edits shows the whole file changed. `core.autocrlf` is true, so build the blob from `git show HEAD:<file>` and insert with `
+`.

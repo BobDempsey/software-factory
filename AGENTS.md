@@ -47,6 +47,9 @@ and report the criterion as unverified rather than passing.
 - Changing the board's columns dates every open card. Re-read the spec of anything in
   flight against the new `.factory/board.json`, because a spec written before the change
   is still internally consistent and the build will pass while shipping dead column names.
+- A spec that names a third-party CLI flag, or says what a vendored script does, checks it against
+  that version's `--help` or source first. #16 shipped a renamed flag and a false claim about a
+  script, and a CRITICAL DECISIONS row was answered on the false claim.
 
 ## The board
 
