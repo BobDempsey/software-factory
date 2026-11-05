@@ -84,6 +84,8 @@ Not built yet, on purpose. The commands run first because the rules are not sett
 | Done | `/factory-retro` | Finished, kept visible on purpose. |
 | No Status | Nobody, on purpose | GitHub's catch-all. Anything here is a mistake worth noticing. |
 
+A draft card goes to /factory-expand and nowhere else. Every other column needs a written-out card to act on, so a draft dragged straight to /factory-refine or later is one a command will hand back rather than work.
+
 ## Labels
 
 Two kinds, and both are visible on the card face.
