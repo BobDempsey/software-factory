@@ -37,6 +37,13 @@ there and no command reads that column. The cap is `reviewRoundCap` in
 Two workflows are still unwritten: the one that moves an approved card to Needs
 merging, and the round counter that routes the third failure to Stuck.
 
+## A reviewed-down card goes back (2026-11-05)
+
+`.github/workflows/factory-changes-requested.yml` sends a card back to Ready
+for dev when a review requests changes, from CodeRabbit or a human. Approvals
+and plain comments move nothing. `/factory-build` cannot yet resume the branch,
+so a returned card is picked up by hand until that card lands.
+
 ## The merge moves the card (2026-11-04)
 
 `.github/workflows/factory-merged.yml` sets a card's Status to Needs retro
