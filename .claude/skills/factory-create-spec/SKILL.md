@@ -142,10 +142,10 @@ Rules for the table:
 **RETURN TO:** <the column the card goes back to once they have done it>
 ```
 
-Replace them rather than stacking them: a card that comes back a second time has one ACTION line, the current one. Then move the card:
+Replace them rather than stacking them: a card that comes back a second time has one ACTION line, the current one. Then park the card, which moves it and gives it the `needs:answer` label:
 
 ```bash
-./scripts/board.sh move <ITEM_ID> "/factory-needs-you"
+./scripts/board.sh park <N> needs:answer
 ```
 
 For this card the two lines are always the same shape:

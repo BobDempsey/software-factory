@@ -5,6 +5,7 @@ on:
 
 permissions:
   pull-requests: write
+  issues: write
 
 jobs:
   move-card:
@@ -88,6 +89,15 @@ jobs:
           if [ "$NOW" != "$COLUMN" ]; then
             echo "wrote $COLUMN but the card reads $NOW" >&2
             exit 1
+          fi
+
+          # Parked at the cap: one needs:* label says the card wants help, not a merge.
+          if [ "$COLUMN" = "$PARK" ]; then
+            ISSUE=$(jq -r '[ .data.repository.pullRequest.closingIssuesReferences.nodes[].number ][0]' refs.json)
+            for L in $(gh issue view "$ISSUE" --json labels --jq '.labels[].name | select(startswith("needs:"))'); do
+              gh issue edit "$ISSUE" --remove-label "$L" > /dev/null
+            done
+            gh issue edit "$ISSUE" --add-label "needs:help" > /dev/null
           fi
 
           echo "moved card to $COLUMN after $ROUNDS changes-requested review(s)"
