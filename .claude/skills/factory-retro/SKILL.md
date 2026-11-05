@@ -142,6 +142,19 @@ Name the solution file, any rule you added, and how many review rounds the PR to
 stages write no log line of their own, so this is where the board's time in @coderabbitai is
 recorded.
 
+### 6c. Remove the card's worktree
+
+`/factory-build` left `.claude/worktrees/worktree-<N>` on disk for review rounds. The run is merged,
+so remove it and its local branch. `ExitWorktree` only removes a worktree made in its own session,
+so use git, from the main checkout:
+
+```bash
+git worktree remove .claude/worktrees/worktree-<N>
+git branch -D <N>-<slug>
+```
+
+A card built before worktrees has none. Say so in one line and carry on.
+
 ### 7. Move the card to Done
 
 ```bash

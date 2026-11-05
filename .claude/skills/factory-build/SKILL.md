@@ -52,17 +52,28 @@ Read `specs/<N>-<slug>/spec.md` end to end. Then `AGENTS.md` for the conventions
 
 The spec is the contract. Build what it says. If the spec is wrong or silent on something that matters, stop and say so rather than deciding it yourself; the point of the gate was that assumptions get answered before code exists.
 
-### 4. Branch
+### 4. Enter the card's worktree
 
-One branch per issue, named for the issue so the number is the thread through branch, PR, and spec directory:
+Build in a git worktree, never in the main checkout. The human may have uncommitted edits there, and
+anything staged in it would ride into the build.
+
+Call Claude Code's `EnterWorktree` with `name: worktree-<N>`. It creates
+`.claude/worktrees/worktree-<N>` on a new branch from `origin/master` and moves the session into
+it. If `.claude/worktrees/worktree-<N>` already exists, because a review sent the card back, call
+`EnterWorktree` with that `path` instead, and skip the rest of this step.
+
+`EnterWorktree` names its branch `worktree-worktree-<N>`. Rename it, so the issue number is the
+thread through branch, PR and spec directory, then bring the spec in. `/factory-create-spec` wrote
+it into the main checkout, where it is still untracked:
 
 ```bash
-git checkout master
-git pull
-git checkout -b <N>-<slug>
+git branch -m <N>-<slug>
+cp -r <main checkout>/specs/<N>-<slug> specs/
 ```
 
-Never build on `master`.
+Every command from here runs inside the worktree. Claude Code refuses `git -C` aimed back at the
+main checkout from a worktree session, and refuses a shell command that mentions git in a form it
+cannot check, so keep git commands plain and separate. Never build on `master`.
 
 ### 5. Implement
 
@@ -75,7 +86,7 @@ Touch only what the spec's scope allows. The spec's NOT-in-scope list is binding
 Run what the spec's verification section names. There is no test suite in this repo yet, so for most cards that is reading the diff plus the one live check the spec describes.
 
 ```bash
-git diff master
+git diff origin/master
 ```
 
 Check every acceptance criterion in the spec by name, and say which ones you confirmed and how. A criterion you could not check is reported as unchecked, never as passing.
@@ -114,6 +125,8 @@ Name the branch, the PR and the file count. Never touch another command's line.
 ```
 
 **Verify the move by reading the board again.** Replacing the board's Status options in the past has left API writes reporting success while the card rendered in the wrong column. If the read-back disagrees, say so plainly and tell the human to drag the card, rather than retrying.
+
+Then leave the worktree with `ExitWorktree` and `action: keep`. The worktree stays on disk for review rounds, and the session goes back to the main checkout.
 
 CodeRabbit takes the card from here: an approval sends it to /factory-needs-you, a request for changes sends it back to /factory-build, and the third failed round sends it to /factory-needs-you. This command stops at @coderabbitai.
 

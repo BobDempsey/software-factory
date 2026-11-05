@@ -2,3 +2,4 @@
 Thumbs.db
 .claude/settings.local.json
 .factory/snapshot.json
+.claude/worktrees/
