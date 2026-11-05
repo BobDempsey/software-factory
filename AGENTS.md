@@ -20,6 +20,9 @@ and report the criterion as unverified rather than passing.
   applies `factory`, and only a human drags a card onward. `/factory-refine` applies
   `factory` after the human has said the card is ready, and never before.
 - Bob's Draft Notes is a private scratchpad. Never read it, never act on it.
+- `/factory-expand` is the only column a draft card may be dragged into. One line is not enough
+  for refinement, so a draft in any other column skipped the step that writes it out. A command
+  that finds one names it and asks for it to be dragged back; it never moves it itself.
 - Needs you is the one human column. No command reads it, acts on it, or offers it.
   A command that needs a decision parks the card there with a bold ACTION line saying
   what it wants and a RETURN TO line naming the column it goes back to, then stops.
@@ -53,6 +56,9 @@ That is the allow-listed surface, so nothing else should call `gh project` direc
 - The board is the record of what is in flight. `/factory-run` is how a session starts.
 - `docs/workflow.md` is how the board is driven. Read it before touching the board.
 - `.claude/skills/factory-run/` drives the whole board on a loop. The usual entry point.
+- `.claude/skills/factory-watch/` is the same loop, but it scans before it schedules: an empty board
+  ends the command instead of starting twelve passes of nothing. Use it to start a working session;
+  use `/factory-run` when you want the loop up regardless.
 - `.claude/skills/factory-expand/` turns a one-line note into a paragraph.
 - `.claude/skills/factory-refine/` is the intake command. It is the admission gate.
 - `.claude/skills/factory-create-spec/` writes the spec and the DECISIONS table.

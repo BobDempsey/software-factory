@@ -16,6 +16,8 @@ You touch two columns. Everything between them moves itself.
 2. Write a one-line card in **Bob's Draft Notes** and drag it to **/factory-expand**.
 3. Run `/factory-run`. It loops over the board, taking one card a pass through
    expand, refine, spec, build and retro, and reports each pass in a few lines.
+   `/factory-watch` is the same loop, except it reads the board first and stops
+   right there if nothing is waiting. Use it to start a working session.
 4. Watch **Needs you**. Every card there opens with a bold `ACTION:` saying what
    it wants and a `RETURN TO:` naming where it goes next. Do the thing, drag it
    there, and the loop carries on.
