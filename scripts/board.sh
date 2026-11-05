@@ -7,7 +7,7 @@
 #   board.sh move <ITEM_ID> <COL>   set a card's Status
 #   board.sh convert <ITEM_ID>      turn a draft card into a real issue
 #   board.sh check                  verify board.json matches the live board
-#   board.sh add <N>                put issue N on the board, No Status
+#   board.sh add <N>                put issue N on the board, in the private drafts column
 #   board.sh file <TITLE> <BODYFILE> file a factory:triage issue and add it
 #   board.sh park <N> <needs:LABEL> move issue N's card to the needs-you column, one needs:* label
 #   board.sh help                   print this usage and exit 0
@@ -27,6 +27,7 @@ PROJECT_ID=$(jqc "['projectId']")
 FIELD_ID=$(jqc "['statusFieldId']")
 REPO=$(jqc "['repo']")
 NEEDS_COL=$(jqc "['needsYouColumn']")
+DRAFTS_COL=$(jqc "['privateColumn']")
 
 # A needs:* label says what a card in the needs-you column wants. It is only true while the card
 # sits there, so every move elsewhere strips it, and park replaces rather than stacks.
@@ -130,7 +131,13 @@ add)
   N="${2:?issue number}"
   URL=$(gh issue view "$N" --repo "$REPO" --json url -q .url)
   ITEM=$(gh project item-add "$NUMBER" --owner "$OWNER" --url "$URL" --format json -q .id)
-  echo "added #$N as $ITEM, No Status"
+  # A card with no Status sits outside every column, where nobody sees it. Land it in the
+  # human's drafts column instead, and read it back: an API write reporting success is not proof.
+  "$0" move "$ITEM" "$DRAFTS_COL" >/dev/null
+  NOW=$(gh api graphql -f query="query{node(id:\"$ITEM\"){... on ProjectV2Item{fieldValueByName(name:\"Status\"){... on ProjectV2ItemFieldSingleSelectValue{name}}}}}" \
+    -q '.data.node.fieldValueByName.name')
+  [ "$NOW" = "$DRAFTS_COL" ] || { echo "added #$N as $ITEM but it reads '$NOW', not $DRAFTS_COL" >&2; exit 1; }
+  echo "added #$N as $ITEM, in $DRAFTS_COL"
   ;;
 
 file)
