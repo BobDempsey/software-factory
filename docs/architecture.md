@@ -16,12 +16,12 @@ flowchart TD
     classDef quiet fill:#d8d8d8,stroke:#888,stroke-width:1px,color:#000
 
     DRAFT["Bob's Draft Notes<br/>one line is enough"]
-    EXPAND["Needs expanding<br/>/factory-expand"]
-    REFINE["Needs refinement<br/>/factory-refine"]
-    SPEC["Ready for spec<br/>/factory-create-spec"]
-    DEV["Ready for dev<br/>/factory-build"]
-    REVIEW["In review (PR)<br/>CodeRabbit"]
-    RETRO["/factory-retro<br/>/factory-retro"]
+    EXPAND["/factory-expand<br/>read the note against the repo"]
+    REFINE["/factory-refine<br/>one unit of work"]
+    SPEC["/factory-create-spec<br/>spec + DECISIONS"]
+    DEV["/factory-build<br/>branch, commit, PR"]
+    REVIEW["@coderabbitai<br/>reviews the PR"]
+    RETRO["/factory-retro<br/>what the run taught us"]
     YOU["Needs you<br/>ACTION + RETURN TO"]
     DONE["Done<br/>the archive"]
 
@@ -51,11 +51,11 @@ flowchart TD
 | `/factory-expand` | agent | A one-liner read against the repo and written out |
 | `/factory-refine` | agent | A real issue, labeled, one unit of work |
 | `/factory-create-spec` | agent | `specs/<N>-<slug>/`, the brief in the issue body, the DECISIONS table, then a park in Needs you |
-| You, in Needs you | you | Every DECISIONS row answered, and the card dragged to Ready for dev |
+| You, in Needs you | you | Every DECISIONS row answered, and the card dragged to /factory-build |
 | `/factory-build` | agent | A branch, a commit, a PR that closes the issue |
 | CodeRabbit, on the PR | agent | An approval, or a request for changes |
 | `factory-reviewed.yml` | GitHub | A finished PR parked in Needs you, with an ACTION line naming the review state |
-| `factory-changes-requested.yml` | GitHub | A reviewed-down card sent back to Ready for dev, or parked in Needs you on the third round |
+| `factory-changes-requested.yml` | GitHub | A reviewed-down card sent back to /factory-build, or parked in Needs you on the third round |
 | You, in Needs you | you | A merge |
 | `factory-merged.yml` | GitHub | The card moved to /factory-retro, no tokens spent |
 | `/factory-retro` | agent | `docs/solutions/<N>-<slug>.md`, a rule in `AGENTS.md` if the run earned one, and Done |

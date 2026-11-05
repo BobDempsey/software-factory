@@ -13,7 +13,7 @@ Eraser: the pipeline, and the build order.
 You touch two columns. Everything between them moves itself.
 
 1. Open the [board](https://github.com/users/BobDempsey/projects/4).
-2. Write a one-line card in **Bob's Draft Notes** and drag it to **Needs expanding**.
+2. Write a one-line card in **Bob's Draft Notes** and drag it to **/factory-expand**.
 3. Run `/factory-run`. It loops over the board, taking one card a pass through
    expand, refine, spec, build and retro, and reports each pass in a few lines.
 4. Watch **Needs you**. Every card there opens with a bold `ACTION:` saying what

@@ -3,8 +3,8 @@
 The board runs itself. You start work in one column and unblock it in another, and every column between them is driven by a command, a workflow, or CodeRabbit.
 
 ```
-Bob's Draft Notes -> Needs expanding -> Needs refinement -> Ready for spec
-  -> Ready for dev -> In review (PR) -> /factory-retro -> Done
+Bob's Draft Notes -> /factory-expand -> /factory-refine -> /factory-create-spec
+  -> /factory-build -> @coderabbitai -> /factory-retro -> Done
 
   Needs you catches anything that wants a decision, from any column, and sends it back
 ```
@@ -23,21 +23,21 @@ Neither reads `docs/outline.md` or `docs/progress.md` to get going. The board al
 
 **2. An agent or an outside source proposes something.** A performance scan, an error triage run, a scheduled dependency check. These file **real issues** labeled `factory:triage`. They wait for my yes or no.
 
-**3. Something is already a well-formed issue.** It goes straight to Ready for spec.
+**3. Something is already a well-formed issue.** It goes straight to /factory-create-spec.
 
 ## The run, column by column
 
-**Bob's Draft Notes.** Mine, private, never read by an agent. One line is enough. I drag it to Needs expanding to start it.
+**Bob's Draft Notes.** Mine, private, never read by an agent. One line is enough. I drag it to /factory-expand to start it.
 
-**Needs expanding.** `/factory-expand` reads the one-liner against the repo, writes out what exists today and what the note wants changed, and moves it on. It never asks me anything.
+**/factory-expand.** `/factory-expand` reads the one-liner against the repo, writes out what exists today and what the note wants changed, and moves it on. It never asks me anything.
 
-**Needs refinement.** `/factory-refine` sharpens it into one unit of work, converts it to an issue, applies `factory` plus one `deliverable:*` label. Anything it cannot decide parks in Needs you.
+**/factory-refine.** `/factory-refine` sharpens it into one unit of work, converts it to an issue, applies `factory` plus one `deliverable:*` label. Anything it cannot decide parks in Needs you.
 
-**Ready for spec.** `/factory-create-spec` writes `specs/<N>-<slug>/spec.md` and the brief, puts the brief in the issue body under `# SPEC`, writes the `## DECISIONS` table, then parks the card in Needs you.
+**/factory-create-spec.** `/factory-create-spec` writes `specs/<N>-<slug>/spec.md` and the brief, puts the brief in the issue body under `# SPEC`, writes the `## DECISIONS` table, then parks the card in Needs you.
 
-**Ready for dev.** `/factory-build` refuses to start while any DECISIONS row says `UNANSWERED`. Otherwise it branches, implements the spec and nothing else, commits, and opens a PR.
+**/factory-build.** `/factory-build` refuses to start while any DECISIONS row says `UNANSWERED`. Otherwise it branches, implements the spec and nothing else, commits, and opens a PR.
 
-**In review (PR).** CodeRabbit's. Any review that is not a request for changes parks the card in Needs you to merge, with an ACTION line naming the state it finished in and how many comments it left. A request for changes sends the card back to Ready for dev, and the third failed round parks it in Needs you.
+**@coderabbitai.** CodeRabbit's. Any review that is not a request for changes parks the card in Needs you to merge, with an ACTION line naming the state it finished in and how many comments it left. A request for changes sends the card back to /factory-build, and the third failed round parks it in Needs you.
 
 Finishing is not the same as approving. CodeRabbit has never submitted an approval on this repo; it comments. Waiting for an approval left three cards stranded before the workflow was widened.
 
@@ -47,7 +47,7 @@ Finishing is not the same as approving. CodeRabbit has never submitted an approv
 
 ```markdown
 **ACTION:** Answer the DECISIONS rows at the bottom of this issue.
-**RETURN TO:** Ready for dev
+**RETURN TO:** /factory-build
 ```
 
 I do the thing, drag the card to whatever RETURN TO names, and the loop picks it up again.
@@ -56,7 +56,7 @@ I do the thing, drag the card to whatever RETURN TO names, and the loop picks it
 
 ## The gestures that are mine
 
-- Writing a line in Bob's Draft Notes and dragging it to Needs expanding.
+- Writing a line in Bob's Draft Notes and dragging it to /factory-expand.
 - Everything in Needs you: answering DECISIONS rows, merging a PR, deciding what to do with a card that failed three review rounds.
 
 That is the whole list. Every other move on this board is made by a command, a workflow, or CodeRabbit.
@@ -75,11 +75,11 @@ Not built yet, on purpose. The commands run first because the rules are not sett
 | --- | --- | --- |
 | Bob's Draft Notes | Me | A scratchpad. One line is enough. Never read by agents. |
 | Needs you | Any command, any workflow | The only column I watch. Each card names its ACTION and its RETURN TO. |
-| Needs expanding | Me, by dragging | A one-liner waiting to be written out. |
-| Needs refinement | `/factory-expand` | Written out, waiting to be sharpened into one unit of work. |
-| Ready for spec | `/factory-refine` | A real issue, labeled. Waiting on the spec. |
-| Ready for dev | Me, out of Needs you | Spec approved, every decision answered. |
-| In review (PR) | `/factory-build` | PR open, CodeRabbit reviewing. |
+| /factory-expand | Me, by dragging | A one-liner waiting to be written out. |
+| /factory-refine | `/factory-expand` | Written out, waiting to be sharpened into one unit of work. |
+| /factory-create-spec | `/factory-refine` | A real issue, labeled. Waiting on the spec. |
+| /factory-build | Me, out of Needs you | Spec approved, every decision answered. |
+| @coderabbitai | `/factory-build` | PR open, CodeRabbit reviewing. |
 | /factory-retro | `factory-merged.yml` | Merged. Waiting on the lesson. |
 | Done | `/factory-retro` | Finished, kept visible on purpose. |
 | No Status | Nobody, on purpose | GitHub's catch-all. Anything here is a mistake worth noticing. |

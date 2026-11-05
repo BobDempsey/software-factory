@@ -38,14 +38,14 @@ One call. Do not read `docs/outline.md` or `docs/progress.md` unless a card need
 
 | Column | What to do | Autonomy |
 | --- | --- | --- |
-| Ready for spec | Run the `factory-create-spec` skill | **Alone.** Flags become DECISIONS rows, so nothing is decided without the human. |
+| /factory-create-spec | Run the `factory-create-spec` skill | **Alone.** Flags become DECISIONS rows, so nothing is decided without the human. |
 | /factory-retro | Run the `factory-retro` skill | **Alone.** It asks nothing by design. |
-| Ready for dev | Run the `factory-build` skill | **Ask first.** It writes code and opens a PR. |
-| Needs refinement | Run the `factory-refine` skill | **Ask first.** Refinement is a conversation. |
+| /factory-build | Run the `factory-build` skill | **Ask first.** It writes code and opens a PR. |
+| /factory-refine | Run the `factory-refine` skill | **Ask first.** Refinement is a conversation. |
 
 One card per pass, from the first column in that list that has one. Finishing one card beats starting four.
 
-**Never touch** Needs you, In review (PR), Bob's Draft Notes or Done. Those wait on the human or on CodeRabbit, and a pass that nudges them is a pass that lies about what is blocking.
+**Never touch** Needs you, @coderabbitai, Bob's Draft Notes or Done. Those wait on the human or on CodeRabbit, and a pass that nudges them is a pass that lies about what is blocking.
 
 Invoke the other commands through the Skill tool rather than reimplementing them. Their rules bind here unchanged: no DECISIONS row is ever answered by an agent, no card is moved into a human column except by the command that owns that transition.
 
@@ -88,7 +88,7 @@ They may:
 - **One card per pass.** The loop is patient; you do not need to be.
 - **Ask before building or refining.** Those two write code or need a conversation. Spec and retro run alone.
 - **Never answer a DECISIONS row yourself.** Transcribing the human's words is not answering.
-- **Never act on a human column.** Needs you is theirs. In review (PR) is CodeRabbit's.
+- **Never act on a human column.** Needs you is theirs. @coderabbitai is CodeRabbit's.
 - **Needs you is untouchable.** No pass reads it, acts on it, or offers it.
 - **Bob's Draft Notes is private.** Do not read it, do not list its contents, do not count it.
 - **Three lines a pass.** A loop that narrates itself is worse than no loop, because the human stops reading it.

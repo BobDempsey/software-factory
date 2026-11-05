@@ -1,6 +1,6 @@
 ---
 name: factory-refine
-description: Refine a rough card into something ready for development. Reads the Software Factory board, works through every card sitting in Needs refinement with the human, and moves each finished one to Ready for spec. Use when the user says to refine the board, work the refinement column, sharpen a draft, or get a card ready for spec.
+description: Refine a rough card into something ready for development. Reads the Software Factory board, works through every card sitting in /factory-refine with the human, and moves each finished one to /factory-create-spec. Use when the user says to refine the board, work the refinement column, sharpen a draft, or get a card ready for spec.
 allowed-tools: Bash(gh:*), Bash(./scripts/board.sh:*), Read, Write, Edit
 ---
 
@@ -8,7 +8,7 @@ allowed-tools: Bash(gh:*), Bash(./scripts/board.sh:*), Read, Write, Edit
 
 Turn a rough note into one unit of work the human is willing to approve.
 
-This runs after the human drags a card into Needs refinement. It does not write specs, create branches, or touch code. It works on cards in **Needs refinement**, one at a time, with the human in the loop, and moves each finished card to **Ready for spec**.
+This runs after the human drags a card into /factory-refine. It does not write specs, create branches, or touch code. It works on cards in **/factory-refine**, one at a time, with the human in the loop, and moves each finished card to **/factory-create-spec**.
 
 ## Board constants
 
@@ -28,7 +28,7 @@ It holds the project number, owner, project id, and the Status field id. Column 
 ./scripts/board.sh list
 ```
 
-Work only on cards whose status is **Needs refinement**. If that column is empty, say so in one line and stop.
+Work only on cards whose status is **/factory-refine**. If that column is empty, say so in one line and stop.
 
 ### 2. Take one card at a time
 
@@ -96,12 +96,12 @@ gh issue edit <N> --add-label factory --remove-label "factory:triage"
 
 Refinement is the admission gate. There is no second pass behind it.
 
-### 5. Move it to Ready for spec
+### 5. Move it to /factory-create-spec
 
 Only when the human has said the card is ready:
 
 ```bash
-./scripts/board.sh move <ITEM_ID> "Ready for spec"
+./scripts/board.sh move <ITEM_ID> "/factory-create-spec"
 ```
 
 **Verify the move by reading the board again.** Replacing the board's Status options in the past has left API writes reporting success while the card rendered in the wrong column. If the read-back disagrees, say so plainly and tell the human to drag the card, rather than retrying.
@@ -111,7 +111,7 @@ Only when the human has said the card is ready:
 One line per card, in this shape:
 
 ```
-#14 Add a margin to the sync button  ->  Ready for spec   [deliverable:config]
+#14 Add a margin to the sync button  ->  /factory-create-spec   [deliverable:config]
 #15 Rework the whole intake flow     ->  held, suggest splitting into 3
 ```
 
@@ -119,9 +119,9 @@ Then one line of totals. Nothing else. No preamble, no restating these instructi
 
 ## Rules
 
-- **The human decides when a card is ready.** You never move a card to Ready for spec on your own judgement.
+- **The human decides when a card is ready.** You never move a card to /factory-create-spec on your own judgement.
 - **Bob's Draft Notes is private.** Do not read it, do not list its contents, do not act on anything in it.
 - **Never invent scope.** Refining sharpens what the card says. It does not add features, acceptance criteria, or constraints the human did not give you.
 - **Ask rather than guess** on the deliverable label and on anything that might need splitting.
 - **The board is not the record.** It shows state. If a card and the issue disagree, the issue wins, and say so.
-- **Do not go further than Ready for spec.** Writing the spec is `/factory-create-spec`, which does not exist yet.
+- **Do not go further than /factory-create-spec.** Writing the spec is `/factory-create-spec`, which does not exist yet.

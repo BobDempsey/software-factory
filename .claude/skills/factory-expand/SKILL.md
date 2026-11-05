@@ -1,6 +1,6 @@
 ---
 name: factory-expand
-description: Turn a one-line note into a paragraph. Reads the Software Factory board, takes a card sitting in Needs expanding, researches what it is asking for, writes it out in a few lines, and moves it to Needs refinement. No conversation. Use when the user says to expand a note, flesh out a card, or work the Needs expanding column.
+description: Turn a one-line note into a paragraph. Reads the Software Factory board, takes a card sitting in /factory-expand, researches what it is asking for, writes it out in a few lines, and moves it to /factory-refine. No conversation. Use when the user says to expand a note, flesh out a card, or work the /factory-expand column.
 allowed-tools: Bash(gh:*), Bash(./scripts/board.sh:*), Read, Glob, Grep
 ---
 
@@ -8,7 +8,7 @@ allowed-tools: Bash(gh:*), Bash(./scripts/board.sh:*), Read, Glob, Grep
 
 Turn "change the watcher to 10 minutes" into something a refinement conversation can start from.
 
-This runs before `/factory-refine`. It does not ask questions, convert the card, apply labels, or decide scope. It works on cards in **Needs expanding**, one at a time.
+This runs before `/factory-refine`. It does not ask questions, convert the card, apply labels, or decide scope. It works on cards in **/factory-expand**, one at a time.
 
 ## Board constants
 
@@ -26,7 +26,7 @@ cat .factory/board.json
 ./scripts/board.sh list
 ```
 
-Take the first card in **Needs expanding**. If that column is empty, say so in one line and stop.
+Take the first card in **/factory-expand**. If that column is empty, say so in one line and stop.
 
 ### 2. Work out what the note is actually asking for
 
@@ -54,10 +54,10 @@ Keep the original one-liner as the first line, verbatim, under **Note:**. It is 
 
 If the note is ambiguous in a way the repo cannot settle, write the ambiguity down as a line starting `OPEN:`. Refinement will ask it.
 
-### 4. Move it to Needs refinement
+### 4. Move it to /factory-refine
 
 ```bash
-./scripts/board.sh move <ITEM_ID> "Needs refinement"
+./scripts/board.sh move <ITEM_ID> "/factory-refine"
 ```
 
 **Verify the move by reading the board again.** Replacing the board's Status options has left API writes reporting success while the card rendered in the wrong column. If the read-back disagrees, say so plainly and tell the human to drag the card, rather than retrying.
@@ -67,7 +67,7 @@ If the note is ambiguous in a way the repo cannot settle, write the ambiguity do
 One line per card:
 
 ```
-Change the watcher to 10 minutes  ->  Needs refinement   scripts/watch.mjs, 1 OPEN
+Change the watcher to 10 minutes  ->  /factory-refine   scripts/watch.mjs, 1 OPEN
 ```
 
 Then one line of totals. Nothing else.

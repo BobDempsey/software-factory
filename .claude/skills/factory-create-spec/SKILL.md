@@ -1,6 +1,6 @@
 ---
 name: factory-create-spec
-description: Write the spec for an admitted card. Reads the Software Factory board, takes a card sitting in Ready for spec, writes spec.md and spec-brief.md for it, posts the brief on the issue for approval, and moves the card to Ready for dev once the human approves. Use when the user says to spec a card, write the spec, run the spec step, or work the Ready for spec column.
+description: Write the spec for an admitted card. Reads the Software Factory board, takes a card sitting in /factory-create-spec, writes spec.md and spec-brief.md for it, posts the brief on the issue for approval, and moves the card to /factory-build once the human approves. Use when the user says to spec a card, write the spec, run the spec step, or work the /factory-create-spec column.
 allowed-tools: Bash(gh:*), Bash(./scripts/board.sh:*), Read, Write, Edit
 ---
 
@@ -8,7 +8,7 @@ allowed-tools: Bash(gh:*), Bash(./scripts/board.sh:*), Read, Write, Edit
 
 Turn an admitted issue into a spec a builder can implement against, and a brief a human can approve in two minutes.
 
-This runs after `/factory-refine`. It does not create branches, write code, or open PRs. It works on cards in **Ready for spec**, one at a time, and parks each specced card in **Needs you** with an ACTION line, and the human sends it on to **Ready for dev** once every DECISIONS row is answered.
+This runs after `/factory-refine`. It does not create branches, write code, or open PRs. It works on cards in **/factory-create-spec**, one at a time, and parks each specced card in **Needs you** with an ACTION line, and the human sends it on to **/factory-build** once every DECISIONS row is answered.
 
 ## Board constants
 
@@ -28,7 +28,7 @@ It holds the project number, owner, project id, and the Status field id. Column 
 ./scripts/board.sh list
 ```
 
-Work only on cards whose status is **Ready for spec**. If that column is empty, say so in one line and stop.
+Work only on cards whose status is **/factory-create-spec**. If that column is empty, say so in one line and stop.
 
 ### 2. Take one card at a time
 
@@ -127,17 +127,17 @@ For this card the two lines are always the same shape:
 
 ```markdown
 **ACTION:** Answer the DECISIONS rows at the bottom of this issue. Each carries a recommendation, so `y` accepts them all.
-**RETURN TO:** Ready for dev
+**RETURN TO:** /factory-build
 ```
 
 Stop there and ask the human to approve, and to answer the DECISIONS rows. Every row has to say something other than `UNANSWERED` before the card can move again.
 
-### 6. Move it to Ready for dev
+### 6. Move it to /factory-build
 
 Only after the human has approved and every DECISIONS row is answered:
 
 ```bash
-./scripts/board.sh move <ITEM_ID> "Ready for dev"
+./scripts/board.sh move <ITEM_ID> "/factory-build"
 ```
 
 **Verify the move by reading the board again.** Replacing the board's Status options in the past has left API writes reporting success while the card rendered in the wrong column. If the read-back disagrees, say so plainly and tell the human to drag the card, rather than retrying.
@@ -147,7 +147,7 @@ Only after the human has approved and every DECISIONS row is answered:
 One line per card, in this shape:
 
 ```
-#14 Add one human-scannable issue template  ->  Ready for dev   specs/14-issue-template/
+#14 Add one human-scannable issue template  ->  /factory-build   specs/14-issue-template/
 #15 Rework the whole intake flow            ->  Needs you, 3 OPEN flags
 ```
 
@@ -155,10 +155,10 @@ Then one line of totals. Nothing else. No preamble, no restating these instructi
 
 ## Rules
 
-- **The human approves the spec.** You never move a card to Ready for dev on your own judgement.
+- **The human approves the spec.** You never move a card to /factory-build on your own judgement.
 - **Never resolve your own assumptions.** They go in the DECISIONS table as `UNANSWERED`, and you wait.
 - **Never fill in a DECISIONS answer yourself.** Transcribe the human's words, or leave the row alone.
 - **Never invent scope.** The spec implements what the issue says, plus whatever `docs/` requires of it. Nothing else.
 - **Bob's Draft Notes is private.** Do not read it, do not list its contents, do not act on anything in it.
 - **The board is not the record.** It shows state. If a card and the issue disagree, the issue wins, and say so.
-- **Do not go further than Ready for dev.** Building is a separate piece, and it does not exist yet.
+- **Do not go further than /factory-build.** Building is a separate piece, and it does not exist yet.

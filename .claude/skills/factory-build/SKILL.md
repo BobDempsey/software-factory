@@ -1,6 +1,6 @@
 ---
 name: factory-build
-description: Build an approved card. Reads the Software Factory board, takes a card sitting in Ready for dev, confirms it has an approved spec, implements it on a branch, and opens a PR. Use when the user says to build a card, start dev, implement the spec, or work the Ready for dev column.
+description: Build an approved card. Reads the Software Factory board, takes a card sitting in /factory-build, confirms it has an approved spec, implements it on a branch, and opens a PR. Use when the user says to build a card, start dev, implement the spec, or work the /factory-build column.
 allowed-tools: Bash(gh:*), Bash(git:*), Bash(./scripts/board.sh:*), Read, Write, Edit, Glob, Grep
 ---
 
@@ -8,7 +8,7 @@ allowed-tools: Bash(gh:*), Bash(git:*), Bash(./scripts/board.sh:*), Read, Write,
 
 Implement one approved spec, and stop at the PR.
 
-This runs after `/factory-create-spec`. It works on cards in **Ready for dev**, one at a time. It opens the PR, moves the card to **In review (PR)**, and stops. It never merges or deploys.
+This runs after `/factory-create-spec`. It works on cards in **/factory-build**, one at a time. It opens the PR, moves the card to **@coderabbitai**, and stops. It never merges or deploys.
 
 ## Board constants
 
@@ -28,7 +28,7 @@ It holds the project number, owner, project id, and the Status field id. Column 
 ./scripts/board.sh list
 ```
 
-Take the first card whose status is **Ready for dev**. If that column is empty, say so in one line and stop.
+Take the first card whose status is **/factory-build**. If that column is empty, say so in one line and stop.
 
 ### 2. Confirm it has a spec
 
@@ -94,22 +94,22 @@ gh pr create --title "<one sentence>" --body-file <file>
 
 The body says `Closes #<N>`, links the spec directory, and lists each acceptance criterion with how it was checked. Anything you could not verify goes in its own section, named.
 
-### 9. Move the card to In review (PR)
+### 9. Move the card to @coderabbitai
 
 ```bash
-./scripts/board.sh move <ITEM_ID> "In review (PR)"
+./scripts/board.sh move <ITEM_ID> "@coderabbitai"
 ```
 
 **Verify the move by reading the board again.** Replacing the board's Status options in the past has left API writes reporting success while the card rendered in the wrong column. If the read-back disagrees, say so plainly and tell the human to drag the card, rather than retrying.
 
-CodeRabbit takes the card from here: an approval sends it to Needs you, a request for changes sends it back to Ready for dev, and the third failed round sends it to Needs you. This command stops at In review (PR).
+CodeRabbit takes the card from here: an approval sends it to Needs you, a request for changes sends it back to /factory-build, and the third failed round sends it to Needs you. This command stops at @coderabbitai.
 
 ### 10. Report
 
 One line per card, in this shape:
 
 ```
-#14 Add one human-scannable issue template  ->  In review (PR), PR #21   4/4 criteria checked
+#14 Add one human-scannable issue template  ->  @coderabbitai, PR #21   4/4 criteria checked
 #15 Rework the whole intake flow            ->  blocked, 2 DECISIONS rows UNANSWERED
 ```
 
