@@ -75,12 +75,12 @@ mutation($fid:ID!){
  updateProjectV2Field(input:{fieldId:$fid, singleSelectOptions:[
   {name:"Drafts",           color:GRAY,   description:"My notes. One line is enough. Never read by agents."},
   {name:"Needs you",        color:YELLOW, description:"The only column you watch. Each card names its ACTION and its RETURN TO."},
-  {name:"Needs expanding",  color:BLUE,   description:"Agent. A one-liner becomes a paragraph. No conversation."},
-  {name:"Needs refinement", color:BLUE,   description:"Agent. Sharpened into one unit of work, converted, labeled."},
-  {name:"Ready for spec",   color:BLUE,   description:"Agent. The spec and the DECISIONS table get written."},
-  {name:"Ready for dev",    color:BLUE,   description:"Agent. The spec gets implemented and a PR opened."},
-  {name:"In review (PR)",   color:BLUE,   description:"Agent. CodeRabbit reviews and moves the card on."},
-  {name:"Needs retro",      color:BLUE,   description:"Agent. The lesson gets written and the card moves to Done."},
+  {name:"Needs expanding",  color:BLUE,   description:"A one-liner becomes a paragraph. No conversation."},
+  {name:"Needs refinement", color:BLUE,   description:"Sharpened into one unit of work, converted, labeled."},
+  {name:"Ready for spec",   color:BLUE,   description:"The spec and the DECISIONS table get written."},
+  {name:"Ready for dev",    color:BLUE,   description:"The spec gets implemented and a PR opened."},
+  {name:"In review (PR)",   color:BLUE,   description:"CodeRabbit reviews and moves the card on."},
+  {name:"/factory-retro",   color:BLUE,   description:"Runs /factory-retro: the lesson gets written and the card moves to Done."},
   {name:"Done",             color:GRAY,   description:"Finished. The archive, kept visible on purpose."}]})
  {projectV2Field{ ... on ProjectV2SingleSelectField { options { name } } }}}'
 ```
@@ -150,7 +150,7 @@ Dragging the card in the UI does the same thing, and is more reliable right afte
 | Ready for spec | `/factory-refine` | A real issue, labeled. Waiting on the spec. |
 | Ready for dev | You, out of Needs you | Spec approved, every decision answered. |
 | In review (PR) | `/factory-build` | PR open, CodeRabbit reviewing. |
-| Needs retro | `factory-merged.yml` | Merged. Waiting on the lesson. |
+| /factory-retro | `factory-merged.yml` | Merged. Waiting on the lesson. |
 | Done | `/factory-retro` | Finished, kept visible on purpose. |
 
 One yellow column answers whether anything is blocking on you.
