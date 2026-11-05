@@ -17,6 +17,24 @@ What exists, and what is next. One line per thing, newest state at the top.
 
 No gates, no CI, no spec tooling. That is on purpose.
 
+## One human column (2026-11-05)
+
+Needs spec approval, Needs merging and Stuck collapsed into a single yellow
+**Needs you**. Everything between the draft notes and Done is blue and moves
+itself. A card parked in Needs you carries a bold ACTION line and a RETURN TO
+line at the top of its body, so the column answers what it wants without being
+opened twice.
+
+**Needs expanding** is new at the front, with `/factory-expand`: a one-liner is
+read against the repo and written out, no conversation.
+
+`factory-approved.yml` parks a card the moment CodeRabbit approves.
+`factory-changes-requested.yml` counts changes-requested reviews and parks the
+card once it hits `reviewRoundCap`, rather than looping.
+
+`/factory-run` drives the whole thing on a loop. The previous layout is saved
+in `.factory/board-layout-2026-11-05.json` and tagged `board-v1`.
+
 ## Board recut to eight columns (2026-11-04)
 
 Bob's Draft Notes, Needs refinement, Ready for spec, Needs spec approval,
