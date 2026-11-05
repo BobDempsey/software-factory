@@ -20,6 +20,8 @@ and report the criterion as unverified rather than passing.
   applies `factory`, and only a human drags a card onward. `/factory-refine` applies
   `factory` after the human has said the card is ready, and never before.
 - Bob's Draft Notes is a private scratchpad. Never read it, never act on it.
+- Stuck is untouchable. A card is there because three review rounds failed. No command
+  reads it, acts on it, or offers it, and only a human decides what happens next.
 - Every admitted issue carries exactly one `deliverable:*` label naming what it
   produces, and repeats it as one bold DELIVERABLE line near the top of the body.
 - A specced issue carries its brief in the body under `# SPEC` and a `## DECISIONS`

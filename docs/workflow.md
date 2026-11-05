@@ -4,7 +4,9 @@ The board is meant to be driven by dragging. A card moves one column at a time, 
 
 ```
 Bob's Draft Notes -> Needs refinement -> Ready for spec -> Needs spec approval
-  -> Ready for dev -> In review (PR) -> Needs retro -> Done
+  -> Ready for dev -> In review (PR) -> Needs merging -> Needs retro -> Done
+
+  In review (PR) -> Ready for dev on changes requested, and -> Stuck on the third round
 ```
 
 Every column names the command or the person that acts on it, and the board colours them: yellow is you, blue is an agent, gray is nothing pending. A column nobody acts on should not exist, which is why Merged was removed.
@@ -31,7 +33,11 @@ Every column names the command or the person that acts on it, and the board colo
 
 **Ready for dev.** `/factory-build` refuses to start while any row says `UNANSWERED`. Otherwise it branches `<N>-<slug>` off master, implements what the spec says and nothing else, checks each acceptance criterion by name, commits with a single `Assisted-by:` trailer, opens a PR that closes the issue, and moves the card to In review (PR).
 
-**In review (PR).** Mine. I read the diff and merge, which closes the issue. The `factory-merged` workflow then moves the card to Needs retro on its own.
+**In review (PR).** CodeRabbit's. It reviews every PR and moves the card itself: an approval sends it to Needs merging, a request for changes sends it back to Ready for dev. Nothing is waiting on me while a card sits here.
+
+**Needs merging.** Mine. CodeRabbit is happy, so I read the diff and merge, and `factory-merged` moves the card to Needs retro on its own.
+
+**Stuck.** Mine, and red on the board. A card that went back to Ready for dev three times and still failed review stops here. No command reads this column. I fix it by hand, send it back for a fresh spec, or close it.
 
 **Needs retro.** `/factory-retro` rebuilds the run from the issue, spec, PR and commits, writes `docs/solutions/<N>-<slug>.md`, adds a rule to `AGENTS.md` if the run earned one, and moves the card to Done. It asks me nothing, because by this point I have moved on.
 
@@ -43,7 +49,8 @@ Every column names the command or the person that acts on it, and the board colo
 - Saying a card is ready, at the end of refinement.
 - Answering the DECISIONS rows.
 - Dragging to Ready for dev. That drag is the approval of the spec.
-- Reviewing and merging the PR. The merge moves the card for me.
+- Reviewing and merging the PR, once CodeRabbit has put it in Needs merging.
+- Deciding what happens to anything in Stuck.
 
 An agent never does any of these.
 
@@ -64,7 +71,9 @@ Not built yet, on purpose. The commands run first because the rules are not sett
 | Ready for spec | `/factory-refine` | A real issue, labeled, one unit of work. Waiting on `/factory-create-spec`. |
 | Needs spec approval | `/factory-create-spec` | Brief is in the issue body. Waiting on me to answer the DECISIONS rows. |
 | Ready for dev | Me, by dragging | Spec approved, every decision answered. Waiting on `/factory-build`. |
-| In review (PR) | `/factory-build` | PR open. Waiting on me to review and merge. The merge moves the card. |
+| In review (PR) | `/factory-build` | PR open, CodeRabbit reviewing. It moves the card on by itself. |
+| Needs merging | CodeRabbit | Approved. Waiting on me to read the diff and merge. |
+| Stuck | `factory-changes-requested` | Three review rounds failed. No command touches it. |
 | Merged | Me, by dragging | PR merged, issue closed. The work is done. |
 | Needs retro | Me, by dragging | Waiting on `/factory-retro`. |
 | Done | `/factory-retro` | Retro written. The archive of finished runs, kept visible on purpose. |
