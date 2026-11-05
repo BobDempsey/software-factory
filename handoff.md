@@ -104,6 +104,8 @@ Things that cost time once and should not cost it twice.
 - **`GITHUB_TOKEN` cannot write to a user-owned project.** Symptom: the project mutation returns a permissions error however generous the workflow's `permissions:` block looks, because the project lives on the account rather than the repo. A classic PAT with `repo` and `project` scopes, stored as the repo secret `FACTORY_PROJECT_TOKEN`, is the fix. Fine-grained tokens do not cover user-owned projects cleanly.
 - **CodeRabbit leaves a `COMMENTED` review, not an approval, by default.** Symptom: a PR it is clearly happy with carries no approval, so anything waiting on `review.state == 'approved'` waits forever. Configure it or treat "no changes requested" as the pass.
 - **`gh pr view --json mergeable` lags a push by seconds.** It returns the pre-push answer right after a conflict resolution. Re-read before concluding the fix failed.
+- **A heredoc at column 0 inside a YAML `run: |` block makes the workflow unparseable.** Symptom: `gh run list` shows a failure named after the workflow's file path instead of its `name:`, with no jobs and `log not found`. Indent every heredoc line to the block's indent; YAML strips the common prefix so bash still sees the terminator at column 0.
+- **CodeRabbit never approves, it comments.** Anything waiting on `review.state == 'approved'` waits forever. `factory-reviewed.yml` reacts to any review that is not `changes_requested` instead.
 - **GitHub serves issue templates from the default branch only.** A template sitting on a branch cannot be confirmed in the new-issue chooser until the PR merges.
 
 ## 6. Not done
