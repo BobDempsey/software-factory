@@ -41,9 +41,10 @@ and report the criterion as unverified rather than passing.
   what it produced. It never edits another command's line.
 - An agent never writes a `Signed-off-by` trailer. Only a human can certify the DCO.
 - Agent-authored commits carry a single `Assisted-by:` line. No banner, no emoji.
+- `/factory-build` works in a git worktree, `.claude/worktrees/worktree-<N>`, made with Claude
+  Code's `EnterWorktree`, never in the main checkout. `/factory-retro` removes it after the merge.
 - Before committing on a factory branch, check `git diff --cached --stat` against the
-  spec's file table. `/factory-build` branches in place, so anything staged earlier in
-  the session rides along.
+  spec's file table, from inside the worktree.
 - Do not edit shared docs on master while a factory branch is open against the same
   sections. `architecture.md`, `workflow.md` and `progress.md` are the usual casualties,
   and the conflict shows up as a PR that was clean turning DIRTY.

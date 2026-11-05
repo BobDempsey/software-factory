@@ -17,6 +17,15 @@ What exists, and what is next. One line per thing, newest state at the top.
 
 No gates, no CI, no spec tooling. That is on purpose.
 
+## Builds run in their own worktree (2026-11-05)
+
+`/factory-build` now enters `.claude/worktrees/worktree-<N>` with Claude Code's
+`EnterWorktree`, renames the branch to `<N>-<slug>`, copies the spec in from the
+main checkout, and leaves with `ExitWorktree keep` once the card is in
+@coderabbitai. The human's uncommitted edits in the main checkout no longer ride
+into a build. `/factory-retro` removes the worktree and the local branch after
+the merge. #18 was the first card built this way.
+
 ## The spec step writes a plan and tasks (2026-11-05)
 
 `/factory-create-spec` now writes `plan.md` and `tasks.md` from Spec Kit's
