@@ -159,6 +159,10 @@ Drafts is where you write yourself notes, paste half-formed ideas, and leave thi
 
 Admission happens at refinement: `/factory-refine` applies `factory` after you have said the card is ready. Until then the item is a note, not work. A card in Drafts does not even have to be an issue; a plain board note works, and it becomes one when it is worth one.
 
+## The token the workflows need
+
+`.github/workflows/factory-merged.yml` writes to the project, and `GITHUB_TOKEN` cannot: a user-owned project is outside the repo's scope. Create a PAT with the `project` and `repo` scopes and store it as the repo secret `FACTORY_PROJECT_TOKEN`. Nothing else in the factory needs it.
+
 ## The board is not the record
 
 Moving a card is a convenience, not a fact in git. A card can be dragged by accident, and a stale card can sit over a spec that has since changed. Approval is the `DECISIONS` table in the issue body, which `/factory-build` reads before it will run. The board shows state; git holds the truth.
