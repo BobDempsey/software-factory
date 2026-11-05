@@ -31,6 +31,9 @@ and report the criterion as unverified rather than passing.
 - Before committing on a factory branch, check `git diff --cached --stat` against the
   spec's file table. `/factory-build` branches in place, so anything staged earlier in
   the session rides along.
+- Do not edit shared docs on master while a factory branch is open against the same
+  sections. `architecture.md`, `workflow.md` and `progress.md` are the usual casualties,
+  and the conflict shows up as a PR that was clean turning DIRTY.
 
 ## The board
 
