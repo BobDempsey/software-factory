@@ -13,7 +13,7 @@
     "Ready for spec",
     "Ready for dev",
     "In review (PR)",
-    "Needs retro",
+    "/factory-retro",
     "Done"
   ],
   "note": "Option ids are not stored here on purpose: they change every time the column list is replaced. scripts/board.sh looks them up by name at call time.",
@@ -25,7 +25,7 @@
   "specColumn": "Ready for spec",
   "buildColumn": "Ready for dev",
   "reviewColumn": "In review (PR)",
-  "retroColumn": "Needs retro",
+  "retroColumn": "/factory-retro",
   "doneColumn": "Done",
   "reviewRoundCap": 3
 }

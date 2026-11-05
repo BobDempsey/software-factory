@@ -84,7 +84,7 @@ Say so in one line, name the first column that does have a card waiting on a com
 | Needs refinement | `/factory-refine` |
 | Ready for spec | `/factory-create-spec` |
 | Ready for dev | `/factory-build` |
-| Needs retro | `/factory-retro` |
+| /factory-retro | `/factory-retro` |
 
 Columns waiting on a human (Needs you) are reported, never acted on. So is In review (PR), which waits on CodeRabbit.
 

@@ -4,7 +4,7 @@ The board runs itself. You start work in one column and unblock it in another, a
 
 ```
 Bob's Draft Notes -> Needs expanding -> Needs refinement -> Ready for spec
-  -> Ready for dev -> In review (PR) -> Needs retro -> Done
+  -> Ready for dev -> In review (PR) -> /factory-retro -> Done
 
   Needs you catches anything that wants a decision, from any column, and sends it back
 ```
@@ -39,7 +39,7 @@ One column is yellow and it is the only one you watch. Everything blue moves its
 
 Finishing is not the same as approving. CodeRabbit has never submitted an approval on this repo; it comments. Waiting for an approval left three cards stranded before the workflow was widened.
 
-**Needs retro.** `/factory-retro` rebuilds the run from the issue, spec, PR and commits, writes `docs/solutions/<N>-<slug>.md`, adds a rule to `AGENTS.md` if the run earned one, and moves the card to Done.
+**/factory-retro.** `/factory-retro` rebuilds the run from the issue, spec, PR and commits, writes `docs/solutions/<N>-<slug>.md`, adds a rule to `AGENTS.md` if the run earned one, and moves the card to Done.
 
 **Needs you.** Mine, and the only column I watch. Every card here opens with two lines:
 
@@ -78,7 +78,7 @@ Not built yet, on purpose. The commands run first because the rules are not sett
 | Ready for spec | `/factory-refine` | A real issue, labeled. Waiting on the spec. |
 | Ready for dev | Me, out of Needs you | Spec approved, every decision answered. |
 | In review (PR) | `/factory-build` | PR open, CodeRabbit reviewing. |
-| Needs retro | `factory-merged.yml` | Merged. Waiting on the lesson. |
+| /factory-retro | `factory-merged.yml` | Merged. Waiting on the lesson. |
 | Done | `/factory-retro` | Finished, kept visible on purpose. |
 | No Status | Nobody, on purpose | GitHub's catch-all. Anything here is a mistake worth noticing. |
 

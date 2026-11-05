@@ -60,7 +60,7 @@ A card whose title changed but whose column did not is not a move. Do not report
 One line per change, nothing for cards that sat still:
 
 ```
-#5 Move a card to Needs retro   Ready for dev -> In review (PR)    by the agent
+#5 Move a card to /factory-retro   Ready for dev -> In review (PR)    by the agent
 #7 Add a cost guard             Needs you -> Ready for dev    by you
 #9 Rework the triage labels     new in Needs refinement
 ```
@@ -78,7 +78,7 @@ A card that **moved into an agent column** is work the human has just handed ove
 | Needs refinement | `/factory-refine` |
 | Ready for spec | `/factory-create-spec` |
 | Ready for dev | `/factory-build` |
-| Needs retro | `/factory-retro` |
+| /factory-retro | `/factory-retro` |
 
 Name the first such card and ask, one question, nothing else:
 

@@ -21,7 +21,7 @@ flowchart TD
     SPEC["Ready for spec<br/>/factory-create-spec"]
     DEV["Ready for dev<br/>/factory-build"]
     REVIEW["In review (PR)<br/>CodeRabbit"]
-    RETRO["Needs retro<br/>/factory-retro"]
+    RETRO["/factory-retro<br/>/factory-retro"]
     YOU["Needs you<br/>ACTION + RETURN TO"]
     DONE["Done<br/>the archive"]
 
@@ -57,7 +57,7 @@ flowchart TD
 | `factory-reviewed.yml` | GitHub | A finished PR parked in Needs you, with an ACTION line naming the review state |
 | `factory-changes-requested.yml` | GitHub | A reviewed-down card sent back to Ready for dev, or parked in Needs you on the third round |
 | You, in Needs you | you | A merge |
-| `factory-merged.yml` | GitHub | The card moved to Needs retro, no tokens spent |
+| `factory-merged.yml` | GitHub | The card moved to /factory-retro, no tokens spent |
 | `/factory-retro` | agent | `docs/solutions/<N>-<slug>.md`, a rule in `AGENTS.md` if the run earned one, and Done |
 
 `/factory-run` drives all of it on a loop. `/factory-refresh` runs at any point. It diffs the board against the last snapshot and offers to run whatever command the move handed over.

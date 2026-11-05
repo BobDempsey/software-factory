@@ -39,7 +39,7 @@ One call. Do not read `handoff.md`, `docs/outline.md`, or `docs/progress.md`, an
 | Column | What to do | Autonomy |
 | --- | --- | --- |
 | Ready for spec | Run the `factory-create-spec` skill | **Alone.** Flags become DECISIONS rows, so nothing is decided without the human. |
-| Needs retro | Run the `factory-retro` skill | **Alone.** It asks nothing by design. |
+| /factory-retro | Run the `factory-retro` skill | **Alone.** It asks nothing by design. |
 | Ready for dev | Run the `factory-build` skill | **Ask first.** It writes code and opens a PR. |
 | Needs refinement | Run the `factory-refine` skill | **Ask first.** Refinement is a conversation. |
 

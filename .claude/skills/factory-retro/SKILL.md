@@ -1,6 +1,6 @@
 ---
 name: factory-retro
-description: Review a finished run and write down what it taught us. Reads the Software Factory board, takes a card sitting in Needs retro, reconstructs the run from the issue, spec, PR and commits, writes a file to docs/solutions/, and applies any rule change it earns. Use when the user says to run the retro, do the after-action review, close out a card, or work the Needs retro column.
+description: Review a finished run and write down what it taught us. Reads the Software Factory board, takes a card sitting in /factory-retro, reconstructs the run from the issue, spec, PR and commits, writes a file to docs/solutions/, and applies any rule change it earns. Use when the user says to run the retro, do the after-action review, close out a card, or work the /factory-retro column.
 allowed-tools: Bash(gh:*), Bash(git:*), Bash(./scripts/board.sh:*), Read, Write, Edit, Glob, Grep
 ---
 
@@ -8,7 +8,7 @@ allowed-tools: Bash(gh:*), Bash(git:*), Bash(./scripts/board.sh:*), Read, Write,
 
 Close out one finished run by writing down what it taught us, so the next run does not pay for the same lesson twice.
 
-This is the last step. It does not touch product code, reopen the issue, or change the merged result. It works on cards in **Needs retro**, one at a time, and moves each one to **Done**.
+This is the last step. It does not touch product code, reopen the issue, or change the merged result. It works on cards in **/factory-retro**, one at a time, and moves each one to **Done**.
 
 ## Board constants
 
@@ -28,7 +28,7 @@ It holds the project number, owner, project id, and the Status field id. Column 
 ./scripts/board.sh list
 ```
 
-Take the first card whose status is **Needs retro**. If that column is empty, say so in one line and stop.
+Take the first card whose status is **/factory-retro**. If that column is empty, say so in one line and stop.
 
 ### 2. Confirm the run actually finished
 
