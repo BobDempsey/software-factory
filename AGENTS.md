@@ -7,6 +7,11 @@ A local-only agentic software factory. This repo is its own first pilot project.
 There is no build and no test suite yet. Verification is reading the diff.
 Once `.factory/checks/` exists, run those scripts.
 
+Some changes only take effect once they are on the default branch: issue templates,
+and any workflow triggered by an event GitHub raises against the base branch. Those
+cannot be checked before merge. Say so in the PR body, name the merge as the test,
+and report the criterion as unverified rather than passing.
+
 ## Conventions
 
 - Prose rules live in the user-level CLAUDE.md. Follow them for every markdown file here.
