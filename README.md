@@ -12,19 +12,17 @@ Eraser: the pipeline, and the build order.
 
 You touch two columns. Everything between them moves itself.
 
-1. Write a line in **Bob's Draft Notes** and drag it to **Needs expanding**.
-2. Run `/factory-run`. It loops over the board, taking one card a pass through
+1. Open the [board](https://github.com/users/BobDempsey/projects/4).
+2. Write a one-line card in **Bob's Draft Notes** and drag it to **Needs expanding**.
+3. Run `/factory-run`. It loops over the board, taking one card a pass through
    expand, refine, spec, build and retro, and reports each pass in a few lines.
-3. Watch **Needs you**. Every card there opens with a bold `ACTION:` saying what
+4. Watch **Needs you**. Every card there opens with a bold `ACTION:` saying what
    it wants and a `RETURN TO:` naming where it goes next. Do the thing, drag it
    there, and the loop carries on.
+5. Repeat step 4 until the card reaches **Done**.
 
-That is the whole interaction. `/factory-start` does a single card instead of
-looping, and `node scripts/watch.mjs` in a second terminal prints when a card
-moves.
-
-Run `node scripts/watch.mjs` in a second terminal and it tells you when a card
-moves and what to run next.
+`/factory-start` does a single card instead of looping, if you would rather drive
+it by hand.
 
 Agents propose work by filing issues labeled `factory:triage`. Only a human
 applies `factory`.
