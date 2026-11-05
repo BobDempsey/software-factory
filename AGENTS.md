@@ -35,6 +35,9 @@ and report the criterion as unverified rather than passing.
 - Do not edit shared docs on master while a factory branch is open against the same
   sections. `architecture.md`, `workflow.md` and `progress.md` are the usual casualties,
   and the conflict shows up as a PR that was clean turning DIRTY.
+- Changing the board's columns dates every open card. Re-read the spec of anything in
+  flight against the new `.factory/board.json`, because a spec written before the change
+  is still internally consistent and the build will pass while shipping dead column names.
 
 ## The board
 
