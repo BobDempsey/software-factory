@@ -1,5 +1,7 @@
 # software-factory
 
+**[How it works, in one diagram](docs/architecture.md)**
+
 A local-only agentic software factory, built one piece at a time, with this repo
 as its own first pilot project.
 
