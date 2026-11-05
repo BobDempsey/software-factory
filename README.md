@@ -21,9 +21,6 @@ You touch two columns. Everything between them moves itself.
    there, and the loop carries on.
 5. Repeat step 4 until the card reaches **Done**.
 
-`/factory-start` does a single card instead of looping, if you would rather drive
-it by hand.
-
 Agents propose work by filing issues labeled `factory:triage`. Only a human
 applies `factory`.
 

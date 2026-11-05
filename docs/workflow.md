@@ -13,7 +13,7 @@ One column is yellow and it is the only one you watch. Everything blue moves its
 
 ## Starting a session
 
-`/factory-run` is the first thing a session runs. It loops over the board, takes one card a pass, and reports in a few lines. `/factory-start` does a single card instead, for driving it by hand.
+`/factory-run` is the first thing a session runs, and the only one it needs. It loops over the board, takes one card a pass, and reports in a few lines. `/factory-refresh` is there for the middle of a session, when you have been dragging cards and want to know what changed.
 
 Neither reads `docs/outline.md` or `docs/progress.md` to get going. The board already says what is in flight, and a session that loads the history before it loads the work has spent its context on the wrong thing.
 

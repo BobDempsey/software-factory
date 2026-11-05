@@ -38,6 +38,13 @@ with three dead column keys within hours of the Needs you redesign, and issue
 The entry below, recording it landing, stays. `specs/4-board-watcher/` and
 `docs/solutions/4-board-watcher.md` are untouched.
 
+## /factory-start removed (2026-11-05)
+
+`/factory-run` loops over the board and does everything `/factory-start` did
+one card at a time. Two entry points answering the same question is the drift
+the command-named columns exist to catch, and `/factory-start` never ran once
+`/factory-run` existed.
+
 ## handoff.md and tasks.md retired (2026-11-05)
 
 The board is the record of what is in flight, `docs/solutions/` of what runs

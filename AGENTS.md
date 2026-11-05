@@ -53,7 +53,6 @@ That is the allow-listed surface, so nothing else should call `gh project` direc
 - The board is the record of what is in flight. `/factory-run` is how a session starts.
 - `docs/workflow.md` is how the board is driven. Read it before touching the board.
 - `.claude/skills/factory-run/` drives the whole board on a loop. The usual entry point.
-- `.claude/skills/factory-start/` opens a session on one card instead of looping.
 - `.claude/skills/factory-expand/` turns a one-line note into a paragraph.
 - `.claude/skills/factory-refine/` is the intake command. It is the admission gate.
 - `.claude/skills/factory-create-spec/` writes the spec and the DECISIONS table.

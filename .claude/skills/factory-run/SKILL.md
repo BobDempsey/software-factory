@@ -8,7 +8,7 @@ allowed-tools: Bash(gh:*), Bash(git:*), Bash(./scripts/board.sh:*), Bash(node:*)
 
 Drive the whole board on a loop, and stay talkable while you do it.
 
-`/factory-start` does one card and stops. `/factory-refresh` reports what moved. This keeps going: every pass, take whatever the board hands over, do it, say what happened in a few lines, and sleep until the next pass.
+`/factory-refresh` reports what moved and stops. This keeps going: every pass, take whatever the board hands over, do it, say what happened in a few lines, and sleep until the next pass.
 
 The human can type at any moment. Their message arrives mid-pass and takes priority over whatever the pass was doing.
 
