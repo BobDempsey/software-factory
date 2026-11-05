@@ -32,6 +32,10 @@ Top to bottom:
 1. **The ACTION block**, and only while the card is parked. Two bold lines, nothing above them. The
    command that parks the card writes them; the command that takes the card away deletes them.
    A card that comes back a second time has one ACTION line, the current one, not a stack.
+   While parked, the card also carries exactly one `needs:*` label saying what it wants:
+   `needs:merge` (the PR is ready to merge), `needs:answer` (DECISIONS rows or a question) or
+   `needs:help` (review rounds ran out, or a command is blocked). `scripts/board.sh park` applies
+   it, and `scripts/board.sh move` removes it when the card leaves the column.
 2. **One sentence** saying what the card is. The human's own words wherever they still fit.
 3. **The DELIVERABLE and the spec link**, on one line. The link is the whole of the detail: the
    brief, the file table, the acceptance criteria, the rollback.

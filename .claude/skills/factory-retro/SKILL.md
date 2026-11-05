@@ -32,7 +32,7 @@ Take the first card whose status is **/factory-retro**. If that column is empty,
 
 ### 2. Confirm the run actually finished
 
-If any of these fails, say which one and stop. A retro on an unfinished run writes fiction.
+If any of these fails, say which one and park the card as step 7b says. A retro on an unfinished run writes fiction.
 
 - The issue is closed.
 - Its PR is merged.
@@ -151,6 +151,25 @@ recorded.
 **Verify the move by reading the board again.** Replacing the board's Status options in the past has left API writes reporting success while the card rendered in the wrong column. If the read-back disagrees, say so plainly and tell the human to drag the card, rather than retrying.
 
 Done is the end of the line. Archiving a Done card is the human's gesture, not yours, and there is no hurry: a card sitting in Done costs nothing until the column gets noisy.
+
+### 7b. Blocked: park it in /factory-needs-you
+
+When a check above fails, or something you cannot clear stops the run (a tool the human has to
+install, a command only they can run), do not leave the card where it is with the reason only in
+chat. Put the two bold lines from `docs/issue-body.md` at the top of the issue body:
+
+```markdown
+**ACTION:** <what is blocked, and what you need the human to do, one sentence>
+**RETURN TO:** /factory-retro
+```
+
+Add your LOG line naming what blocked it, then park the card with the `needs:help` label:
+
+```bash
+./scripts/board.sh park <N> needs:help
+```
+
+Stop there. The human clears the blocker and sends the card back.
 
 ### 8. Report
 

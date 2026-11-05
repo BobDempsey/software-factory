@@ -156,10 +156,11 @@ Carry a recommendation with it wherever you have one, so the human can answer wi
 **RETURN TO:** /factory-refine
 ```
 
-Then move it:
+Then park it. `park` moves the card and gives it the `needs:answer` label, so the card says what it
+wants on its face:
 
 ```bash
-./scripts/board.sh move <ITEM_ID> "/factory-needs-you"
+./scripts/board.sh park <N> needs:answer
 ```
 
 One question per card. A card parked with three questions is a conversation the human has to hold in

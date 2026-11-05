@@ -2,6 +2,15 @@ name: factory-reviewed
 
 on:
   pull_request_review:
+  # A clean CodeRabbit pass submits no review at all: it only edits its summary
+  # comment to say "No actionable comments were generated". Seen on #19 and #17.
+  issue_comment:
+    types: [created, edited]
+
+# CodeRabbit edits its summary comment several times per review. One run per PR
+# at a time, so the guard on the review column below sees the previous run's move.
+concurrency:
+  group: factory-reviewed-${{ github.event.pull_request.number || github.event.issue.number }}
 
 permissions:
   pull-requests: write
@@ -14,9 +23,14 @@ jobs:
     # factory-changes-requested.yml this partitions every submitted review.
     # States arrive lowercase in the webhook, unlike the GraphQL enum.
     if: >-
-      github.event.action == 'submitted' &&
-      github.event.review.state != 'changes_requested' &&
-      github.event.review.user.login != github.event.pull_request.user.login
+      (github.event_name == 'pull_request_review' &&
+       github.event.action == 'submitted' &&
+       github.event.review.state != 'changes_requested' &&
+       github.event.review.user.login != github.event.pull_request.user.login) ||
+      (github.event_name == 'issue_comment' &&
+       github.event.issue.pull_request &&
+       github.event.comment.user.login == 'coderabbitai[bot]' &&
+       contains(github.event.comment.body, 'No actionable comments were generated'))
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -24,8 +38,9 @@ jobs:
       - name: Park the card in /factory-needs-you to merge
         env:
           GH_TOKEN: ${{ secrets.FACTORY_PROJECT_TOKEN }}
-          PR: ${{ github.event.pull_request.number }}
-          STATE: ${{ github.event.review.state }}
+          PR: ${{ github.event.pull_request.number || github.event.issue.number }}
+          STATE: ${{ github.event.review.state || 'clean' }}
+          EVENT: ${{ github.event_name }}
         run: |
           set -euo pipefail
 
@@ -54,6 +69,12 @@ jobs:
               | .projectItems.nodes[] | select(.project.number == $p) | .id ][0] // empty
           ' refs.json)
 
+          if [ -z "$ITEM" ] && [ "$EVENT" = issue_comment ]; then
+            # Every CodeRabbit edit would repeat the comment below. Stay quiet.
+            echo "PR #$PR closes no card on project $PROJECT_NUMBER" >&2
+            exit 0
+          fi
+
           if [ -z "$ITEM" ]; then
             gh pr comment "$PR" --body "No linked issue on project $PROJECT_NUMBER, so no card was moved. If this change belongs to a factory card, move it to **$COLUMN** by hand."
             echo "PR #$PR closes no card on project $PROJECT_NUMBER" >&2
@@ -71,6 +92,18 @@ jobs:
           fi
 
           PROJECT_ID=$(jq -r '.projectId' .factory/board.json)
+
+          # A clean pass only moves a card that is still waiting on CodeRabbit, so a
+          # later edit of the same summary comment changes nothing.
+          if [ "$EVENT" = issue_comment ]; then
+            REVIEW=$(jq -r '.reviewColumn' .factory/board.json)
+            WAS=$(gh api graphql -f query="query{node(id:\"$ITEM\"){... on ProjectV2Item{fieldValueByName(name:\"Status\"){... on ProjectV2ItemFieldSingleSelectValue{name}}}}}" \
+              | jq -r '.data.node.fieldValueByName.name')
+            if [ "$WAS" != "$REVIEW" ]; then
+              echo "card is in $WAS, not $REVIEW, so the clean pass moves nothing"
+              exit 0
+            fi
+          fi
 
           gh api graphql -f query='
             mutation($p:ID!, $i:ID!, $f:ID!, $o:String!) {
@@ -108,12 +141,22 @@ jobs:
           body = re.sub(r'^\*\*ACTION:\*\*.*?\n\*\*RETURN TO:\*\*.*?\n(?:\s*---\s*\n)?\s*',
                         '', body, count=1, flags=re.S)
           plural = '' if comments == '1' else 's'
-          head = (f'**ACTION:** CodeRabbit finished with {state} and {comments} comment{plural}. '
+          if state == 'clean':
+              found = 'CodeRabbit finished with no findings.'
+          else:
+              found = f'CodeRabbit finished with {state} and {comments} comment{plural}.'
+          head = (f'**ACTION:** {found} '
                   f'Read the diff and merge PR #{pr}.\n'
                   f'**RETURN TO:** {nxt}\n\n---\n\n')
           io.open('body.md', 'w', encoding='utf-8', newline='\n').write(head + body)
           PY
 
           gh issue edit "$ISSUE" --body-file body.md > /dev/null
+
+          # One needs:* label on the card face says what it wants without opening it.
+          for L in $(gh issue view "$ISSUE" --json labels --jq '.labels[].name | select(startswith("needs:"))'); do
+            gh issue edit "$ISSUE" --remove-label "$L" > /dev/null
+          done
+          gh issue edit "$ISSUE" --add-label "needs:merge" > /dev/null
 
           echo "parked card in $COLUMN: $STATE, $COMMENTS comment(s)"

@@ -32,7 +32,7 @@ Take the first card whose status is **/factory-build**. If that column is empty,
 
 ### 2. Confirm it has a spec
 
-Before touching code, all of these must hold. If any fails, say which one and stop. Fixing it is a different command's job.
+Before touching code, all of these must hold. If any fails, say which one and park the card as step 9b says. Fixing it is a different command's job.
 
 - The card is a real issue, not a draft.
 - It carries the `factory` label and exactly one `deliverable:*` label.
@@ -116,6 +116,25 @@ Name the branch, the PR and the file count. Never touch another command's line.
 **Verify the move by reading the board again.** Replacing the board's Status options in the past has left API writes reporting success while the card rendered in the wrong column. If the read-back disagrees, say so plainly and tell the human to drag the card, rather than retrying.
 
 CodeRabbit takes the card from here: an approval sends it to /factory-needs-you, a request for changes sends it back to /factory-build, and the third failed round sends it to /factory-needs-you. This command stops at @coderabbitai.
+
+### 9b. Blocked: park it in /factory-needs-you
+
+When a check above fails, or something you cannot clear stops the run (a tool the human has to
+install, a command only they can run), do not leave the card where it is with the reason only in
+chat. Put the two bold lines from `docs/issue-body.md` at the top of the issue body:
+
+```markdown
+**ACTION:** <what is blocked, and what you need the human to do, one sentence>
+**RETURN TO:** /factory-build
+```
+
+Add your LOG line naming what blocked it, then park the card with the `needs:help` label:
+
+```bash
+./scripts/board.sh park <N> needs:help
+```
+
+Stop there. The human clears the blocker and sends the card back.
 
 ### 10. Report
 
