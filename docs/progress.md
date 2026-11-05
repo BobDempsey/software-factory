@@ -17,6 +17,14 @@ What exists, and what is next. One line per thing, newest state at the top.
 
 No gates, no CI, no spec tooling. That is on purpose.
 
+## The spec step writes a plan and tasks (2026-11-05)
+
+`/factory-create-spec` now writes `plan.md` and `tasks.md` from Spec Kit's
+templates in the same pass as `spec.md` and `spec-brief.md`, so the human
+approves the plan with the DECISIONS table before anything is built. It writes
+no `research.md`, `data-model.md`, `contracts/` or `quickstart.md`, and runs
+none of Spec Kit's scripts. `/factory-build` still builds from `spec.md`.
+
 ## Spec Kit drives the spec step (2026-11-05)
 
 GitHub Spec Kit is installed: `specify-cli` 1.3.2.dev0, from
