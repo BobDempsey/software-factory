@@ -37,8 +37,9 @@ Before touching code, all of these must hold. If any fails, say which one and st
 - The card is a real issue, not a draft.
 - It carries the `factory` label and exactly one `deliverable:*` label.
 - `specs/<N>-<slug>/spec.md` exists.
-- The issue body carries the brief under a `# SPEC` heading.
-- The body carries a `## DECISIONS` table at the bottom, and **no row says `UNANSWERED`**. A flag the human never answered is not approval, however good the spec looks.
+- The body links the spec directory, in the shape `docs/issue-body.md` describes. The brief itself
+  lives in `specs/<N>-<slug>/spec-brief.md`, not in the issue.
+- The body carries a `## DECISIONS` table, and **no row says `UNANSWERED`**. A flag the human never answered is not approval, however good the spec looks.
 
 ```bash
 gh issue view <N>
@@ -94,6 +95,17 @@ gh pr create --title "<one sentence>" --body-file <file>
 
 The body says `Closes #<N>`, links the spec directory, and lists each acceptance criterion with how it was checked. Anything you could not verify goes in its own section, named.
 
+### 8b. Write the log line
+
+Add one line at the **top** of the issue's `## LOG` section, newest first, as `docs/issue-body.md`
+says. Clear the ACTION block while you are there: the card is no longer parked.
+
+```markdown
+**/factory-build** — branch `13-park-on-review`, PR #14, 2 files.
+```
+
+Name the branch, the PR and the file count. Never touch another command's line.
+
 ### 9. Move the card to @coderabbitai
 
 ```bash
@@ -102,7 +114,7 @@ The body says `Closes #<N>`, links the spec directory, and lists each acceptance
 
 **Verify the move by reading the board again.** Replacing the board's Status options in the past has left API writes reporting success while the card rendered in the wrong column. If the read-back disagrees, say so plainly and tell the human to drag the card, rather than retrying.
 
-CodeRabbit takes the card from here: an approval sends it to Needs you, a request for changes sends it back to /factory-build, and the third failed round sends it to Needs you. This command stops at @coderabbitai.
+CodeRabbit takes the card from here: an approval sends it to /factory-needs-you, a request for changes sends it back to /factory-build, and the third failed round sends it to /factory-needs-you. This command stops at @coderabbitai.
 
 ### 10. Report
 
@@ -122,6 +134,6 @@ Then one line of totals. Nothing else. No preamble, no restating these instructi
 - **Never exceed the spec's scope.** What you find along the way is a report line, or a new card.
 - **Never write `Signed-off-by:`.** The DCO is the human's to certify.
 - **Never build on master**, and never merge your own PR.
-- **Needs you is untouchable.** No command reads it, acts on it, or offers it. Only the human moves a card out, back to whatever its RETURN TO line names.
+- **/factory-needs-you is untouchable.** No command reads it, acts on it, or offers it. The human moves a card out, back to whatever its RETURN TO line names, either by dragging it or by running `/factory-needs-you` themselves.
 - **Bob's Draft Notes is private.** Do not read it, do not list its contents, do not act on anything in it.
 - **Report honestly.** An unchecked criterion is unchecked. A failing check is quoted in full.

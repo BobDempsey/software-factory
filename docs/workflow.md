@@ -3,10 +3,10 @@
 The board runs itself. You start work in one column and unblock it in another, and every column between them is driven by a command, a workflow, or CodeRabbit.
 
 ```
-Bob's Draft Notes -> /factory-expand -> /factory-refine -> /factory-create-spec
+Bob's Draft Notes -> /factory-refine -> /factory-create-spec
   -> /factory-build -> @coderabbitai -> /factory-retro -> Done
 
-  Needs you catches anything that wants a decision, from any column, and sends it back
+  /factory-needs-you catches anything that wants a decision, from any column, and sends it back
 ```
 
 One column is yellow and it is the only one you watch. Everything blue moves itself. Gray is where work starts and where it ends.
@@ -27,23 +27,21 @@ Neither reads `docs/outline.md` or `docs/progress.md` to get going. The board al
 
 ## The run, column by column
 
-**Bob's Draft Notes.** Mine, private, never read by an agent. One line is enough. I drag it to /factory-expand to start it.
+**Bob's Draft Notes.** Mine, private, never read by an agent. One line is enough. I drag it to /factory-refine to start it.
 
-**/factory-expand.** `/factory-expand` reads the one-liner against the repo, writes out what exists today and what the note wants changed, and moves it on. It never asks me anything.
+**/factory-refine.** `/factory-refine` reads the one-liner against the repo, writes out what exists today and what the note wants changed, sharpens it into one unit of work, converts it to an issue, and applies `factory` plus one `deliverable:*` label. It runs alone: most notes never need me, because reading the repo answers what looked like a question. Anything it still cannot settle parks in /factory-needs-you with one question and a recommendation.
 
-**/factory-refine.** `/factory-refine` sharpens it into one unit of work, converts it to an issue, applies `factory` plus one `deliverable:*` label. Anything it cannot decide parks in Needs you.
-
-**/factory-create-spec.** `/factory-create-spec` writes `specs/<N>-<slug>/spec.md` and the brief, puts the brief in the issue body under `# SPEC`, writes the `## DECISIONS` table, then parks the card in Needs you.
+**/factory-create-spec.** `/factory-create-spec` writes `specs/<N>-<slug>/spec.md` and the brief, links that directory from the issue, writes the `## DECISIONS` table, then parks the card in /factory-needs-you. The brief stays in the spec directory: the issue is the index, and `docs/issue-body.md` is the shape it keeps.
 
 **/factory-build.** `/factory-build` refuses to start while any DECISIONS row says `UNANSWERED`. Otherwise it branches, implements the spec and nothing else, commits, and opens a PR.
 
-**@coderabbitai.** CodeRabbit's. Any review that is not a request for changes parks the card in Needs you to merge, with an ACTION line naming the state it finished in and how many comments it left. A request for changes sends the card back to /factory-build, and the third failed round parks it in Needs you.
+**@coderabbitai.** CodeRabbit's. Any review that is not a request for changes parks the card in /factory-needs-you to merge, with an ACTION line naming the state it finished in and how many comments it left. A request for changes sends the card back to /factory-build, and the third failed round parks it in /factory-needs-you.
 
 Finishing is not the same as approving. CodeRabbit has never submitted an approval on this repo; it comments. Waiting for an approval left three cards stranded before the workflow was widened.
 
 **/factory-retro.** `/factory-retro` rebuilds the run from the issue, spec, PR and commits, writes `docs/solutions/<N>-<slug>.md`, adds a rule to `AGENTS.md` if the run earned one, and moves the card to Done.
 
-**Needs you.** Mine, and the only column I watch. Every card here opens with two lines:
+**/factory-needs-you.** Mine, and the only column I watch. Every card here opens with two lines:
 
 ```markdown
 **ACTION:** Answer the DECISIONS rows at the bottom of this issue.
@@ -56,8 +54,8 @@ I do the thing, drag the card to whatever RETURN TO names, and the loop picks it
 
 ## The gestures that are mine
 
-- Writing a line in Bob's Draft Notes and dragging it to /factory-expand.
-- Everything in Needs you: answering DECISIONS rows, merging a PR, deciding what to do with a card that failed three review rounds.
+- Writing a line in Bob's Draft Notes and dragging it to /factory-refine.
+- Everything in /factory-needs-you: answering DECISIONS rows, merging a PR, deciding what to do with a card that failed three review rounds. `/factory-needs-you` walks that queue card by card, writes down what I say, and moves each card where its RETURN TO line points.
 
 That is the whole list. Every other move on this board is made by a command, a workflow, or CodeRabbit.
 
@@ -74,15 +72,16 @@ Not built yet, on purpose. The commands run first because the rules are not sett
 | Column | Who puts cards here | What it means |
 | --- | --- | --- |
 | Bob's Draft Notes | Me | A scratchpad. One line is enough. Never read by agents. |
-| Needs you | Any command, any workflow | The only column I watch. Each card names its ACTION and its RETURN TO. |
-| /factory-expand | Me, by dragging | A one-liner waiting to be written out. |
-| /factory-refine | `/factory-expand` | Written out, waiting to be sharpened into one unit of work. |
+| /factory-needs-you | Any command, any workflow | The only column I watch. Each card names its ACTION and its RETURN TO. |
+| /factory-refine | Me, by dragging | A one-liner waiting to be read against the repo and sharpened into one unit of work. |
 | /factory-create-spec | `/factory-refine` | A real issue, labeled. Waiting on the spec. |
-| /factory-build | Me, out of Needs you | Spec approved, every decision answered. |
+| /factory-build | Me, out of /factory-needs-you | Spec approved, every decision answered. |
 | @coderabbitai | `/factory-build` | PR open, CodeRabbit reviewing. |
 | /factory-retro | `factory-merged.yml` | Merged. Waiting on the lesson. |
 | Done | `/factory-retro` | Finished, kept visible on purpose. |
 | No Status | Nobody, on purpose | GitHub's catch-all. Anything here is a mistake worth noticing. |
+
+A draft card goes to /factory-refine and nowhere else. Every column after it needs a written-out, labeled issue to act on, so a draft dragged further down the board is one a command will hand back rather than work.
 
 ## Labels
 

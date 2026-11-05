@@ -8,7 +8,7 @@ allowed-tools: Bash(gh:*), Bash(./scripts/board.sh:*), Read, Write, Edit
 
 Turn an admitted issue into a spec a builder can implement against, and a brief a human can approve in two minutes.
 
-This runs after `/factory-refine`. It does not create branches, write code, or open PRs. It works on cards in **/factory-create-spec**, one at a time, and parks each specced card in **Needs you** with an ACTION line, and the human sends it on to **/factory-build** once every DECISIONS row is answered.
+This runs after `/factory-refine`. It does not create branches, write code, or open PRs. It works on cards in **/factory-create-spec**, one at a time, and parks each specced card in **/factory-needs-you** with an ACTION line, and the human sends it on to **/factory-build** once every DECISIONS row is answered.
 
 ## Board constants
 
@@ -74,19 +74,30 @@ Hard cap: the brief fits one screen down to the end of acceptance criteria. If i
 
 **Flag rather than decide.** Every choice the issue did not make is an `ASSUMPTION` flag. You do not resolve your own assumptions. A brief with no flags on a non-trivial change means the spec work was shallow.
 
-### 5. Put the brief in the issue body
+### 5. Point the issue at the brief
 
-The brief lives in the issue body, not in a comment. A comment scrolls away; the body is what a reader sees first.
+The brief lives in `specs/<N>-<slug>/spec-brief.md`, not in the issue body. An issue carrying a card
+that touches a frontend and a backend would run to several screens, and the one thing the human has
+to act on would be below the fold.
 
-Append the brief below the original card text, under a `# SPEC` heading, keeping what the human wrote above it.
+`docs/issue-body.md` is the shape. Keep the one-sentence summary the card already has, and set the
+deliverable and spec line beneath it:
+
+```markdown
+**DELIVERABLE:** workflow · **Spec:** [specs/13-park-on-review/](../specs/13-park-on-review/)
+```
 
 ```bash
 gh issue edit <N> --body-file <assembled body>
 ```
 
+Never paste the brief into the body, and never leave a `# SPEC` section behind.
+
 ### 5b. Write the DECISIONS table
 
-Every flag in the brief gets a row, and the table goes at the **bottom of the issue body** under `## DECISIONS`. This is the record of what the human decided, and `/factory-build` refuses to run while any row is unanswered.
+Every flag in the brief gets a row, and the table goes under `## DECISIONS`, above the `## LOG`
+section. It is the one thing the human edits, so nothing sits between it and the ACTION line but
+the summary. This is the record of what the human decided, and `/factory-build` refuses to run while any row is unanswered.
 
 ```markdown
 ## DECISIONS
@@ -106,11 +117,11 @@ Rules for the table:
 - You never write an answer yourself. The human edits the cell, or replies and you transcribe their words verbatim.
 - Rows are never deleted. An answer replaces `UNANSWERED` in place, so the table stays the history of what was decided.
 
-### 5c. Park it in Needs you
+### 5c. Park it in /factory-needs-you
 
-## Parking a card in Needs you
+## Parking a card in /factory-needs-you
 
-Needs you is the only column a human watches, so a card arriving there has to say what it wants without being opened twice. Put these two lines at the very top of the issue body, above everything else:
+/factory-needs-you is the only column a human watches, so a card arriving there has to say what it wants without being opened twice. Put these two lines at the very top of the issue body, above everything else:
 
 ```markdown
 **ACTION:** <what you need from the human, one sentence>
@@ -120,7 +131,7 @@ Needs you is the only column a human watches, so a card arriving there has to sa
 Replace them rather than stacking them: a card that comes back a second time has one ACTION line, the current one. Then move the card:
 
 ```bash
-./scripts/board.sh move <ITEM_ID> "Needs you"
+./scripts/board.sh move <ITEM_ID> "/factory-needs-you"
 ```
 
 For this card the two lines are always the same shape:
@@ -131,6 +142,18 @@ For this card the two lines are always the same shape:
 ```
 
 Stop there and ask the human to approve, and to answer the DECISIONS rows. Every row has to say something other than `UNANSWERED` before the card can move again.
+
+### 5d. Write the log line
+
+Add one line at the **top** of `## LOG`, creating the section if the issue has none. Newest first,
+as `docs/issue-body.md` says:
+
+```markdown
+**/factory-create-spec** — spec written against `factory-reviewed.yml`, 1 row open.
+```
+
+Name what it produced: the file the spec is written against, and how many rows are open. Never
+touch another command's line.
 
 ### 6. Move it to /factory-build
 
@@ -148,7 +171,7 @@ One line per card, in this shape:
 
 ```
 #14 Add one human-scannable issue template  ->  /factory-build   specs/14-issue-template/
-#15 Rework the whole intake flow            ->  Needs you, 3 OPEN flags
+#15 Rework the whole intake flow            ->  /factory-needs-you, 3 OPEN flags
 ```
 
 Then one line of totals. Nothing else. No preamble, no restating these instructions.

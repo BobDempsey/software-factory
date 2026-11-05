@@ -4,7 +4,7 @@ How a card moves through the factory, and what acts on it at each stop.
 
 One column is yellow, and it is the only one you watch. Everything blue moves itself. Gray is where work starts and where it ends.
 
-Every card in **Needs you** carries two lines at the top of its body: a bold **ACTION** saying what it wants, and a **RETURN TO** naming the column it goes back to. You never have to work out what a parked card needs.
+Every card in **/factory-needs-you** carries two lines at the top of its body: a bold **ACTION** saying what it wants, and a **RETURN TO** naming the column it goes back to. You never have to work out what a parked card needs.
 
 This diagram is generated from `.factory/board.json` and the skills in `.claude/skills/`. Run `/factory-diagram` after changing a column or a command, and edit only the source, never the block below.
 
@@ -16,18 +16,18 @@ flowchart TD
     classDef quiet fill:#d8d8d8,stroke:#888,stroke-width:1px,color:#000
 
     DRAFT["Bob's Draft Notes<br/>one line is enough"]
-    EXPAND["/factory-expand<br/>read the note against the repo"]
     REFINE["/factory-refine<br/>one unit of work"]
     SPEC["/factory-create-spec<br/>spec + DECISIONS"]
     DEV["/factory-build<br/>branch, commit, PR"]
     REVIEW["@coderabbitai<br/>reviews the PR"]
     RETRO["/factory-retro<br/>what the run taught us"]
-    YOU["Needs you<br/>ACTION + RETURN TO"]
+    YOU["/factory-needs-you<br/>ACTION + RETURN TO"]
     DONE["Done<br/>the archive"]
 
-    DRAFT -->|you drag| EXPAND
-    EXPAND --> REFINE
+    DRAFT -->|you drag| REFINE
     REFINE --> SPEC
+    REFINE -.->|one question| YOU
+    YOU -.->|answered| REFINE
     SPEC -->|DECISIONS written| YOU
     YOU -->|rows answered| DEV
     DEV -->|PR opened| REVIEW
@@ -39,7 +39,7 @@ flowchart TD
 
     class DRAFT quiet
     class YOU you
-    class EXPAND,REFINE,SPEC,DEV,REVIEW,RETRO agent
+    class REFINE,SPEC,DEV,REVIEW,RETRO agent
     class DONE quiet
 ```
 <!-- END board-diagram -->
@@ -48,15 +48,14 @@ flowchart TD
 
 | Step | Who | Produces |
 | --- | --- | --- |
-| `/factory-expand` | agent | A one-liner read against the repo and written out |
-| `/factory-refine` | agent | A real issue, labeled, one unit of work |
-| `/factory-create-spec` | agent | `specs/<N>-<slug>/`, the brief in the issue body, the DECISIONS table, then a park in Needs you |
-| You, in Needs you | you | Every DECISIONS row answered, and the card dragged to /factory-build |
+| `/factory-refine` | agent | A real issue, labeled, one unit of work, or a park in /factory-needs-you with one question |
+| `/factory-create-spec` | agent | `specs/<N>-<slug>/`, the brief in the issue body, the DECISIONS table, then a park in /factory-needs-you |
+| You, in /factory-needs-you | you, or `/factory-needs-you` | Every DECISIONS row answered, and the card moved to /factory-build |
 | `/factory-build` | agent | A branch, a commit, a PR that closes the issue |
 | CodeRabbit, on the PR | agent | An approval, or a request for changes |
-| `factory-reviewed.yml` | GitHub | A finished PR parked in Needs you, with an ACTION line naming the review state |
-| `factory-changes-requested.yml` | GitHub | A reviewed-down card sent back to /factory-build, or parked in Needs you on the third round |
-| You, in Needs you | you | A merge |
+| `factory-reviewed.yml` | GitHub | A finished PR parked in /factory-needs-you, with an ACTION line naming the review state |
+| `factory-changes-requested.yml` | GitHub | A reviewed-down card sent back to /factory-build, or parked in /factory-needs-you on the third round |
+| You, in /factory-needs-you | you | A merge |
 | `factory-merged.yml` | GitHub | The card moved to /factory-retro, no tokens spent |
 | `/factory-retro` | agent | `docs/solutions/<N>-<slug>.md`, a rule in `AGENTS.md` if the run earned one, and Done |
 
@@ -64,8 +63,8 @@ flowchart TD
 
 ## The two rules the shape rests on
 
-**You touch two columns.** You start work by dragging out of Bob's Draft Notes, and you unblock it in Needs you. Nothing else on the board is yours.
+**You touch two columns.** You start work by dragging out of Bob's Draft Notes, and you unblock it in /factory-needs-you. Nothing else on the board is yours.
 
-**A command that needs a decision parks the card rather than guessing.** It writes the ACTION line, moves the card to Needs you, and stops.
+**A command that needs a decision parks the card rather than guessing.** It writes the ACTION line, moves the card to /factory-needs-you, and stops.
 
-**Needs you is also the circuit breaker.** A card bounced between CodeRabbit and the builder three times parks there, because a fourth automated attempt at something three rounds could not fix is a loop rather than progress. The cap is `reviewRoundCap` in `.factory/board.json`.
+**/factory-needs-you is also the circuit breaker.** A card bounced between CodeRabbit and the builder three times parks there, because a fourth automated attempt at something three rounds could not fix is a loop rather than progress. The cap is `reviewRoundCap` in `.factory/board.json`.

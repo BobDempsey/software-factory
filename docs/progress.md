@@ -17,6 +17,58 @@ What exists, and what is next. One line per thing, newest state at the top.
 
 No gates, no CI, no spec tooling. That is on purpose.
 
+## The issue became an index (2026-11-05)
+
+An issue carried the whole spec brief under `# SPEC`, which worked while every
+card was one small file. A card touching a frontend and a backend would have
+run to several screens, with the one thing the human had to act on below the
+fold.
+
+`docs/issue-body.md` is the shape now: the ACTION block while the card is
+parked, one sentence, the deliverable and a link to `specs/<N>-<slug>/`, the
+DECISIONS table, then a LOG. The brief stays in the spec directory.
+
+Each command adds one line to the top of the log saying what it produced, so
+opening a card shows what has happened to it, newest first, without opening
+anything else. The review stages write no line; /factory-retro names the rounds
+in its own.
+
+The issue template shrank to match.
+
+## The human column got a command (2026-11-05)
+
+Needs you is now **/factory-needs-you**, named after the command that works
+it, like every other column. The command is the one exception to the rule that
+nothing reads that column: it takes a card, says in one sentence what it is and
+what it wants, takes the answer in chat, writes it into the issue verbatim, and
+moves the card where its RETURN TO line points. Answering nine DECISIONS rows by
+editing a markdown table was the thing it replaced.
+
+Transcribing is still not answering. The command never fills in a row the human
+did not say out loud, and no loop invokes it.
+
+The column was renamed in the UI, which keeps its option id, so no card moved
+and nothing had to be dragged back.
+
+## /factory-expand folded into /factory-refine (2026-11-05)
+
+Two commands read the same one-liner and neither could finish it alone.
+`/factory-expand` wrote the note out and asked nothing; `/factory-refine` then
+held a conversation to decide what it meant. A draft now goes straight to
+/factory-refine, which reads the repo first and runs alone: most notes never
+reach the human, because reading the repo answers what looked like a question.
+What it still cannot settle parks in Needs you as one ACTION line with a
+recommendation.
+
+The board lost a column. `/factory-create-spec` still writes a DECISIONS table
+and parks it, so nothing gets built on a guess refinement made.
+
+## /factory-watch added (2026-11-05)
+
+Same loop as `/factory-run`, except it reads the board before it schedules
+anything and ends the command when nothing is waiting. A pass also follows its
+own move instead of stalling five minutes at each column it just filled.
+
 ## A finished review parks the card (2026-11-05)
 
 `factory-approved.yml` became `factory-reviewed.yml` and now fires on any

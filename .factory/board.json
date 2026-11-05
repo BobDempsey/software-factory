@@ -7,8 +7,7 @@
   "statusFieldId": "PVTSSF_lAHOAS5FRs4BqNybzhol4i0",
   "columns": [
     "Bob's Draft Notes",
-    "Needs you",
-    "/factory-expand",
+    "/factory-needs-you",
     "/factory-refine",
     "/factory-create-spec",
     "/factory-build",
@@ -17,10 +16,9 @@
     "Done"
   ],
   "note": "Option ids are not stored here on purpose: they change every time the column list is replaced. scripts/board.sh looks them up by name at call time.",
-  "shape": "One human column. Bob's Draft Notes is where work starts and Needs you is where it comes back; everything between them moves itself. Each of those columns is named after the command or app that acts on it, so a command with no column is one nothing runs. A card parked in Needs you carries a bold ACTION line and a RETURN TO line at the top of its body, naming what it wants and which column it goes back to.",
+  "shape": "One human column. Bob's Draft Notes is where work starts and /factory-needs-you is where it comes back; everything between them moves itself. Each of those columns is named after the command or app that acts on it, so a command with no column is one nothing runs. A card parked in /factory-needs-you carries a bold ACTION line and a RETURN TO line at the top of its body, naming what it wants and which column it goes back to. A draft card may only be dragged into /factory-refine: every column after it needs a written-out card to act on, so a draft anywhere else is a card that skipped its intake.",
   "privateColumn": "Bob's Draft Notes",
-  "needsYouColumn": "Needs you",
-  "expandColumn": "/factory-expand",
+  "needsYouColumn": "/factory-needs-you",
   "refineColumn": "/factory-refine",
   "specColumn": "/factory-create-spec",
   "buildColumn": "/factory-build",

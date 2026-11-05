@@ -675,7 +675,7 @@ Not in scope for v1, recorded so they are a decision rather than an oversight:
 
 ## The GitHub board is the control plane
 
-**Decision: a GitHub Projects board is the factory's control surface. You file an issue, the agents move the card from column to column, and a single "Needs you" column is the only place you have to look to know whether you are blocking anything.**
+**Decision: a GitHub Projects board is the factory's control surface. You file an issue, the agents move the card from column to column, and a single "/factory-needs-you" column is the only place you have to look to know whether you are blocking anything.**
 
 This replaces nothing in the pipeline. The seven stages, the three gates, and the standing layers are unchanged. The board is where that pipeline becomes visible.
 
@@ -684,10 +684,10 @@ This replaces nothing in the pipeline. The seven stages, the three gates, and th
 One per stage, plus the gate column:
 
 ```
-Draft -> Inbox -> Spec -> [Needs you] -> Build -> Verify -> [Needs you] -> Merge gate -> CI/CD -> [Needs you] -> Operate -> Done
+Draft -> Inbox -> Spec -> [/factory-needs-you] -> Build -> Verify -> [/factory-needs-you] -> Merge gate -> CI/CD -> [/factory-needs-you] -> Operate -> Done
 ```
 
-In practice that is ten columns: **Draft, Inbox, Spec, Needs you, Build, Verify, Merge gate, CI/CD, Operate, Done.** Cards return to the one Needs you column at each of the three gates rather than having three separate ones, so there is a single place that answers "is anything waiting on me."
+In practice that is ten columns: **Draft, Inbox, Spec, /factory-needs-you, Build, Verify, Merge gate, CI/CD, Operate, Done.** Cards return to the one /factory-needs-you column at each of the three gates rather than having three separate ones, so there is a single place that answers "is anything waiting on me."
 
 **Draft is the ingestion control.** It holds my own notes and half-formed ideas, carries no `factory` label, and no agent reads it. A card there does not even have to be an issue; a plain board note works until it is worth one. Admission is a deliberate two-part act: add the `factory` label, and move the card to Inbox. Until both happen the item is invisible to the factory. The setup procedure is in `docs/board-setup.md`.
 
@@ -696,7 +696,7 @@ In practice that is ten columns: **Draft, Inbox, Spec, Needs you, Build, Verify,
 1. **You file an issue** and drop it in Inbox. Typing it by hand is the normal case. The issue body needs a problem and a reason, not a spec.
 2. **You run `/factory-sync-issues`** (or the scheduled run picks it up). It reads Inbox, admits anything labeled `factory`, sizes it, and moves the card to Spec.
 3. **The agent works a stage and moves the card itself.** Column position is the run's state, readable with `gh project item-list`, which is also what the weekly monitor reads for time-in-stage.
-4. **At a gate the agent moves the card to Needs you** and posts what it needs: the spec brief at gate 1, the diff and reviewer comments at gate 2, the preview URL at gate 3.
+4. **At a gate the agent moves the card to /factory-needs-you** and posts what it needs: the spec brief at gate 1, the diff and reviewer comments at gate 2, the preview URL at gate 3.
 5. **You reply in the issue thread**, either in the GitHub UI with `@claude` or from the terminal. The agent flips the matching `spec.json` flag, commits it, and moves the card onward.
 6. **Merge closes the issue**, and the card lands in Done.
 
@@ -760,7 +760,7 @@ The only thing being built first.
 Each piece is a `factory` issue in this repo, built by the factory as it exists at that point.
 
 1. **Issue sync.** Inbox to Spec. Above.
-2. **`/spec`.** Spec Kit wired in, producing `spec.md`, `spec-brief.md`, and `spec.json`. The card moves to Needs you and the brief gets posted on the issue. This is the first time I review something the factory wrote.
+2. **`/spec`.** Spec Kit wired in, producing `spec.md`, `spec-brief.md`, and `spec.json`. The card moves to /factory-needs-you and the brief gets posted on the issue. This is the first time I review something the factory wrote.
 3. **`/build`.** Worktree per issue, implement the task list, nothing else. No parallelism, one agent.
 4. **The first gate in CI.** Lint and typecheck as required checks, branch protection on. The cheapest gates, and the first thing that can actually stop a merge.
 5. **`/pr`.** Opens the PR with the brief, the diff summary, and the `Assisted-by` trailer.

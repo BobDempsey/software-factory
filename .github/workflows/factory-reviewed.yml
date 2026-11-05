@@ -21,7 +21,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Park the card in Needs you to merge
+      - name: Park the card in /factory-needs-you to merge
         env:
           GH_TOKEN: ${{ secrets.FACTORY_PROJECT_TOKEN }}
           PR: ${{ github.event.pull_request.number }}
@@ -88,7 +88,7 @@ jobs:
             exit 1
           fi
 
-          # The card has to say what it wants. Needs you is the only column a
+          # The card has to say what it wants. /factory-needs-you is the only column a
           # human watches, and one that needs opening twice is a column that lies.
           ISSUE=$(jq -r '
             [ .data.repository.pullRequest.closingIssuesReferences.nodes[].number ][0]

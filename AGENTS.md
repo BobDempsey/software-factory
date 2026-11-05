@@ -20,13 +20,22 @@ and report the criterion as unverified rather than passing.
   applies `factory`, and only a human drags a card onward. `/factory-refine` applies
   `factory` after the human has said the card is ready, and never before.
 - Bob's Draft Notes is a private scratchpad. Never read it, never act on it.
-- Needs you is the one human column. No command reads it, acts on it, or offers it.
-  A command that needs a decision parks the card there with a bold ACTION line saying
-  what it wants and a RETURN TO line naming the column it goes back to, then stops.
+- `/factory-refine` is the only column a draft card may be dragged into. It reads the repo, writes
+  the card out, converts and labels it, and either moves it on or parks it in /factory-needs-you with one
+  question. A command that finds a draft in any other column names it and asks for it to be dragged
+  back; it never moves it itself.
+- /factory-needs-you is the one human column. A command that needs a decision parks the card there with a
+  bold ACTION line saying what it wants and a RETURN TO line naming the column it goes back to,
+  then stops. Nothing reads that column on its own: `/factory-needs-you` is the single exception,
+  and only because the human typed it. No loop invokes it and no pass offers it.
 - Every admitted issue carries exactly one `deliverable:*` label naming what it
   produces, and repeats it as one bold DELIVERABLE line near the top of the body.
-- A specced issue carries its brief in the body under `# SPEC` and a `## DECISIONS`
-  table at the bottom. An agent never fills in an answer; `UNANSWERED` blocks the build.
+- An issue body has one shape, in `docs/issue-body.md`: the ACTION block while parked, one
+  sentence, the deliverable and a link to `specs/<N>-<slug>/`, the `## DECISIONS` table, then
+  `## LOG`. The brief lives in the spec directory and is never pasted into the body. An agent never
+  fills in a DECISIONS answer; `UNANSWERED` blocks the build.
+- Every command that touches an issue adds one line to the top of `## LOG`, newest first, naming
+  what it produced. It never edits another command's line.
 - An agent never writes a `Signed-off-by` trailer. Only a human can certify the DCO.
 - Agent-authored commits carry a single `Assisted-by:` line. No banner, no emoji.
 - Before committing on a factory branch, check `git diff --cached --stat` against the
@@ -53,15 +62,20 @@ That is the allow-listed surface, so nothing else should call `gh project` direc
 - The board is the record of what is in flight. `/factory-run` is how a session starts.
 - `docs/workflow.md` is how the board is driven. Read it before touching the board.
 - `.claude/skills/factory-run/` drives the whole board on a loop. The usual entry point.
-- `.claude/skills/factory-expand/` turns a one-line note into a paragraph.
-- `.claude/skills/factory-refine/` is the intake command. It is the admission gate.
+- `.claude/skills/factory-watch/` is the same loop, but it scans before it schedules: an empty board
+  ends the command instead of starting twelve passes of nothing. Use it to start a working session;
+  use `/factory-run` when you want the loop up regardless.
+- `.claude/skills/factory-refine/` is the intake command and the admission gate. It takes a
+  one-liner, reads the repo, and runs alone: ready cards move on, unclear ones park in /factory-needs-you.
 - `.claude/skills/factory-create-spec/` writes the spec and the DECISIONS table.
 - `.claude/skills/factory-build/` implements an approved spec and stops at the PR.
 - `.claude/skills/factory-retro/` closes out a finished run and writes `docs/solutions/`.
+- `.claude/skills/factory-needs-you/` walks the human through their own column, one card at a time.
 - `specs/<N>-<slug>/` holds the spec for issue N.
 - `docs/outline.md` is the full design. Read it before proposing structural changes.
 - `docs/progress.md` is what exists today. Read it first, and update it when a piece lands.
 - `docs/board-setup.md` is the board install procedure, including the one manual step.
+- `docs/issue-body.md` is the shape of an issue body and the rules for its log.
 - `docs/solutions/` holds learnings from completed runs, and `traps.md` holds the
   ones that bite twice. Read both during spec work.
 - `template/` will hold what gets installed into other repos. It is empty until piece two.
@@ -71,7 +85,8 @@ That is the allow-listed surface, so nothing else should call `gh project` direc
 One piece at a time. A piece is done when it has been used on a real issue, not
 when it is written. Refine, spec and build have each run once, on issue #2.
 Current piece: `/factory-retro`. Nothing after it starts until that has run on
-real work. The order is in `docs/outline.md`; it is a best guess,
+real work. `/factory-watch` and the folded-in refine are both unproven: neither
+has driven a card end to end yet. The order is in `docs/outline.md`; it is a best guess,
 not a commitment.
 
 ## Standing chores
