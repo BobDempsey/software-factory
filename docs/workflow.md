@@ -31,7 +31,9 @@ Every column names the command or the person that acts on it, and the board colo
 
 **Ready for dev.** `/factory-build` refuses to start while any row says `UNANSWERED`. Otherwise it branches `<N>-<slug>` off master, implements what the spec says and nothing else, checks each acceptance criterion by name, commits with a single `Assisted-by:` trailer, opens a PR that closes the issue, and moves the card to In review (PR).
 
-**In review (PR).** Mine. I read the diff and merge, which closes the issue. The `factory-merged` workflow then moves the card to Needs retro on its own.
+**In review (PR).** Mine. I read the diff and merge, which closes the issue, and the `factory-merged` workflow moves the card to Needs retro on its own.
+
+The column has a second exit. CodeRabbit reviews every PR, and when it or I request changes, `factory-changes-requested` sends the card back to Ready for dev. An approval or a plain comment moves nothing, so In review (PR) only ever means waiting on a first read.
 
 **Needs retro.** `/factory-retro` rebuilds the run from the issue, spec, PR and commits, writes `docs/solutions/<N>-<slug>.md`, adds a rule to `AGENTS.md` if the run earned one, and moves the card to Done. It asks me nothing, because by this point I have moved on.
 

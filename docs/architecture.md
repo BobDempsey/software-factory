@@ -28,6 +28,7 @@ flowchart TD
     APPROVE -->|you drag| DEV
     DEV -->|PR opened| REVIEW
     REVIEW -->|merge, by factory-merged.yml| RETRO
+    REVIEW -.->|changes requested, by factory-changes-requested.yml| DEV
     RETRO -->|lesson written| DONE
 
     class DRAFT quiet
@@ -47,6 +48,7 @@ flowchart TD
 | `/factory-build` | agent | A branch, a commit, a PR that closes the issue |
 | You, on the PR | you | A merge |
 | `factory-merged.yml` | GitHub | The card moved to Needs retro, no tokens spent |
+| `factory-changes-requested.yml` | GitHub | A reviewed-down card sent back to Ready for dev |
 | `/factory-retro` | agent | `docs/solutions/<N>-<slug>.md`, and a rule in `AGENTS.md` if the run earned one |
 
 `/factory-refresh` runs at any point. It diffs the board against the last snapshot and offers to run whatever command the move handed over.

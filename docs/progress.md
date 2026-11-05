@@ -24,6 +24,13 @@ Ready for dev, In review (PR), Needs retro, Done. Yellow means you, blue means a
 agent, gray means nothing pending, and every description opens with YOU or
 Agent. Merged was cut: it only ever asked for a second drag.
 
+## A reviewed-down card goes back (2026-11-05)
+
+`.github/workflows/factory-changes-requested.yml` sends a card back to Ready
+for dev when a review requests changes, from CodeRabbit or a human. Approvals
+and plain comments move nothing. `/factory-build` cannot yet resume the branch,
+so a returned card is picked up by hand until that card lands.
+
 ## The merge moves the card (2026-11-04)
 
 `.github/workflows/factory-merged.yml` sets a card's Status to Needs retro
