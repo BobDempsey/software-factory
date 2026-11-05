@@ -21,7 +21,7 @@ Neither reads `docs/outline.md` or `docs/progress.md` to get going. The board al
 
 **1. I think of something.** It goes in **Bob's Draft Notes** as a draft card. No issue, no labels, no ceremony. Half a sentence is fine. Agents never read this column, so nothing can act on it while it is still an idea.
 
-**2. An agent or an outside source proposes something.** A performance scan, an error triage run, a scheduled dependency check. These file **real issues** labeled `factory:triage`. They wait for my yes or no.
+**2. An agent or an outside source proposes something.** A performance scan, an error triage run, a scheduled dependency check. These file **real issues** labeled `factory:triage` through `scripts/board.sh file`, which puts them on the board with No Status. They wait for my yes or no.
 
 **3. Something is already a well-formed issue.** It goes straight to /factory-create-spec.
 

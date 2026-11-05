@@ -19,6 +19,9 @@ and report the criterion as unverified rather than passing.
 - Agents may propose work by filing real issues labeled `factory:triage`. Only a human
   applies `factory`, and only a human drags a card onward. `/factory-refine` applies
   `factory` after the human has said the card is ready, and never before.
+- File them with `scripts/board.sh file`, never bare `gh issue create`. The bare call
+  leaves the issue off the board, where nobody sees it. `board.sh add <N>` fixes one
+  that was filed the other way.
 - Bob's Draft Notes is a private scratchpad. Never read it, never act on it.
 - `/factory-refine` is the only column a draft card may be dragged into. It reads the repo, writes
   the card out, converts and labels it, and either moves it on or parks it in /factory-needs-you with one
@@ -57,7 +60,7 @@ Config is `.factory/board.json`. Never hardcode project or option ids; the optio
 ids change every time the column list is replaced, so `scripts/board.sh` looks them
 up by name at call time.
 
-Board operations go through `scripts/board.sh` (list, ids, move, convert, check).
+Board operations go through `scripts/board.sh` (list, ids, move, convert, check, add, file).
 That is the allow-listed surface, so nothing else should call `gh project` directly.
 
 ## Where things are
