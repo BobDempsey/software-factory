@@ -45,6 +45,9 @@ and report the criterion as unverified rather than passing.
   Code's `EnterWorktree`, never in the main checkout. `/factory-retro` removes it after the merge.
 - Before committing on a factory branch, check `git diff --cached --stat` against the
   spec's file table, from inside the worktree.
+- After a factory PR merges, the main checkout still holds the build's spec folder untracked, and
+  `git pull` refuses to overwrite it. Diff it against `origin/master` and delete it first. First
+  hit on #18.
 - Do not edit shared docs on master while a factory branch is open against the same
   sections. `architecture.md`, `workflow.md` and `progress.md` are the usual casualties,
   and the conflict shows up as a PR that was clean turning DIRTY.
