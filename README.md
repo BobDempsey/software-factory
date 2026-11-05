@@ -30,6 +30,9 @@ everything sits, and offers the first card waiting on refinement.
 8. Run `/factory-retro`. It writes what the run taught us into
    `docs/solutions/` and moves the card to **Done**.
 
+Run `node scripts/watch.mjs` in a second terminal and it tells you when a card
+moves and what to run next.
+
 Agents propose work by filing issues labeled `factory:triage`. Only a human
 applies `factory`, and only a human drags a card onward.
 
