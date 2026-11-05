@@ -122,7 +122,8 @@ gh issue edit <N> --add-label factory --remove-label "factory:triage"
 
 Refinement is the admission gate. There is no second pass behind it.
 
-**Write the log line.** One line at the top of `## LOG`, creating the section:
+**Write the log line.** One line at the top of `## LOG (newest first)`, creating the
+section, or swapping in the marker for a bare `## LOG` in the same edit:
 
 ```markdown
 **/factory-refine** — one unit of work, labeled `deliverable:workflow`.
