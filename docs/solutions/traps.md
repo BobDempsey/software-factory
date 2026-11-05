@@ -34,3 +34,5 @@ symptom is what you meet.
 - **A blob for `git update-index --cacheinfo` must be LF here.** Symptom: staging one hunk of a file that carries a human's uncommitted edits shows the whole file changed. `core.autocrlf` is true, so build the blob from `git show HEAD:<file>` and insert with `
 `.
 - **Local master lags origin after a GitHub merge.** Symptom: `git checkout master` refuses because of a human's uncommitted edits, though origin/master matches the current branch. `git branch -f master origin/master`, then check out. Hit on #16 and #17.
+- **A `pull_request_review` workflow runs the PR's own copy, not master's.** Symptom: a workflow change you expected to be untestable fires on its own PR's review. `issue_comment` and `pull_request_target` do run from master. Hit on #27.
+- **`$ARGUMENTS` in a skill body is replaced with the skill's argument at run time.** Symptom: an instruction reads "never a leftover `27`". Do not write the literal token in a skill. Hit on #27, from text added in #16.
