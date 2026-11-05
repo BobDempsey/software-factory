@@ -7,6 +7,8 @@
 #   board.sh move <ITEM_ID> <COL>   set a card's Status
 #   board.sh convert <ITEM_ID>      turn a draft card into a real issue
 #   board.sh check                  verify board.json matches the live board
+#   board.sh add <N>                put issue N on the board, No Status
+#   board.sh file <TITLE> <BODYFILE> file a factory:triage issue and add it
 set -euo pipefail
 
 CFG="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)/.factory/board.json"
@@ -87,7 +89,20 @@ check)
   echo "config:"; cat "$CFG"; echo; echo "live columns:"; "$0" ids
   ;;
 
+add)
+  N="${2:?issue number}"
+  URL=$(gh issue view "$N" --repo "$REPO" --json url -q .url)
+  ITEM=$(gh project item-add "$NUMBER" --owner "$OWNER" --url "$URL" --format json -q .id)
+  echo "added #$N as $ITEM, No Status"
+  ;;
+
+file)
+  TITLE="${2:?title}"; BODY="${3:?body file}"
+  URL=$(gh issue create --repo "$REPO" --title "$TITLE" --body-file "$BODY" --label "factory:triage")
+  "$0" add "${URL##*/}"
+  ;;
+
 *)
-  sed -n '2,10p' "${BASH_SOURCE[0]}"; exit 1
+  sed -n '2,12p' "${BASH_SOURCE[0]}"; exit 1
   ;;
 esac
