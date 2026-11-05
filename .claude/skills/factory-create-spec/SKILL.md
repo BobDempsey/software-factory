@@ -1,6 +1,6 @@
 ---
 name: factory-create-spec
-description: Write the spec for an admitted card. Reads the Software Factory board, takes a card sitting in /factory-create-spec, writes spec.md and spec-brief.md for it, posts the brief on the issue for approval, and moves the card to /factory-build once the human approves. Use when the user says to spec a card, write the spec, run the spec step, or work the /factory-create-spec column.
+description: Write the spec for an admitted card. Reads the Software Factory board, takes a card sitting in /factory-create-spec, writes spec.md, plan.md, tasks.md and spec-brief.md for it, posts the brief on the issue for approval, and moves the card to /factory-build once the human approves. Use when the user says to spec a card, write the spec, run the spec step, or work the /factory-create-spec column.
 allowed-tools: Bash(gh:*), Bash(./scripts/board.sh:*), Read, Write, Edit
 ---
 
@@ -54,9 +54,11 @@ If the issue contradicts any of these, say so and stop. The contradiction is the
 
 ### 4. Write the spec
 
-Write two files under `specs/<N>-<short-slug>/`, both generated in this one pass so they cannot drift apart:
+Write four files under `specs/<N>-<short-slug>/`, all generated in this one pass so they cannot drift apart:
 
 - `spec.md` — the full technical spec the implementation is built against.
+- `plan.md` — how it will be built, from Spec Kit's plan template.
+- `tasks.md` — the ordered task list, from Spec Kit's tasks template.
 - `spec-brief.md` — the human review document.
 
 `spec.md` is written from GitHub Spec Kit's template, `.specify/templates/spec-template.md`. Read the template and fill in its header first: `Feature Branch` is `<N>-<slug>`, the branch `/factory-build` will create, and `Input` is the issue title and link, never a leftover `$ARGUMENTS`. Then fill in each of its sections; this skill does not define a layout of its own. Remove any section the template marks optional that the card does not need, as the template itself says. The spec is written for the agent that builds, so it may be long.
@@ -64,6 +66,13 @@ Write two files under `specs/<N>-<short-slug>/`, both generated in this one pass
 - **Unresolved questions** go in the spec as `[NEEDS CLARIFICATION: question]` markers, at most three, chosen in this order: scope, then security and privacy, then user experience, then technical detail. Each marker is an `OPEN` flag in the brief and an `OPEN` row in DECISIONS.
 - **The directory is `specs/<N>-<slug>/`**, where N is the issue number, not Spec Kit's own counter. The issue number is what ties the branch, the PR and the spec together.
 - **End `spec.md` with two appendix sections**, `## Files touched` (a table of file and change) and `## Rollback`. Spec Kit keeps both in `plan.md`, but `/factory-build` and the pre-commit check in `AGENTS.md` read the file table from `spec.md`.
+
+After `spec.md`, write `plan.md` from `.specify/templates/plan-template.md`, then `tasks.md` from `.specify/templates/tasks-template.md`, with `spec.md` and `plan.md` as its input. Read each template and fill it in; as with the spec, this skill does not describe their sections.
+
+- **Only `plan.md` and `tasks.md`.** Spec Kit's plan phase also asks for `research.md`, `data-model.md`, `contracts/` and `quickstart.md`. Do not write them. Remove the plan template's references to them, or mark them not applicable.
+- **The file table stays in `spec.md`.** The plan's Project Structure section names the same files and points at the appendix rather than repeating the table.
+- **`tasks.md` is for review.** `/factory-build` still builds from `spec.md`; the human reads the task list at approval time.
+- **A question the plan or tasks raise is a flag in the brief** and a row in the one DECISIONS table, like any question the spec raises.
 
 `spec-brief.md` follows the structure in `docs/outline.md` under "The spec brief", widest to narrowest:
 
@@ -73,7 +82,7 @@ Write two files under `specs/<N>-<short-slug>/`, both generated in this one pass
 4. **Flags in caps**, inline: `CRITICAL`, `IRREVERSIBLE`, `SECURITY`, `BREAKING`, `ASSUMPTION`, `OPEN`.
 5. **Acceptance criteria**, EARS form: when X, the system shall Y.
 6. **Scope boundaries.** In scope, and explicitly NOT in scope. The second list matters more.
-7. **Technical detail.** Everything the reader only wants on demand. Nothing above this line may depend on it.
+7. **Technical detail.** Everything the reader only wants on demand. Nothing above this line may depend on it. It links `plan.md` and `tasks.md`.
 
 Hard cap: the brief fits one screen down to the end of acceptance criteria. If it does not fit, the unit of work is too big; say so and hand the split back to the human.
 
@@ -191,4 +200,5 @@ Then one line of totals. Nothing else. No preamble, no restating these instructi
 - **Bob's Draft Notes is private.** Do not read it, do not list its contents, do not act on anything in it.
 - **The board is not the record.** It shows state. If a card and the issue disagree, the issue wins, and say so.
 - **Never run `.specify/scripts/bash/create-new-feature.sh`.** It numbers the directory with Spec Kit's own `001-` counter instead of the issue number, and writes `.specify/feature.json`, which nothing here reads.
+- **Never run `setup-plan.sh`, `setup-tasks.sh` or `check-prerequisites.sh`** under `.specify/scripts/bash/`. They find the feature directory through `.specify/feature.json`, per-checkout state this step never writes, and copy the templates there. Read the templates and write into `specs/<N>-<slug>/` directly.
 - **Do not go further than /factory-build.** Building is a separate piece, and it does not exist yet.

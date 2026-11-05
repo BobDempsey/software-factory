@@ -70,7 +70,7 @@ That is the allow-listed surface, so nothing else should call `gh project` direc
   use `/factory-run` when you want the loop up regardless.
 - `.claude/skills/factory-refine/` is the intake command and the admission gate. It takes a
   one-liner, reads the repo, and runs alone: ready cards move on, unclear ones park in /factory-needs-you.
-- `.claude/skills/factory-create-spec/` writes the spec and the DECISIONS table.
+- `.claude/skills/factory-create-spec/` writes the spec, plan, tasks and the DECISIONS table.
 - `.claude/skills/factory-build/` implements an approved spec and stops at the PR.
 - `.claude/skills/factory-retro/` closes out a finished run and writes `docs/solutions/`.
 - `.claude/skills/factory-needs-you/` walks the human through their own column, one card at a time.
