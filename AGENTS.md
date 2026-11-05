@@ -72,6 +72,8 @@ That is the allow-listed surface, so nothing else should call `gh project` direc
 - `.claude/skills/factory-retro/` closes out a finished run and writes `docs/solutions/`.
 - `.claude/skills/factory-needs-you/` walks the human through their own column, one card at a time.
 - `specs/<N>-<slug>/` holds the spec for issue N.
+- `.specify/` is GitHub Spec Kit: the spec template `/factory-create-spec` fills in, and a constitution
+  copied from this file.
 - `docs/outline.md` is the full design. Read it before proposing structural changes.
 - `docs/progress.md` is what exists today. Read it first, and update it when a piece lands.
 - `docs/board-setup.md` is the board install procedure, including the one manual step.

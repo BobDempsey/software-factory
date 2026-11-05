@@ -17,6 +17,23 @@ What exists, and what is next. One line per thing, newest state at the top.
 
 No gates, no CI, no spec tooling. That is on purpose.
 
+## Spec Kit drives the spec step (2026-11-05)
+
+GitHub Spec Kit is installed: `specify-cli` 1.3.2.dev0, from
+`git+https://github.com/github/spec-kit.git`, run with
+`specify init --here --force --integration claude --script sh`. It added
+`.specify/` with its templates, bash scripts and constitution.
+
+`/factory-create-spec` now writes `spec.md` from
+`.specify/templates/spec-template.md`, marks open questions as
+`[NEEDS CLARIFICATION]` (at most three, each one an `OPEN` DECISIONS row), and
+keeps a `Files touched` and `Rollback` appendix for the build. The constitution
+copies its rules from `AGENTS.md` and adds none.
+
+Init also wrote nine `speckit-*` skills into `.claude/skills/`. They were
+deleted, so a spec is only ever written through the board. Plan and tasks are
+#17. The specs written before this change keep the old layout.
+
 ## The issue became an index (2026-11-05)
 
 An issue carried the whole spec brief under `# SPEC`, which worked while every
@@ -200,9 +217,8 @@ Omitting them mints new ids and blanks every card.
 ## Not started
 
 The first CI gate, red-first replay, `agent-approval-check`, worktree isolation,
-OpenSpec in place of the hand-rolled spec template, the weekly monitor, and
-`template/`. The order is in `docs/outline.md` and is a best guess rather than a
-commitment.
+the weekly monitor, and `template/`. The order is in `docs/outline.md` and is a
+best guess rather than a commitment.
 
 On the shelf, decided but not built: parallel agents, mutation testing, fiberplane/drift, a second reviewer, the cost guard, the test-tamper hook, post-merge verification.
 
