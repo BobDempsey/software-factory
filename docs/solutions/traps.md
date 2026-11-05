@@ -28,4 +28,4 @@ symptom is what you meet.
 - **A heredoc at column 0 inside a YAML `run: |` block makes the workflow unparseable.** Symptom: `gh run list` shows a failure named after the workflow's file path instead of its `name:`, with no jobs and `log not found`. Indent every heredoc line to the block's indent; YAML strips the common prefix so bash still sees the terminator at column 0.
 - **CodeRabbit never approves, it comments.** Anything waiting on `review.state == 'approved'` waits forever. `factory-reviewed.yml` reacts to any review that is not `changes_requested` instead.
 - **GitHub serves issue templates from the default branch only.** A template sitting on a branch cannot be confirmed in the new-issue chooser until the PR merges.
-
+- **A clean CodeRabbit pass submits no review.** Symptom: the PR carries only CodeRabbit's summary comment saying "No actionable comments were generated", `gh pr view --json reviews` is empty, and `factory-reviewed.yml` never runs, so the card waits in @coderabbitai forever. First hit on #19.
