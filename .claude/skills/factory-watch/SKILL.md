@@ -39,7 +39,8 @@ fired by the loop, skip this section: the loop already exists.
 ### The loop stops after an hour
 
 - Count passes. At pass 12, delete the cron job and stop.
-- Say it in one line: `watch expired after 1h, 12 passes. /factory-watch to restart.`
+- Say it in one line, above that pass's DONE block rather than after YOU:
+  `watch expired after 1h, 12 passes. /factory-watch to restart.`
 - Never mention the scheduler's seven-day cron default. It is not this command's behaviour.
 
 ## What a pass does
@@ -103,28 +104,42 @@ Do not move it, do not convert it, do not work it. Say so in one line, naming th
 card, and ask the human to drag it back to /factory-refine. Then carry on with whatever else the
 scan found.
 
-### 4. Report the pass
+### 4. Report the pass, and end on what the human has to do
 
-Lead with what changed. Three lines at most.
-
-```
-pass 4   specced #11 -> /factory-needs-you, 3 rows for you
-         #9 waiting on CodeRabbit, #12 in /factory-needs-you: merge the PR
-```
-
-An idle pass is one line:
+Every pass ends with the same two blocks, in this order:
 
 ```
-pass 5   nothing moved
+DONE
+  refined #15 -> /factory-needs-you, no label yet
+
+YOU
+  #15  doc or config? emails live in GitHub and CodeRabbit settings, not this repo
+       -> answer it with /factory-needs-you
 ```
 
-Do not re-list the board every pass. The human can see the board; what they cannot see is what you
-just did.
+**DONE** is what this pass changed. One line per card: the issue number, where it went, and what it
+produced. A pass that changed nothing says `nothing moved` and leaves it there.
 
-### 5. Surface what is blocked on the human
+**YOU** is every card waiting on the human right now, not only the ones this pass parked. One line
+per card with the issue number and what its ACTION line asks for in a few words, then an indented
+arrow line saying how to answer it. Repeat each card on every pass while it sits there; a card the
+human has already been told about three times is still blocking, and going quiet about it reads as
+progress.
 
-Name anything sitting in /factory-needs-you, and what each card's ACTION line asks for. Say it once per card,
-on the pass it arrives, then stay quiet until it moves unless the human asks.
+When nothing is waiting, print the block anyway, so there is no guessing whether it was dropped or
+empty:
+
+```
+YOU
+  nothing. the board moves on its own from here.
+```
+
+**Nothing goes after YOU.** Not the interval, not the pass count, not the cron job id, not how the
+watch expires. The human agreed to the schedule when they started the watch and does not need it
+read back; the last line on their screen is the one thing they have to act on. Say the interval once,
+on the pass that creates the loop, above DONE.
+
+Do not re-list the board. What they cannot see is what you just did and what you need from them.
 
 ## Being interrupted
 
@@ -147,5 +162,9 @@ immediately, with the board state in one line.
 - **Never act on a human column.** /factory-needs-you is theirs. @coderabbitai is CodeRabbit's.
 - **Bob's Draft Notes is private.** Do not read it, do not list it, do not count it.
 - **Never print the board.** A pass says what it did, not what the board holds.
+- **End every pass on the human.** DONE, then YOU, and YOU is the last thing printed. Both blocks
+  appear every pass, empty or not, and nothing about the schedule may follow them.
+- **Repeat what is blocked until it moves.** Every card in /factory-needs-you is named on every
+  pass, not only the pass that parked it.
 - **One hour, then stop.** Twelve passes, then CronDelete and one line saying how to restart.
 - **Everything is in the issue.** Nothing a pass learns may live only in this session.
