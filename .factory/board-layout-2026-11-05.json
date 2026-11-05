@@ -1,0 +1,73 @@
+{
+  "savedAt": "2026-11-05",
+  "note": "The board's Status options exactly as they stood before the Needs you redesign. Restore by re-sending this list to updateProjectV2Field, ids included, which preserves every card.",
+  "statusFieldId": "PVTSSF_lAHOAS5FRs4BqNybzhol4i0",
+  "options": [
+    {
+      "id": "05c0d949",
+      "name": "Bob's Draft Notes",
+      "color": "GRAY",
+      "description": "YOU. Private scratchpad, never read by agents. One line is enough. Drag it to Needs expanding."
+    },
+    {
+      "id": "87d80de0",
+      "name": "Needs expanding",
+      "color": "BLUE",
+      "description": "Agent. A one-liner. The next pass researches it and writes it out, then moves it to Needs refinement. No conversation."
+    },
+    {
+      "id": "b619c506",
+      "name": "Needs refinement",
+      "color": "YELLOW",
+      "description": "YOU. Run /factory-start and refine it in conversation."
+    },
+    {
+      "id": "5d6cb3e2",
+      "name": "Ready for spec",
+      "color": "BLUE",
+      "description": "Agent. /factory-create-spec writes the spec and the DECISIONS table."
+    },
+    {
+      "id": "19400bd1",
+      "name": "Needs spec approval",
+      "color": "YELLOW",
+      "description": "YOU, with the agent. Each DECISIONS row carries a recommendation; say yes or no to each, then drag it to Ready for dev."
+    },
+    {
+      "id": "6c9b4c47",
+      "name": "Ready for dev",
+      "color": "BLUE",
+      "description": "Agent. /factory-build implements the spec and opens a PR."
+    },
+    {
+      "id": "53687c2b",
+      "name": "In review (PR)",
+      "color": "BLUE",
+      "description": "Agent. CodeRabbit is reviewing. It moves on by itself: approved goes to Needs merging, changes requested goes back to Ready for dev."
+    },
+    {
+      "id": "75930f9a",
+      "name": "Needs merging",
+      "color": "YELLOW",
+      "description": "YOU. CodeRabbit is happy. Read the diff and merge; the merge moves the card to Needs retro."
+    },
+    {
+      "id": "5344eb31",
+      "name": "Needs retro",
+      "color": "BLUE",
+      "description": "Agent. Run /factory-retro. It writes the lesson and moves the card to Done."
+    },
+    {
+      "id": "8fa0091e",
+      "name": "Stuck",
+      "color": "RED",
+      "description": "YOU. Three review rounds and still not right. No command touches this column. Fix it, respec it, or close it."
+    },
+    {
+      "id": "77a47633",
+      "name": "Done",
+      "color": "GRAY",
+      "description": "Retro written. The archive of finished runs, kept visible on purpose."
+    }
+  ]
+}
