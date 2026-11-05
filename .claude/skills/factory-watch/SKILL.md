@@ -65,7 +65,7 @@ and you name it by its `PVTI_...` item id.
 | --- | --- | --- |
 | /factory-create-spec | Run the `factory-create-spec` skill | **Alone.** Flags become DECISIONS rows, so nothing is decided without the human. |
 | /factory-retro | Run the `factory-retro` skill | **Alone.** It asks nothing by design. |
-| /factory-refine | Run the `factory-refine` skill | **Alone.** It parks anything it cannot settle in Needs you. |
+| /factory-refine | Run the `factory-refine` skill | **Alone.** It parks anything it cannot settle in /factory-needs-you. |
 | /factory-build | Run the `factory-build` skill | **Ask first.** It writes code and opens a PR. |
 
 One card at a time, from the first column in that list that has one. Finishing one card beats
@@ -80,7 +80,7 @@ Keep following it while the next column is one that runs alone. Stop the chain a
 the card lands in:
 
 - **an ask-first column** (`/factory-build`) — ask the human, and that is the pass;
-- **a human column** (Needs you, @coderabbitai) — their turn;
+- **a human column** (/factory-needs-you, @coderabbitai) — their turn;
 - **Done**, or a column with nothing in it.
 
 The one-card rule is about not starting four unrelated things at once. Following a card you moved
@@ -91,7 +91,7 @@ Invoke them through the Skill tool rather than reimplementing them. Their rules 
 no DECISIONS row is ever answered by an agent, no card is moved into a human column except by the
 command that owns that transition.
 
-**Never touch** Needs you, @coderabbitai, Bob's Draft Notes or Done. Those wait on the human or on
+**Never touch** /factory-needs-you, @coderabbitai, Bob's Draft Notes or Done. Those wait on the human or on
 CodeRabbit, and a pass that nudges them is a pass that lies about what is blocking.
 
 ### 3. Hand back a misplaced draft
@@ -108,8 +108,8 @@ scan found.
 Lead with what changed. Three lines at most.
 
 ```
-pass 4   specced #11 -> Needs you, 3 rows for you
-         #9 waiting on CodeRabbit, #12 in Needs you: merge the PR
+pass 4   specced #11 -> /factory-needs-you, 3 rows for you
+         #9 waiting on CodeRabbit, #12 in /factory-needs-you: merge the PR
 ```
 
 An idle pass is one line:
@@ -123,7 +123,7 @@ just did.
 
 ### 5. Surface what is blocked on the human
 
-Name anything sitting in Needs you, and what each card's ACTION line asks for. Say it once per card,
+Name anything sitting in /factory-needs-you, and what each card's ACTION line asks for. Say it once per card,
 on the pass it arrives, then stay quiet until it moves unless the human asks.
 
 ## Being interrupted
@@ -144,7 +144,7 @@ immediately, with the board state in one line.
   create.
 - **Ask before building.** Refine, spec and retro run alone.
 - **Never answer a DECISIONS row yourself.** Transcribing the human's words is not answering.
-- **Never act on a human column.** Needs you is theirs. @coderabbitai is CodeRabbit's.
+- **Never act on a human column.** /factory-needs-you is theirs. @coderabbitai is CodeRabbit's.
 - **Bob's Draft Notes is private.** Do not read it, do not list it, do not count it.
 - **Never print the board.** A pass says what it did, not what the board holds.
 - **One hour, then stop.** Twelve passes, then CronDelete and one line saying how to restart.

@@ -73,8 +73,8 @@ Then replace the options in one call.
 gh api graphql -F fid=PVTSSF_YOUR_FIELD_ID -f query='
 mutation($fid:ID!){
  updateProjectV2Field(input:{fieldId:$fid, singleSelectOptions:[
-  {name:"Bob's Draft Notes", color:GRAY,   description:"My notes. One line is enough. Never read by agents."},
-  {name:"Needs you",        color:YELLOW, description:"The only column you watch. Each card names its ACTION and its RETURN TO."},
+  {name:"Bob's Draft Notes", color:GRAY, description:"My notes. One line is enough. Never read by agents. Drag one to /factory-refine to start it."},
+  {name:"/factory-needs-you", color:YELLOW, description:"Runs /factory-needs-you: the only column you watch. Each card names its ACTION and its RETURN TO. Answer in chat and it moves itself, or drag it yourself."},
   {name:"/factory-refine", color:BLUE,   description:"A one-liner read against the repo, sharpened into one unit of work, converted, labeled."},
   {name:"/factory-create-spec",   color:BLUE,   description:"The spec and the DECISIONS table get written."},
   {name:"/factory-build",    color:BLUE,   description:"The spec gets implemented and a PR opened."},
@@ -143,10 +143,10 @@ Dragging the card in the UI does the same thing, and is more reliable right afte
 | Column | Who moves the card in | What it means |
 | --- | --- | --- |
 | Bob's Draft Notes | You | Your own notes, one line each. No `factory` label, and agents never read this column. |
-| Needs you | Any command | The only column you watch. Each card opens with a bold ACTION and a RETURN TO. |
+| /factory-needs-you | Any command | The only column you watch. Each card opens with a bold ACTION and a RETURN TO. `/factory-needs-you` walks the queue for you. |
 | /factory-refine | You, by dragging | A one-liner waiting to be read against the repo and sharpened into one unit of work. |
 | /factory-create-spec | `/factory-refine` | A real issue, labeled. Waiting on the spec. |
-| /factory-build | You, out of Needs you | Spec approved, every decision answered. |
+| /factory-build | You, out of /factory-needs-you | Spec approved, every decision answered. |
 | @coderabbitai | `/factory-build` | PR open, CodeRabbit reviewing. |
 | /factory-retro | `factory-merged.yml` | Merged. Waiting on the lesson. |
 | Done | `/factory-retro` | Finished, kept visible on purpose. |

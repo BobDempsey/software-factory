@@ -51,11 +51,11 @@ Do not read `docs/outline.md` or `docs/progress.md` unless a card needs them.
 | /factory-create-spec | Run the `factory-create-spec` skill | **Alone.** Flags become DECISIONS rows, so nothing is decided without the human. |
 | /factory-retro | Run the `factory-retro` skill | **Alone.** It asks nothing by design. |
 | /factory-build | Run the `factory-build` skill | **Ask first.** It writes code and opens a PR. |
-| /factory-refine | Run the `factory-refine` skill | **Alone.** It parks anything it cannot settle in Needs you. |
+| /factory-refine | Run the `factory-refine` skill | **Alone.** It parks anything it cannot settle in /factory-needs-you. |
 
 One card per pass, from the first column in that list that has one. Finishing one card beats starting four.
 
-**Never touch** Needs you, @coderabbitai, Bob's Draft Notes or Done. Those wait on the human or on CodeRabbit, and a pass that nudges them is a pass that lies about what is blocking.
+**Never touch** /factory-needs-you, @coderabbitai, Bob's Draft Notes or Done. Those wait on the human or on CodeRabbit, and a pass that nudges them is a pass that lies about what is blocking.
 
 Invoke the other commands through the Skill tool rather than reimplementing them. Their rules bind here unchanged: no DECISIONS row is ever answered by an agent, no card is moved into a human column except by the command that owns that transition.
 
@@ -64,8 +64,8 @@ Invoke the other commands through the Skill tool rather than reimplementing them
 Three lines at most. Lead with what changed.
 
 ```
-pass 4   specced #11 -> Needs you, 3 rows for you
-         #9 waiting on CodeRabbit, #12 in Needs you: merge the PR
+pass 4   specced #11 -> /factory-needs-you, 3 rows for you
+         #9 waiting on CodeRabbit, #12 in /factory-needs-you: merge the PR
 ```
 
 When nothing moved and nothing is waiting on you, one line:
@@ -78,9 +78,9 @@ Do not re-list the board every pass. The human can see the board; what they cann
 
 ### 4. Surface what is blocked on the human
 
-Every pass, in one line, name anything sitting in Needs you, and what each card's ACTION line asks for. That is the whole reason to leave the loop running: the board tells them where the queue is, without them opening it.
+Every pass, in one line, name anything sitting in /factory-needs-you, and what each card's ACTION line asks for. That is the whole reason to leave the loop running: the board tells them where the queue is, without them opening it.
 
-Say it once per card, not once per pass. A card that has been in Needs you for six passes gets mentioned on the pass it arrived and then stays quiet until it moves, unless the human asks.
+Say it once per card, not once per pass. A card that has been in /factory-needs-you for six passes gets mentioned on the pass it arrived and then stays quiet until it moves, unless the human asks.
 
 ## Being interrupted
 
@@ -90,7 +90,7 @@ They may:
 
 - **Ask what is happening.** Answer from the board and the issues, not from memory of earlier passes.
 - **Steer a card.** "That spec is wrong" means stop and fix it with them, in conversation. The loop keeps running underneath; the current pass just becomes that work.
-- **Answer DECISIONS rows out loud.** Transcribe their words into the issue body verbatim and move the card on. This is the one way a card leaves Needs you without them opening GitHub.
+- **Answer DECISIONS rows out loud.** Transcribe their words into the issue body verbatim and move the card on. This is the one way a card leaves /factory-needs-you without them opening GitHub.
 - **Say stop.** End the loop immediately and say the board state in one line.
 
 ## Rules
@@ -98,8 +98,8 @@ They may:
 - **One card per pass.** The loop is patient; you do not need to be.
 - **Ask before building.** It writes code and opens a PR. Refine, spec and retro run alone.
 - **Never answer a DECISIONS row yourself.** Transcribing the human's words is not answering.
-- **Never act on a human column.** Needs you is theirs. @coderabbitai is CodeRabbit's.
-- **Needs you is untouchable.** No pass reads it, acts on it, or offers it.
+- **Never act on a human column.** /factory-needs-you is theirs. @coderabbitai is CodeRabbit's.
+- **/factory-needs-you is untouchable.** No pass reads it, acts on it, or offers it. The human works it themselves, by dragging or by running `/factory-needs-you`.
 - **Bob's Draft Notes is private.** Do not read it, do not list its contents, do not count it.
 - **Three lines a pass.** A loop that narrates itself is worse than no loop, because the human stops reading it.
 - **Never print the board.** Not the Done column, not a row count, not a tidy summary table. A pass says what it did.

@@ -1,6 +1,6 @@
 ---
 name: factory-refine
-description: Refine a rough card into something ready for spec. Reads the Software Factory board, takes a card sitting in /factory-refine, reads the repo to work out what the note is asking for, writes it out, converts and labels it, and either moves it to /factory-create-spec or parks it in Needs you with one question. Use when the user says to refine the board, work the refinement column, sharpen a draft, or get a card ready for spec.
+description: Refine a rough card into something ready for spec. Reads the Software Factory board, takes a card sitting in /factory-refine, reads the repo to work out what the note is asking for, writes it out, converts and labels it, and either moves it to /factory-create-spec or parks it in /factory-needs-you with one question. Use when the user says to refine the board, work the refinement column, sharpen a draft, or get a card ready for spec.
 allowed-tools: Bash(gh:*), Bash(./scripts/board.sh:*), Read, Write, Edit, Glob, Grep
 ---
 
@@ -10,7 +10,7 @@ Turn a one-line note into one unit of work, without needing the human in the roo
 
 This is the intake command and the admission gate. It works on cards in **/factory-refine**, one at
 a time. A card arrives as whatever the human typed: half a sentence is normal. It leaves either in
-**/factory-create-spec**, written out, converted and labeled, or in **Needs you** carrying the one
+**/factory-create-spec**, written out, converted and labeled, or in **/factory-needs-you** carrying the one
 question that stopped it.
 
 It does not write specs, create branches, or touch code.
@@ -110,7 +110,7 @@ gh issue edit <N> --add-label deliverable:<kind>
 ```
 
 Pick it from what the card produces. If two are genuinely arguable, that is a question, and the card
-stops in Needs you rather than carrying a coin-flip label.
+stops in /factory-needs-you rather than carrying a coin-flip label.
 
 **Apply the `factory` label**, and drop `factory:triage` if it is there. An issue carrying both
 reads as proposed and admitted at once:
@@ -131,7 +131,7 @@ The spec step writes a DECISIONS table and parks it for approval, so a card you 
 about still reaches the human before anything gets built. That is the safety net that lets this
 command run alone.
 
-### 5b. Not ready: park it in Needs you
+### 5b. Not ready: park it in /factory-needs-you
 
 Put the question at the top of the issue body, above everything else, as two bold lines:
 
@@ -151,7 +151,7 @@ Carry a recommendation with it wherever you have one, so the human can answer wi
 Then move it:
 
 ```bash
-./scripts/board.sh move <ITEM_ID> "Needs you"
+./scripts/board.sh move <ITEM_ID> "/factory-needs-you"
 ```
 
 One question per card. A card parked with three questions is a conversation the human has to hold in
@@ -169,7 +169,7 @@ One line per card:
 
 ```
 #14 Add a margin to the sync button  ->  /factory-create-spec   [deliverable:config]
-#15 Rework the whole intake flow     ->  Needs you: one card or three?
+#15 Rework the whole intake flow     ->  /factory-needs-you: one card or three?
 ```
 
 Then one line of totals. Nothing else. No preamble, no restating these instructions.

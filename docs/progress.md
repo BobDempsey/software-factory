@@ -17,6 +17,21 @@ What exists, and what is next. One line per thing, newest state at the top.
 
 No gates, no CI, no spec tooling. That is on purpose.
 
+## The human column got a command (2026-11-05)
+
+Needs you is now **/factory-needs-you**, named after the command that works
+it, like every other column. The command is the one exception to the rule that
+nothing reads that column: it takes a card, says in one sentence what it is and
+what it wants, takes the answer in chat, writes it into the issue verbatim, and
+moves the card where its RETURN TO line points. Answering nine DECISIONS rows by
+editing a markdown table was the thing it replaced.
+
+Transcribing is still not answering. The command never fills in a row the human
+did not say out loud, and no loop invokes it.
+
+The column was renamed in the UI, which keeps its option id, so no card moved
+and nothing had to be dragged back.
+
 ## /factory-expand folded into /factory-refine (2026-11-05)
 
 Two commands read the same one-liner and neither could finish it alone.

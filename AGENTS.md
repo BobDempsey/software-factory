@@ -21,12 +21,13 @@ and report the criterion as unverified rather than passing.
   `factory` after the human has said the card is ready, and never before.
 - Bob's Draft Notes is a private scratchpad. Never read it, never act on it.
 - `/factory-refine` is the only column a draft card may be dragged into. It reads the repo, writes
-  the card out, converts and labels it, and either moves it on or parks it in Needs you with one
+  the card out, converts and labels it, and either moves it on or parks it in /factory-needs-you with one
   question. A command that finds a draft in any other column names it and asks for it to be dragged
   back; it never moves it itself.
-- Needs you is the one human column. No command reads it, acts on it, or offers it.
-  A command that needs a decision parks the card there with a bold ACTION line saying
-  what it wants and a RETURN TO line naming the column it goes back to, then stops.
+- /factory-needs-you is the one human column. A command that needs a decision parks the card there with a
+  bold ACTION line saying what it wants and a RETURN TO line naming the column it goes back to,
+  then stops. Nothing reads that column on its own: `/factory-needs-you` is the single exception,
+  and only because the human typed it. No loop invokes it and no pass offers it.
 - Every admitted issue carries exactly one `deliverable:*` label naming what it
   produces, and repeats it as one bold DELIVERABLE line near the top of the body.
 - A specced issue carries its brief in the body under `# SPEC` and a `## DECISIONS`
@@ -61,10 +62,11 @@ That is the allow-listed surface, so nothing else should call `gh project` direc
   ends the command instead of starting twelve passes of nothing. Use it to start a working session;
   use `/factory-run` when you want the loop up regardless.
 - `.claude/skills/factory-refine/` is the intake command and the admission gate. It takes a
-  one-liner, reads the repo, and runs alone: ready cards move on, unclear ones park in Needs you.
+  one-liner, reads the repo, and runs alone: ready cards move on, unclear ones park in /factory-needs-you.
 - `.claude/skills/factory-create-spec/` writes the spec and the DECISIONS table.
 - `.claude/skills/factory-build/` implements an approved spec and stops at the PR.
 - `.claude/skills/factory-retro/` closes out a finished run and writes `docs/solutions/`.
+- `.claude/skills/factory-needs-you/` walks the human through their own column, one card at a time.
 - `specs/<N>-<slug>/` holds the spec for issue N.
 - `docs/outline.md` is the full design. Read it before proposing structural changes.
 - `docs/progress.md` is what exists today. Read it first, and update it when a piece lands.

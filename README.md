@@ -18,9 +18,10 @@ You touch two columns. Everything between them moves itself.
    expand, refine, spec, build and retro, and reports each pass in a few lines.
    `/factory-watch` is the same loop, except it reads the board first and stops
    right there if nothing is waiting. Use it to start a working session.
-4. Watch **Needs you**. Every card there opens with a bold `ACTION:` saying what
-   it wants and a `RETURN TO:` naming where it goes next. Do the thing, drag it
-   there, and the loop carries on.
+4. Watch **/factory-needs-you**. Every card there opens with a bold `ACTION:` saying what
+   it wants and a `RETURN TO:` naming where it goes next. Run `/factory-needs-you`
+   to work that queue in chat: it asks, writes your answer into the issue, and
+   moves the card. Dragging it yourself works just as well.
 5. Repeat step 4 until the card reaches **Done**.
 
 Agents propose work by filing issues labeled `factory:triage`. Only a human

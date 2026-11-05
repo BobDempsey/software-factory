@@ -155,5 +155,5 @@ Then one line of totals, and the full text of anything you added to `AGENTS.md` 
 - **Never ask the human what happened.** The evidence is in the repo, and they have moved on.
 - **Apply the rule, do not propose it.** And hold the bar: most lessons belong in the run's own solution file or in `docs/solutions/traps.md`, not in `AGENTS.md`.
 - **Never archive a card.** Moving it to Done is the end of your job.
-- **Needs you is untouchable.** No command reads it, acts on it, or offers it. Only the human moves a card out, back to whatever its RETURN TO line names.
+- **/factory-needs-you is untouchable.** No command reads it, acts on it, or offers it. The human moves a card out, back to whatever its RETURN TO line names, either by dragging it or by running `/factory-needs-you` themselves.
 - **Bob's Draft Notes is private.** Do not read it, do not list its contents, do not act on anything in it.

@@ -8,7 +8,7 @@ allowed-tools: Bash(gh:*), Bash(./scripts/board.sh:*), Read, Write, Edit
 
 Turn an admitted issue into a spec a builder can implement against, and a brief a human can approve in two minutes.
 
-This runs after `/factory-refine`. It does not create branches, write code, or open PRs. It works on cards in **/factory-create-spec**, one at a time, and parks each specced card in **Needs you** with an ACTION line, and the human sends it on to **/factory-build** once every DECISIONS row is answered.
+This runs after `/factory-refine`. It does not create branches, write code, or open PRs. It works on cards in **/factory-create-spec**, one at a time, and parks each specced card in **/factory-needs-you** with an ACTION line, and the human sends it on to **/factory-build** once every DECISIONS row is answered.
 
 ## Board constants
 
@@ -106,11 +106,11 @@ Rules for the table:
 - You never write an answer yourself. The human edits the cell, or replies and you transcribe their words verbatim.
 - Rows are never deleted. An answer replaces `UNANSWERED` in place, so the table stays the history of what was decided.
 
-### 5c. Park it in Needs you
+### 5c. Park it in /factory-needs-you
 
-## Parking a card in Needs you
+## Parking a card in /factory-needs-you
 
-Needs you is the only column a human watches, so a card arriving there has to say what it wants without being opened twice. Put these two lines at the very top of the issue body, above everything else:
+/factory-needs-you is the only column a human watches, so a card arriving there has to say what it wants without being opened twice. Put these two lines at the very top of the issue body, above everything else:
 
 ```markdown
 **ACTION:** <what you need from the human, one sentence>
@@ -120,7 +120,7 @@ Needs you is the only column a human watches, so a card arriving there has to sa
 Replace them rather than stacking them: a card that comes back a second time has one ACTION line, the current one. Then move the card:
 
 ```bash
-./scripts/board.sh move <ITEM_ID> "Needs you"
+./scripts/board.sh move <ITEM_ID> "/factory-needs-you"
 ```
 
 For this card the two lines are always the same shape:
@@ -148,7 +148,7 @@ One line per card, in this shape:
 
 ```
 #14 Add one human-scannable issue template  ->  /factory-build   specs/14-issue-template/
-#15 Rework the whole intake flow            ->  Needs you, 3 OPEN flags
+#15 Rework the whole intake flow            ->  /factory-needs-you, 3 OPEN flags
 ```
 
 Then one line of totals. Nothing else. No preamble, no restating these instructions.
