@@ -73,18 +73,19 @@ Then replace the options in one call.
 gh api graphql -F fid=PVTSSF_YOUR_FIELD_ID -f query='
 mutation($fid:ID!){
  updateProjectV2Field(input:{fieldId:$fid, singleSelectOptions:[
-  {name:"Drafts",              color:GRAY,   description:"My notes. Not admitted, agents never read these."},
-  {name:"Needs refinement",    color:YELLOW, description:"Rough note waiting on /factory-refine."},
-  {name:"Ready for spec",      color:BLUE,   description:"Refined and waiting on /factory-create-spec"},
-  {name:"Needs spec approval", color:ORANGE, description:"Brief is in the issue body under SPEC. Waiting on you."},
-  {name:"Ready for dev",       color:GREEN,  description:"Spec approved, decisions answered. Waiting on /factory-build."},
-  {name:"In review (PR)",           color:PURPLE, description:"PR open. Waiting on you to review and merge."},
-  {name:"Merged",              color:GREEN,  description:"PR merged, issue closed. The work is done."},
-  {name:"Needs retro",         color:PINK,   description:"Waiting on /factory-retro."}]})
+  {name:"Drafts",           color:GRAY,   description:"My notes. One line is enough. Never read by agents."},
+  {name:"Needs you",        color:YELLOW, description:"The only column you watch. Each card names its ACTION and its RETURN TO."},
+  {name:"Needs expanding",  color:BLUE,   description:"Agent. A one-liner becomes a paragraph. No conversation."},
+  {name:"Needs refinement", color:BLUE,   description:"Agent. Sharpened into one unit of work, converted, labeled."},
+  {name:"Ready for spec",   color:BLUE,   description:"Agent. The spec and the DECISIONS table get written."},
+  {name:"Ready for dev",    color:BLUE,   description:"Agent. The spec gets implemented and a PR opened."},
+  {name:"In review (PR)",   color:BLUE,   description:"Agent. CodeRabbit reviews and moves the card on."},
+  {name:"Needs retro",      color:BLUE,   description:"Agent. The lesson gets written and the card moves to Done."},
+  {name:"Done",             color:GRAY,   description:"Finished. The archive, kept visible on purpose."}]})
  {projectV2Field{ ... on ProjectV2SingleSelectField { options { name } } }}}'
 ```
 
-The response lists the eight names back, each with its new ID. That is the confirmation, and those IDs are what `gh project item-edit` needs, so keep them.
+The response lists the nine names back, each with its new ID. That is the confirmation, and those IDs are what `gh project item-edit` needs, so keep them.
 
 ### Changing columns later
 
@@ -142,22 +143,23 @@ Dragging the card in the UI does the same thing, and is more reliable right afte
 
 | Column | Who moves the card in | What it means |
 | --- | --- | --- |
-| Drafts | You | Your own notes and half-formed ideas. No `factory` label, and agents never read this column. Cards here can be board-only notes rather than issues. |
-| Needs refinement | You | Worth doing, not yet one unit of work. `/factory-refine` works it with you. |
-| Ready for spec | `/factory-refine` | A real issue, labeled, one unit of work. |
-| Needs spec approval | `/factory-create-spec` | Brief is in the issue body. You answer the DECISIONS rows. |
-| Ready for dev | You | Spec approved, every decision answered. |
-| In review (PR) | `/factory-build` | PR open. You review and merge. |
-| Merged | You | PR merged, issue closed. |
-| Needs retro | You | Waiting on `/factory-retro`, which does not exist yet. |
+| Drafts | You | Your own notes, one line each. No `factory` label, and agents never read this column. |
+| Needs you | Any command | The only column you watch. Each card opens with a bold ACTION and a RETURN TO. |
+| Needs expanding | You, by dragging | A one-liner waiting to be written out. |
+| Needs refinement | `/factory-expand` | Written out, waiting to be sharpened into one unit of work. |
+| Ready for spec | `/factory-refine` | A real issue, labeled. Waiting on the spec. |
+| Ready for dev | You, out of Needs you | Spec approved, every decision answered. |
+| In review (PR) | `/factory-build` | PR open, CodeRabbit reviewing. |
+| Needs retro | `factory-merged.yml` | Merged. Waiting on the lesson. |
+| Done | `/factory-retro` | Finished, kept visible on purpose. |
 
-Every column a human owns says so, so one scan answers whether anything is blocking on you.
+One yellow column answers whether anything is blocking on you.
 
 ## Drafts versus the rest
 
 Drafts is where you write yourself notes, paste half-formed ideas, and leave things unfinished. Nothing there is admitted, nothing has the `factory` label, and no agent reads it.
 
-Admission happens at refinement: `/factory-refine` applies `factory` after you have said the card is ready. Until then the item is a note, not work. A card in Drafts does not even have to be an issue; a plain board note works, and it becomes one when it is worth one.
+Admission happens at refinement: `/factory-refine` applies `factory` once the card is one unit of work. Until then the item is a note, not work. A card in Drafts does not even have to be an issue; a plain board note works, and it becomes one when it is worth one.
 
 ## The token the workflows need
 

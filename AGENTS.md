@@ -20,8 +20,9 @@ and report the criterion as unverified rather than passing.
   applies `factory`, and only a human drags a card onward. `/factory-refine` applies
   `factory` after the human has said the card is ready, and never before.
 - Bob's Draft Notes is a private scratchpad. Never read it, never act on it.
-- Stuck is untouchable. A card is there because three review rounds failed. No command
-  reads it, acts on it, or offers it, and only a human decides what happens next.
+- Needs you is the one human column. No command reads it, acts on it, or offers it.
+  A command that needs a decision parks the card there with a bold ACTION line saying
+  what it wants and a RETURN TO line naming the column it goes back to, then stops.
 - Every admitted issue carries exactly one `deliverable:*` label naming what it
   produces, and repeats it as one bold DELIVERABLE line near the top of the body.
 - A specced issue carries its brief in the body under `# SPEC` and a `## DECISIONS`
@@ -50,7 +51,9 @@ That is the allow-listed surface, so nothing else should call `gh project` direc
   The normal start is `/factory-start`, which reads the board instead.
 - `tasks.md` is the remaining phases, regenerated from the handoff.
 - `docs/workflow.md` is how the board is driven. Read it before touching the board.
-- `.claude/skills/factory-start/` opens a session on the board instead of the handoff.
+- `.claude/skills/factory-run/` drives the whole board on a loop. The usual entry point.
+- `.claude/skills/factory-start/` opens a session on one card instead of the handoff.
+- `.claude/skills/factory-expand/` turns a one-line note into a paragraph.
 - `.claude/skills/factory-refine/` is the intake command. It is the admission gate.
 - `.claude/skills/factory-create-spec/` writes the spec and the DECISIONS table.
 - `.claude/skills/factory-build/` implements an approved spec and stops at the PR.

@@ -1,0 +1,83 @@
+name: factory-approved
+
+on:
+  pull_request_review:
+
+permissions:
+  pull-requests: write
+
+jobs:
+  move-card:
+    # The webhook sends this lowercase, unlike the GraphQL enum.
+    if: github.event.review.state == 'approved'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Park the card in Needs you to merge
+        env:
+          GH_TOKEN: ${{ secrets.FACTORY_PROJECT_TOKEN }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          set -euo pipefail
+
+          PROJECT_NUMBER=$(jq -r '.projectNumber' .factory/board.json)
+          FIELD_ID=$(jq -r '.statusFieldId' .factory/board.json)
+          COLUMN=$(jq -r '.needsYouColumn' .factory/board.json)
+
+          # The issue this PR closes, and its card on our project. One round trip.
+          gh api graphql -f query='
+            query($owner:String!, $repo:String!, $pr:Int!) {
+              repository(owner:$owner, name:$repo) {
+                pullRequest(number:$pr) {
+                  closingIssuesReferences(first:10) {
+                    nodes {
+                      number
+                      projectItems(first:10) { nodes { id project { number } } }
+                    }
+                  }
+                }
+              }
+            }' -f owner="${GITHUB_REPOSITORY%/*}" -f repo="${GITHUB_REPOSITORY#*/}" \
+               -F pr="$PR" > refs.json
+
+          ITEM=$(jq -r --argjson p "$PROJECT_NUMBER" '
+            [ .data.repository.pullRequest.closingIssuesReferences.nodes[]
+              | .projectItems.nodes[] | select(.project.number == $p) | .id ][0] // empty
+          ' refs.json)
+
+          if [ -z "$ITEM" ]; then
+            gh pr comment "$PR" --body "No linked issue on project $PROJECT_NUMBER, so no card was moved. If this change belongs to a factory card, move it to **$COLUMN** by hand."
+            echo "PR #$PR closes no card on project $PROJECT_NUMBER" >&2
+            exit 1
+          fi
+
+          # Option ids change every time the column list is replaced, so look it up by name.
+          OPT=$(gh api graphql -f query="query{node(id:\"$FIELD_ID\"){... on ProjectV2SingleSelectField{options{id name}}}}" \
+            | jq -r --arg want "$COLUMN" '
+                [ .data.node.options[] | select(.name == $want) | .id ][0] // empty')
+
+          if [ -z "$OPT" ]; then
+            echo "no column named '$COLUMN' on the board" >&2
+            exit 1
+          fi
+
+          PROJECT_ID=$(jq -r '.projectId' .factory/board.json)
+
+          gh api graphql -f query='
+            mutation($p:ID!, $i:ID!, $f:ID!, $o:String!) {
+              updateProjectV2ItemFieldValue(input:{
+                projectId:$p, itemId:$i, fieldId:$f,
+                value:{ singleSelectOptionId:$o }}) { projectV2Item { id } }
+            }' -f p="$PROJECT_ID" -f i="$ITEM" -f f="$FIELD_ID" -f o="$OPT" > /dev/null
+
+          # Read it back. An API write reporting success is not proof.
+          NOW=$(gh api graphql -f query="query{node(id:\"$ITEM\"){... on ProjectV2Item{fieldValueByName(name:\"Status\"){... on ProjectV2ItemFieldSingleSelectValue{name}}}}}" \
+            | jq -r '.data.node.fieldValueByName.name')
+
+          if [ "$NOW" != "$COLUMN" ]; then
+            echo "wrote $COLUMN but the card reads $NOW" >&2
+            exit 1
+          fi
+
+          echo "parked card in $COLUMN to merge"

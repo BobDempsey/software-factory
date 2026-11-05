@@ -10,30 +10,21 @@ Eraser: the pipeline, and the build order.
 
 ## Driving it from GitHub
 
-Run `/factory-start` at the top of a session. It reads the board, says where
-everything sits, and offers the first card waiting on refinement.
+You touch two columns. Everything between them moves itself.
 
-1. Jot the idea as a card in **Bob's Draft Notes**. No issue, no labels.
-2. Drag it to **Needs refinement** and run `/factory-refine`. It sharpens the
-   card with you, converts it to an issue, labels it, and moves it to
-   **Ready for spec**.
-3. Run `/factory-create-spec`. It writes the spec, puts the brief in the issue
-   body, and parks the card in **Needs spec approval**.
-4. Answer the `DECISIONS` rows in the issue body, then drag the card to
-   **Ready for dev**.
-5. Run `/factory-build`. It implements the spec, opens a PR, and moves the card
-   to **In review (PR)**.
-6. CodeRabbit reviews the PR and moves the card itself: approved goes to
-   **Needs merging**, changes requested goes back to **Ready for dev**, and a
-   third failed round goes to **Stuck**.
-7. Merge the PR from Needs merging. The merge moves the card to **Needs retro**.
-8. Run `/factory-retro`. It writes what the run taught us into
-   `docs/solutions/` and moves the card to **Done**.
+1. Write a line in **Bob's Draft Notes** and drag it to **Needs expanding**.
+2. Run `/factory-run`. It loops over the board, taking one card a pass through
+   expand, refine, spec, build and retro, and reports each pass in a few lines.
+3. Watch **Needs you**. Every card there opens with a bold `ACTION:` saying what
+   it wants and a `RETURN TO:` naming where it goes next. Do the thing, drag it
+   there, and the loop carries on.
+
+That is the whole interaction. `/factory-start` does a single card instead of
+looping, and `node scripts/watch.mjs` in a second terminal prints when a card
+moves.
 
 Agents propose work by filing issues labeled `factory:triage`. Only a human
-applies `factory`, and only a human drags a card onward.
-
-A scheduled GitHub Action will run the commands on its own later. Not yet.
+applies `factory`.
 
 Full detail in [docs/workflow.md](docs/workflow.md).
 

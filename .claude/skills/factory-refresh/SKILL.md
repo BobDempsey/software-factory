@@ -61,7 +61,7 @@ One line per change, nothing for cards that sat still:
 
 ```
 #5 Move a card to Needs retro   Ready for dev -> In review (PR)    by the agent
-#7 Add a cost guard             Needs spec approval -> Ready for dev    by you
+#7 Add a cost guard             Needs you -> Ready for dev    by you
 #9 Rework the triage labels     new in Needs refinement
 ```
 
@@ -90,9 +90,9 @@ Run /factory-build on #7 Add a cost guard?
 
 On a yes, run it. On anything else, do what they said.
 
-A card that moved into a human column (Needs spec approval, Needs merging, Stuck) is reported and never acted on, and neither is one in In review (PR), which waits on CodeRabbit.
+A card that moved into a human column (Needs you) is reported and never acted on, and neither is one in In review (PR), which waits on CodeRabbit.
 
-A card that landed in **Stuck** is worth calling out in the report, because it got there by failing three review rounds and nothing will move it until the human does. So is a card that was already sitting in an agent column before this run: it did not move, so nobody handed it over, and picking it up would be reaching for work rather than responding to it.
+A card that landed in **Needs you** is worth calling out in the report, because it got there by failing three review rounds and nothing will move it until the human does. So is a card that was already sitting in an agent column before this run: it did not move, so nobody handed it over, and picking it up would be reaching for work rather than responding to it.
 
 If more than one card was handed over, say how many and offer the first. One card at a time.
 
@@ -110,8 +110,8 @@ Write it from the board read in step 1, not from what you think the board should
 
 - **Report only what moved.** A list of everything is `/factory-start`, not this.
 - **Only a move into an agent column is an offer.** A card sitting still is not work being handed over.
-- **Never act on a human column.** Needs spec approval, Needs merging and Stuck wait on a person. In review (PR) waits on CodeRabbit.
-- **Stuck is untouchable.** No command reads it, acts on it, or offers it. A card is there because three review rounds failed, and only the human decides what happens next.
+- **Never act on a human column.** Needs you wait on a person. In review (PR) waits on CodeRabbit.
+- **Needs you is untouchable.** No command reads it, acts on it, or offers it. Only the human moves a card out, back to whatever its RETURN TO line names.
 - **Always write the snapshot**, even on a run that reports nothing and even if the human says no.
 - **Bob's Draft Notes is private.** Count moves in and out of it, since the board read already shows them, but never read a card's contents there.
 - **No preamble.** The report is the first thing in the response.

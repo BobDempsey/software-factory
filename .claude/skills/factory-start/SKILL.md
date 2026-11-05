@@ -86,7 +86,7 @@ Say so in one line, name the first column that does have a card waiting on a com
 | Ready for dev | `/factory-build` |
 | Needs retro | `/factory-retro` |
 
-Columns waiting on a human (Needs spec approval, Needs merging, Stuck) are reported, never acted on. So is In review (PR), which waits on CodeRabbit.
+Columns waiting on a human (Needs you) are reported, never acted on. So is In review (PR), which waits on CodeRabbit.
 
 If the whole board is quiet, say that in one line and stop. An empty board is a fine place to start a session.
 
@@ -94,7 +94,7 @@ If the whole board is quiet, say that in one line and stop. An empty board is a 
 
 - **Do not read the handoff.** If the session turns out to need deep history, say so and let the human ask for it.
 - **Bob's Draft Notes is private.** Do not read it, do not list its contents, do not count it.
-- **Do not act on a human's column.** Needs refinement, Needs spec approval, Needs merging and Stuck wait on a person. In review (PR) waits on CodeRabbit.
-- **Stuck is untouchable.** No command reads it, acts on it, or offers it. A card is there because three review rounds failed, and only the human decides what happens next.
+- **Do not act on a human's column.** Needs refinement, Needs you wait on a person. In review (PR) waits on CodeRabbit.
+- **Needs you is untouchable.** No command reads it, acts on it, or offers it. Only the human moves a card out, back to whatever its RETURN TO line names.
 - **One card, and ask first.** Starting the session means starting one piece of work, with the human's yes, not surveying all of them.
 - **No preamble.** The report is the first thing in the response.

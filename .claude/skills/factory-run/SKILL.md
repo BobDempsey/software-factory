@@ -45,7 +45,7 @@ One call. Do not read `handoff.md`, `docs/outline.md`, or `docs/progress.md`, an
 
 One card per pass, from the first column in that list that has one. Finishing one card beats starting four.
 
-**Never touch** Needs spec approval, In review (PR), Needs merging, Stuck, Bob's Draft Notes or Done. Those wait on the human or on CodeRabbit, and a pass that nudges them is a pass that lies about what is blocking.
+**Never touch** Needs you, In review (PR), Bob's Draft Notes or Done. Those wait on the human or on CodeRabbit, and a pass that nudges them is a pass that lies about what is blocking.
 
 Invoke the other commands through the Skill tool rather than reimplementing them. Their rules bind here unchanged: no DECISIONS row is ever answered by an agent, no card is moved into a human column except by the command that owns that transition.
 
@@ -54,8 +54,8 @@ Invoke the other commands through the Skill tool rather than reimplementing them
 Three lines at most. Lead with what changed.
 
 ```
-pass 4   specced #11 -> Needs spec approval, 3 rows for you
-         #9 waiting on CodeRabbit, #12 in Needs merging
+pass 4   specced #11 -> Needs you, 3 rows for you
+         #9 waiting on CodeRabbit, #12 in Needs you: merge the PR
 ```
 
 When nothing moved and nothing is waiting on you, one line:
@@ -68,9 +68,9 @@ Do not re-list the board every pass. The human can see the board; what they cann
 
 ### 4. Surface what is blocked on the human
 
-Every pass, in one line, name anything sitting in Needs spec approval, Needs merging or Stuck. That is the whole reason to leave the loop running: the board tells them where the queue is, without them opening it.
+Every pass, in one line, name anything sitting in Needs you, and what each card's ACTION line asks for. That is the whole reason to leave the loop running: the board tells them where the queue is, without them opening it.
 
-Say it once per card, not once per pass. A card that has been in Needs merging for six passes gets mentioned on the pass it arrived and then stays quiet until it moves, unless the human asks.
+Say it once per card, not once per pass. A card that has been in Needs you for six passes gets mentioned on the pass it arrived and then stays quiet until it moves, unless the human asks.
 
 ## Being interrupted
 
@@ -80,7 +80,7 @@ They may:
 
 - **Ask what is happening.** Answer from the board and the issues, not from memory of earlier passes.
 - **Steer a card.** "That spec is wrong" means stop and fix it with them, in conversation. The loop keeps running underneath; the current pass just becomes that work.
-- **Answer DECISIONS rows out loud.** Transcribe their words into the issue body verbatim and move the card on. This is the one way a card leaves Needs spec approval without them opening GitHub.
+- **Answer DECISIONS rows out loud.** Transcribe their words into the issue body verbatim and move the card on. This is the one way a card leaves Needs you without them opening GitHub.
 - **Say stop.** End the loop immediately and say the board state in one line.
 
 ## Rules
@@ -88,8 +88,8 @@ They may:
 - **One card per pass.** The loop is patient; you do not need to be.
 - **Ask before building or refining.** Those two write code or need a conversation. Spec and retro run alone.
 - **Never answer a DECISIONS row yourself.** Transcribing the human's words is not answering.
-- **Never act on a human column.** Needs spec approval, Needs merging and Stuck are theirs. In review (PR) is CodeRabbit's.
-- **Stuck is untouchable.** No pass reads it, acts on it, or offers it.
+- **Never act on a human column.** Needs you is theirs. In review (PR) is CodeRabbit's.
+- **Needs you is untouchable.** No pass reads it, acts on it, or offers it.
 - **Bob's Draft Notes is private.** Do not read it, do not list its contents, do not count it.
 - **Three lines a pass.** A loop that narrates itself is worse than no loop, because the human stops reading it.
 - **Everything is in the issue.** Nothing a pass learns may live only in this session: it goes in the issue body, the spec, or `docs/solutions/`.

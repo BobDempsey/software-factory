@@ -1,15 +1,15 @@
 # The workflow, from the board
 
-The board is meant to be driven by dragging. A card moves one column at a time, and at each stop one slash command acts on it.
+The board runs itself. You start work in one column and unblock it in another, and every column between them is driven by a command, a workflow, or CodeRabbit.
 
 ```
-Bob's Draft Notes -> Needs refinement -> Ready for spec -> Needs spec approval
-  -> Ready for dev -> In review (PR) -> Needs merging -> Needs retro -> Done
+Bob's Draft Notes -> Needs expanding -> Needs refinement -> Ready for spec
+  -> Ready for dev -> In review (PR) -> Needs retro -> Done
 
-  In review (PR) -> Ready for dev on changes requested, and -> Stuck on the third round
+  Needs you catches anything that wants a decision, from any column, and sends it back
 ```
 
-Every column names the command or the person that acts on it, and the board colours them: yellow is you, blue is an agent, gray is nothing pending. A column nobody acts on should not exist, which is why Merged was removed.
+One column is yellow and it is the only one you watch. Everything blue moves itself. Gray is where work starts and where it ends.
 
 ## Starting a session
 
@@ -25,34 +25,37 @@ Every column names the command or the person that acts on it, and the board colo
 
 ## The run, column by column
 
-**Needs refinement.** I drag a card here when it is worth doing but not yet one unit of work. `/factory-refine` asks only the questions whose answers change what gets built, rewrites the card so it reads cleanly to someone who was not in the conversation, converts it to an issue, applies `factory` and one `deliverable:*` label, and moves it to Ready for spec once I say it is ready. Work that turns out to be two cards is held, and I decide the split.
+**Bob's Draft Notes.** Mine, private, never read by an agent. One line is enough. I drag it to Needs expanding to start it.
 
-**Ready for spec.** `/factory-create-spec` reads the issue plus `docs/`, writes `specs/<N>-<slug>/spec.md` and `spec-brief.md`, puts the brief into the issue body under a `# SPEC` heading, and writes a `## DECISIONS` table at the bottom. Then it moves the card to Needs spec approval and stops.
+**Needs expanding.** `/factory-expand` reads the one-liner against the repo, writes out what exists today and what the note wants changed, and moves it on. It never asks me anything.
 
-**Needs spec approval.** Mine. Every flag the agent could not decide is a row in the DECISIONS table with the answer `UNANSWERED`. I replace each one with yes, no, or a short phrase, in the issue body. The agent never fills one in. When every row is answered I drag the card to Ready for dev.
+**Needs refinement.** `/factory-refine` sharpens it into one unit of work, converts it to an issue, applies `factory` plus one `deliverable:*` label. Anything it cannot decide parks in Needs you.
 
-**Ready for dev.** `/factory-build` refuses to start while any row says `UNANSWERED`. Otherwise it branches `<N>-<slug>` off master, implements what the spec says and nothing else, checks each acceptance criterion by name, commits with a single `Assisted-by:` trailer, opens a PR that closes the issue, and moves the card to In review (PR).
+**Ready for spec.** `/factory-create-spec` writes `specs/<N>-<slug>/spec.md` and the brief, puts the brief in the issue body under `# SPEC`, writes the `## DECISIONS` table, then parks the card in Needs you.
 
-**In review (PR).** CodeRabbit's. It reviews every PR and moves the card itself: an approval sends it to Needs merging, a request for changes sends it back to Ready for dev. Nothing is waiting on me while a card sits here.
+**Ready for dev.** `/factory-build` refuses to start while any DECISIONS row says `UNANSWERED`. Otherwise it branches, implements the spec and nothing else, commits, and opens a PR.
 
-**Needs merging.** Mine. CodeRabbit is happy, so I read the diff and merge, and `factory-merged` moves the card to Needs retro on its own.
+**In review (PR).** CodeRabbit's. An approval parks the card in Needs you to merge; a request for changes sends it back to Ready for dev; the third failed round parks it in Needs you.
 
-**Stuck.** Mine, and red on the board. A card that went back to Ready for dev three times and still failed review stops here. No command reads this column. I fix it by hand, send it back for a fresh spec, or close it.
+**Needs retro.** `/factory-retro` rebuilds the run from the issue, spec, PR and commits, writes `docs/solutions/<N>-<slug>.md`, adds a rule to `AGENTS.md` if the run earned one, and moves the card to Done.
 
-**Needs retro.** `/factory-retro` rebuilds the run from the issue, spec, PR and commits, writes `docs/solutions/<N>-<slug>.md`, adds a rule to `AGENTS.md` if the run earned one, and moves the card to Done. It asks me nothing, because by this point I have moved on.
+**Needs you.** Mine, and the only column I watch. Every card here opens with two lines:
 
-**Done.** The archive of finished runs, kept visible on purpose. Archiving a card is mine, and there is no hurry.
+```markdown
+**ACTION:** Answer the DECISIONS rows at the bottom of this issue.
+**RETURN TO:** Ready for dev
+```
+
+I do the thing, drag the card to whatever RETURN TO names, and the loop picks it up again.
+
+**Done.** The archive, kept visible on purpose.
 
 ## The gestures that are mine
 
-- Dragging out of Bob's Draft Notes. Nothing reads that column.
-- Saying a card is ready, at the end of refinement.
-- Answering the DECISIONS rows.
-- Dragging to Ready for dev. That drag is the approval of the spec.
-- Reviewing and merging the PR, once CodeRabbit has put it in Needs merging.
-- Deciding what happens to anything in Stuck.
+- Writing a line in Bob's Draft Notes and dragging it to Needs expanding.
+- Everything in Needs you: answering DECISIONS rows, merging a PR, deciding what to do with a card that failed three review rounds.
 
-An agent never does any of these.
+That is the whole list. Every other move on this board is made by a command, a workflow, or CodeRabbit.
 
 > **Automation note.** GitHub's built-in project workflows cannot convert a draft or apply labels on a status change, and user-owned projects do not emit the `projects_v2_item` webhook that would let an Action react to the drag. So the tidying happens when a command runs, not at the moment of the drag.
 
@@ -66,18 +69,16 @@ Not built yet, on purpose. The commands run first because the rules are not sett
 
 | Column | Who puts cards here | What it means |
 | --- | --- | --- |
-| Bob's Draft Notes | Me | A scratchpad. Drafts, half-formed ideas, reminders. Not issues, not labeled, never read by agents. |
-| Needs refinement | Me, by dragging | Worth doing, not yet one unit of work. `/factory-refine` works it with me. |
-| Ready for spec | `/factory-refine` | A real issue, labeled, one unit of work. Waiting on `/factory-create-spec`. |
-| Needs spec approval | `/factory-create-spec` | Brief is in the issue body. Waiting on me to answer the DECISIONS rows. |
-| Ready for dev | Me, by dragging | Spec approved, every decision answered. Waiting on `/factory-build`. |
-| In review (PR) | `/factory-build` | PR open, CodeRabbit reviewing. It moves the card on by itself. |
-| Needs merging | CodeRabbit | Approved. Waiting on me to read the diff and merge. |
-| Stuck | `factory-changes-requested` | Three review rounds failed. No command touches it. |
-| Merged | Me, by dragging | PR merged, issue closed. The work is done. |
-| Needs retro | Me, by dragging | Waiting on `/factory-retro`. |
-| Done | `/factory-retro` | Retro written. The archive of finished runs, kept visible on purpose. |
-| No Status | Nobody, on purpose | GitHub's catch-all for cards with no Status. Should be empty; anything here is a mistake worth noticing. |
+| Bob's Draft Notes | Me | A scratchpad. One line is enough. Never read by agents. |
+| Needs you | Any command, any workflow | The only column I watch. Each card names its ACTION and its RETURN TO. |
+| Needs expanding | Me, by dragging | A one-liner waiting to be written out. |
+| Needs refinement | `/factory-expand` | Written out, waiting to be sharpened into one unit of work. |
+| Ready for spec | `/factory-refine` | A real issue, labeled. Waiting on the spec. |
+| Ready for dev | Me, out of Needs you | Spec approved, every decision answered. |
+| In review (PR) | `/factory-build` | PR open, CodeRabbit reviewing. |
+| Needs retro | `factory-merged.yml` | Merged. Waiting on the lesson. |
+| Done | `/factory-retro` | Finished, kept visible on purpose. |
+| No Status | Nobody, on purpose | GitHub's catch-all. Anything here is a mistake worth noticing. |
 
 ## Labels
 

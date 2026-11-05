@@ -24,6 +24,16 @@ jobs:
           PROJECT_NUMBER=$(jq -r '.projectNumber' .factory/board.json)
           FIELD_ID=$(jq -r '.statusFieldId' .factory/board.json)
           COLUMN=$(jq -r '.buildColumn' .factory/board.json)
+          CAP=$(jq -r '.reviewRoundCap' .factory/board.json)
+          PARK=$(jq -r '.needsYouColumn' .factory/board.json)
+
+          # Count how many times this PR has been reviewed down already.
+          # Past the cap, a fourth automated attempt is a loop, not progress.
+          ROUNDS=$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR/reviews" \
+            --jq '[.[] | select(.state == "CHANGES_REQUESTED")] | length')
+          if [ "$ROUNDS" -ge "$CAP" ]; then
+            COLUMN="$PARK"
+          fi
 
           # The issue this PR closes, and its card on our project. One round trip.
           gh api graphql -f query='
@@ -80,4 +90,4 @@ jobs:
             exit 1
           fi
 
-          echo "moved card back to $COLUMN"
+          echo "moved card to $COLUMN after $ROUNDS changes-requested review(s)"

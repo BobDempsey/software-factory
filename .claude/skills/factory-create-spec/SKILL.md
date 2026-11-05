@@ -8,7 +8,7 @@ allowed-tools: Bash(gh:*), Bash(./scripts/board.sh:*), Read, Write, Edit
 
 Turn an admitted issue into a spec a builder can implement against, and a brief a human can approve in two minutes.
 
-This runs after `/factory-refine`. It does not create branches, write code, or open PRs. It works on cards in **Ready for spec**, one at a time, and parks each specced card in **Needs spec approval**, and moves it to **Ready for dev** once the human approves.
+This runs after `/factory-refine`. It does not create branches, write code, or open PRs. It works on cards in **Ready for spec**, one at a time, and parks each specced card in **Needs you** with an ACTION line, and the human sends it on to **Ready for dev** once every DECISIONS row is answered.
 
 ## Board constants
 
@@ -106,12 +106,28 @@ Rules for the table:
 - You never write an answer yourself. The human edits the cell, or replies and you transcribe their words verbatim.
 - Rows are never deleted. An answer replaces `UNANSWERED` in place, so the table stays the history of what was decided.
 
-### 5c. Move the card
+### 5c. Park it in Needs you
 
-Move it so the board shows it is waiting on you:
+## Parking a card in Needs you
+
+Needs you is the only column a human watches, so a card arriving there has to say what it wants without being opened twice. Put these two lines at the very top of the issue body, above everything else:
+
+```markdown
+**ACTION:** <what you need from the human, one sentence>
+**RETURN TO:** <the column the card goes back to once they have done it>
+```
+
+Replace them rather than stacking them: a card that comes back a second time has one ACTION line, the current one. Then move the card:
 
 ```bash
-./scripts/board.sh move <ITEM_ID> "Needs spec approval"
+./scripts/board.sh move <ITEM_ID> "Needs you"
+```
+
+For this card the two lines are always the same shape:
+
+```markdown
+**ACTION:** Answer the DECISIONS rows at the bottom of this issue. Each carries a recommendation, so `y` accepts them all.
+**RETURN TO:** Ready for dev
 ```
 
 Stop there and ask the human to approve, and to answer the DECISIONS rows. Every row has to say something other than `UNANSWERED` before the card can move again.
@@ -132,7 +148,7 @@ One line per card, in this shape:
 
 ```
 #14 Add one human-scannable issue template  ->  Ready for dev   specs/14-issue-template/
-#15 Rework the whole intake flow            ->  Needs spec approval, 3 OPEN flags
+#15 Rework the whole intake flow            ->  Needs you, 3 OPEN flags
 ```
 
 Then one line of totals. Nothing else. No preamble, no restating these instructions.
