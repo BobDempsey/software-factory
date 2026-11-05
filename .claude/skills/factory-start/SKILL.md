@@ -56,6 +56,23 @@ On a yes, refine it with the human, following `.claude/skills/factory-refine/SKI
 
 Refinement is a conversation. Ask the questions whose answers change what gets built, capped at three and asked as one block, and stop there. Do not run ahead to a second card.
 
+Every question carries your recommendation. The human should be able to answer a whole refinement with `y`, so a question without a recommendation is a question you have not finished thinking about.
+
+```
+QUESTION
+
+<the question, one sentence>
+
+RECOMMENDATION
+
+<the answer you would pick, and why, one sentence>
+
+Use this recommendation? (y/n)
+```
+
+Say no recommendation only when you genuinely have none, and say so in those words rather than hedging into one.
+
+
 On anything else, do what they said instead.
 
 ### 4. When Needs refinement is empty

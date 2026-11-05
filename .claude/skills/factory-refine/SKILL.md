@@ -38,6 +38,23 @@ Refinement is a conversation, not a batch job. Finish a card, report it, then mo
 
 Read the card. Then ask only the questions whose answers would change what gets built. Cap it at three at a time, and ask them as one block rather than one per turn.
 
+Every question carries your recommendation. The human should be able to answer a whole refinement with `y`, so a question without a recommendation is a question you have not finished thinking about.
+
+```
+QUESTION
+
+<the question, one sentence>
+
+RECOMMENDATION
+
+<the answer you would pick, and why, one sentence>
+
+Use this recommendation? (y/n)
+```
+
+Say no recommendation only when you genuinely have none, and say so in those words rather than hedging into one.
+
+
 A card is ready when all of these hold:
 
 - **It names one deliverable.** One skill, one hook, one workflow, one doc, one script, or one config change.
