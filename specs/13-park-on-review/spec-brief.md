@@ -11,7 +11,7 @@ A PR CodeRabbit has finished with shows up in Needs you, and its first line says
 - `factory-approved.yml` becomes `factory-reviewed.yml`. The old name would be a lie once the guard widens.
 - Fires on any submitted review that is not `changes_requested`, from anyone except the PR author.
 - The two review workflows now partition every submitted review, so no state falls through both.
-- Prepends `**ACTION:**` and `**RETURN TO:** Needs retro` to the issue body, stripping any pair already there.
+- Prepends `**ACTION:**` and `**RETURN TO:** <retroColumn from board.json>` to the issue body, stripping any pair already there.
 - The ACTION line names the literal review state, because approved and finished-with-comments are different decisions.
 - CRITICAL: three runs have already stalled on this. #4, #7 and #11 all sat in In review (PR) until merged by hand.
 - ASSUMPTION: a review by the PR author is ignored, so commenting on your own work does not park the card.
@@ -24,7 +24,7 @@ A PR CodeRabbit has finished with shows up in Needs you, and its first line says
 - When a `commented` review is submitted by someone other than the pull request author, the system shall move the card to Needs you.
 - When an `approved` review is submitted, the system shall move the card to Needs you.
 - When a `changes_requested` review is submitted, the system shall skip and let `factory-changes-requested.yml` act.
-- When the card is parked, the system shall prepend an ACTION line naming the review state and comment count, and a RETURN TO line reading Needs retro.
+- When the card is parked, the system shall prepend an ACTION line naming the review state and comment count, and a RETURN TO line reading `retroColumn` from `.factory/board.json`.
 - When a card is parked a second time, the system shall leave exactly one ACTION line.
 
 ## Scope boundaries

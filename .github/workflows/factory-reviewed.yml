@@ -99,16 +99,18 @@ jobs:
 
           # Strip any ACTION/RETURN TO pair already there, so a card that passes
           # through twice carries one, the current one.
-          python3 - "$STATE" "$COMMENTS" "$PR" <<'PY'
+          RETRO=$(jq -r '.retroColumn' .factory/board.json)
+
+          python3 - "$STATE" "$COMMENTS" "$PR" "$RETRO" <<'PY'
 import io, re, sys
-state, comments, pr = sys.argv[1], sys.argv[2], sys.argv[3]
+state, comments, pr, nxt = sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4]
 body = io.open('body.md', encoding='utf-8').read()
 body = re.sub(r'^\*\*ACTION:\*\*.*?\n\*\*RETURN TO:\*\*.*?\n(?:\s*---\s*\n)?\s*',
               '', body, count=1, flags=re.S)
 plural = '' if comments == '1' else 's'
 head = (f'**ACTION:** CodeRabbit finished with {state} and {comments} comment{plural}. '
         f'Read the diff and merge PR #{pr}.\n'
-        f'**RETURN TO:** Needs retro\n\n---\n\n')
+        f'**RETURN TO:** {nxt}\n\n---\n\n')
 io.open('body.md', 'w', encoding='utf-8', newline='\n').write(head + body)
 PY
 

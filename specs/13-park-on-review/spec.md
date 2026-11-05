@@ -38,7 +38,7 @@ The job prepends two lines to the issue body, above everything else:
 
 ```markdown
 **ACTION:** CodeRabbit finished with <state> and <n> comment(s). Read the diff and merge PR #<PR>.
-**RETURN TO:** Needs retro
+**RETURN TO:** <retroColumn from board.json>
 ```
 
 `<state>` is the literal review state, lowercase as the webhook sends it. Approved and commented are different signals and the merge decision depends on which it was, so the line names it rather than flattening both to "ready".
@@ -67,7 +67,7 @@ Possible, and rejected. It puts the factory's wiring in a vendor dashboard inste
 - When a review with state `approved` is submitted, the system shall move the card to Needs you.
 - When a review with state `changes_requested` is submitted, the system shall leave this workflow skipped and let `factory-changes-requested.yml` act.
 - When a review is submitted by the pull request author, the system shall do nothing.
-- When the card is parked, the system shall prepend an ACTION line naming the review state and the comment count, and a RETURN TO line reading Needs retro.
+- When the card is parked, the system shall prepend an ACTION line naming the review state and the comment count, and a RETURN TO line reading `retroColumn` from `.factory/board.json`.
 - When a card is parked a second time, the system shall leave exactly one ACTION line in the body.
 
 ## Verification
