@@ -8,7 +8,7 @@ allowed-tools: Bash(gh:*), Bash(git:*), Bash(./scripts/board.sh:*), Read, Write,
 
 Implement one approved spec, and stop at the PR.
 
-This runs after `/factory-create-spec`. It works on cards in **Ready for dev**, one at a time. It opens the PR, moves the card to **In review**, and stops. It never merges or deploys.
+This runs after `/factory-create-spec`. It works on cards in **Ready for dev**, one at a time. It opens the PR, moves the card to **In review (PR)**, and stops. It never merges or deploys.
 
 ## Board constants
 
@@ -94,22 +94,22 @@ gh pr create --title "<one sentence>" --body-file <file>
 
 The body says `Closes #<N>`, links the spec directory, and lists each acceptance criterion with how it was checked. Anything you could not verify goes in its own section, named.
 
-### 9. Move the card to In review
+### 9. Move the card to In review (PR)
 
 ```bash
-./scripts/board.sh move <ITEM_ID> "In review"
+./scripts/board.sh move <ITEM_ID> "In review (PR)"
 ```
 
 **Verify the move by reading the board again.** Replacing the board's Status options in the past has left API writes reporting success while the card rendered in the wrong column. If the read-back disagrees, say so plainly and tell the human to drag the card, rather than retrying.
 
-Reviewing and merging the PR is the human's, and so is the drag to Needs retro that follows it. This command stops at In review.
+Reviewing and merging the PR is the human's, and so is the drag to Needs retro that follows it. This command stops at In review (PR).
 
 ### 10. Report
 
 One line per card, in this shape:
 
 ```
-#14 Add one human-scannable issue template  ->  In review, PR #21   4/4 criteria checked
+#14 Add one human-scannable issue template  ->  In review (PR), PR #21   4/4 criteria checked
 #15 Rework the whole intake flow            ->  blocked, 2 DECISIONS rows UNANSWERED
 ```
 

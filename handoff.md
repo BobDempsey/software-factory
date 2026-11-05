@@ -45,7 +45,7 @@ https://app.eraser.io/workspace/OUpb5Em92ffztvfLtLQ1
 ## 3. State, verified 2026-11-04
 
 - Repo public at https://github.com/BobDempsey/software-factory, pushed, master.
-- Board at https://github.com/users/BobDempsey/projects/4, eight columns plus No Status: **Bob's Draft Notes, Needs refinement, Ready for spec, Needs spec approval, Ready for dev, In review, Needs retro, Done**, board layout saved. Yellow is a column waiting on the human, blue is one waiting on a command, gray is neither, and every description opens with YOU or Agent.
+- Board at https://github.com/users/BobDempsey/projects/4, eight columns plus No Status: **Bob's Draft Notes, Needs refinement, Ready for spec, Needs spec approval, Ready for dev, In review (PR), Needs retro, Done**, board layout saved. Yellow is a column waiting on the human, blue is one waiting on a command, gray is neither, and every description opens with YOU or Agent.
 - Labels: `factory`, `factory:triage`, and six `deliverable:*` (skill, hook, workflow, doc, script, config).
 - Five commands exist as skills. Four have run: `/factory-refine`, `/factory-create-spec`, `/factory-build`, `/factory-retro`. `/factory-start` is written and untested.
 - `/factory-sync-issues` was deleted. Its checks live in `/factory-refine` now, because two commands reading the same column was the confusing part.

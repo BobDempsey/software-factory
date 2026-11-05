@@ -20,7 +20,7 @@ No gates, no CI, no spec tooling. That is on purpose.
 ## Board recut to eight columns (2026-11-04)
 
 Bob's Draft Notes, Needs refinement, Ready for spec, Needs spec approval,
-Ready for dev, In review, Needs retro, Done. Yellow means you, blue means an
+Ready for dev, In review (PR), Needs retro, Done. Yellow means you, blue means an
 agent, gray means nothing pending, and every description opens with YOU or
 Agent. Merged was cut: it only ever asked for a second drag.
 
@@ -44,7 +44,7 @@ write a user-owned project.
   `spec-brief.md`, puts the brief in the issue body under `# SPEC`, writes the
   `## DECISIONS` table, and parks the card in Needs spec approval.
 - `/factory-build` refuses while any DECISIONS row says `UNANSWERED`, then
-  branches, implements, opens a PR, and moves the card to In review.
+  branches, implements, opens a PR, and moves the card to In review (PR).
 - `/factory-retro` rebuilds a finished run from the issue, spec, PR and
   commits, writes `docs/solutions/<N>-<slug>.md`, applies any rule the run
   earned to `AGENTS.md`, and moves the card to Done. It asks the human nothing.

@@ -78,7 +78,7 @@ mutation($fid:ID!){
   {name:"Ready for spec",      color:BLUE,   description:"Refined and waiting on /factory-create-spec"},
   {name:"Needs spec approval", color:ORANGE, description:"Brief is in the issue body under SPEC. Waiting on you."},
   {name:"Ready for dev",       color:GREEN,  description:"Spec approved, decisions answered. Waiting on /factory-build."},
-  {name:"In review",           color:PURPLE, description:"PR open. Waiting on you to review and merge."},
+  {name:"In review (PR)",           color:PURPLE, description:"PR open. Waiting on you to review and merge."},
   {name:"Merged",              color:GREEN,  description:"PR merged, issue closed. The work is done."},
   {name:"Needs retro",         color:PINK,   description:"Waiting on /factory-retro."}]})
  {projectV2Field{ ... on ProjectV2SingleSelectField { options { name } } }}}'
@@ -147,7 +147,7 @@ Dragging the card in the UI does the same thing, and is more reliable right afte
 | Ready for spec | `/factory-refine` | A real issue, labeled, one unit of work. |
 | Needs spec approval | `/factory-create-spec` | Brief is in the issue body. You answer the DECISIONS rows. |
 | Ready for dev | You | Spec approved, every decision answered. |
-| In review | `/factory-build` | PR open. You review and merge. |
+| In review (PR) | `/factory-build` | PR open. You review and merge. |
 | Merged | You | PR merged, issue closed. |
 | Needs retro | You | Waiting on `/factory-retro`, which does not exist yet. |
 
