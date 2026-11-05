@@ -24,6 +24,19 @@ Ready for dev, In review (PR), Needs retro, Done. Yellow means you, blue means a
 agent, gray means nothing pending, and every description opens with YOU or
 Agent. Merged was cut: it only ever asked for a second drag.
 
+## CodeRabbit owns In review (PR) (2026-11-05)
+
+CodeRabbit is installed. In review (PR) became an agent column: it reviews,
+then an approval sends the card to **Needs merging** and a request for changes
+sends it back to Ready for dev.
+
+**Stuck**, red, is the circuit breaker. Three failed review rounds park a card
+there and no command reads that column. The cap is `reviewRoundCap` in
+`.factory/board.json`.
+
+Two workflows are still unwritten: the one that moves an approved card to Needs
+merging, and the round counter that routes the third failure to Stuck.
+
 ## A reviewed-down card goes back (2026-11-05)
 
 `.github/workflows/factory-changes-requested.yml` sends a card back to Ready

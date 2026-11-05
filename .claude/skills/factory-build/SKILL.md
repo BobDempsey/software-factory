@@ -102,7 +102,7 @@ The body says `Closes #<N>`, links the spec directory, and lists each acceptance
 
 **Verify the move by reading the board again.** Replacing the board's Status options in the past has left API writes reporting success while the card rendered in the wrong column. If the read-back disagrees, say so plainly and tell the human to drag the card, rather than retrying.
 
-Reviewing and merging the PR is the human's, and so is the drag to Needs retro that follows it. This command stops at In review (PR).
+CodeRabbit takes the card from here: an approval sends it to Needs merging, a request for changes sends it back to Ready for dev, and the third failed round sends it to Stuck. This command stops at In review (PR).
 
 ### 10. Report
 
@@ -122,5 +122,6 @@ Then one line of totals. Nothing else. No preamble, no restating these instructi
 - **Never exceed the spec's scope.** What you find along the way is a report line, or a new card.
 - **Never write `Signed-off-by:`.** The DCO is the human's to certify.
 - **Never build on master**, and never merge your own PR.
+- **Stuck is untouchable.** No command reads it, acts on it, or offers it. A card is there because three review rounds failed, and only the human decides what happens next.
 - **Bob's Draft Notes is private.** Do not read it, do not list its contents, do not act on anything in it.
 - **Report honestly.** An unchecked criterion is unchecked. A failing check is quoted in full.

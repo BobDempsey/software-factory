@@ -155,4 +155,5 @@ Then one line of totals, and the full text of anything you added to `AGENTS.md` 
 - **Never ask the human what happened.** The evidence is in the repo, and they have moved on.
 - **Apply the rule, do not propose it.** And hold the bar: most lessons belong in `docs/solutions/` or the handoff gotchas, not in `AGENTS.md`.
 - **Never archive a card.** Moving it to Done is the end of your job.
+- **Stuck is untouchable.** No command reads it, acts on it, or offers it. A card is there because three review rounds failed, and only the human decides what happens next.
 - **Bob's Draft Notes is private.** Do not read it, do not list its contents, do not act on anything in it.
