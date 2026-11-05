@@ -1,7 +1,7 @@
 ---
 name: factory-run
 description: Run the factory as a loop. Starts a recurring pass over the Software Factory board, moving every card it can through refine, spec, build and retro, reporting each pass in a few lines, and staying a conversation the human can interrupt at any time. Use when the user says to start the factory, run the factory, keep the board moving, or asks for the orchestrator.
-allowed-tools: Bash(gh:*), Bash(git:*), Bash(./scripts/board.sh:*), Bash(node:*), Read, Write, Edit, Glob, Grep, Skill, ScheduleWakeup
+allowed-tools: Bash(gh:*), Bash(git:*), Bash(./scripts/board.sh:*), Bash(node:*), Read, Write, Edit, Glob, Grep, Skill, ScheduleWakeup, CronCreate, CronDelete
 ---
 
 # factory-run
@@ -24,15 +24,25 @@ If you were invoked directly rather than through `/loop`, say so in one line, st
 
 Say the interval once, on the first pass only. After that the loop is assumed and repeating it is noise.
 
+### The loop stops after an hour
+
+`/loop` schedules a cron job that auto-expires after seven days, which is far longer than a working session. An hour is the budget here, so the loop ends itself:
+
+- Count passes. At pass 12 (twelve passes at five minutes is one hour), delete the cron job and stop.
+- Say it in one line: `loop expired after 1h, 12 passes. /factory-run to restart.`
+- Never mention the seven-day cron default to the human. It is an implementation detail of the scheduler, not the behaviour of this command.
+
 ## What a pass does
 
 ### 1. Read the board
 
 ```bash
-./scripts/board.sh list
+./scripts/board.sh list | grep -vE '	(Done|Bob.s Draft Notes)	'
 ```
 
-One call. Do not read `docs/outline.md` or `docs/progress.md` unless a card needs them, and never read Bob's Draft Notes.
+One call, and filter at the call site. `Done` and Bob's Draft Notes are never actionable, so printing them is noise the human has to read past every pass. Filtering in the pipe also means a draft note never reaches the transcript at all.
+
+Do not read `docs/outline.md` or `docs/progress.md` unless a card needs them.
 
 ### 2. Pick up to one card, in this order
 
@@ -92,4 +102,6 @@ They may:
 - **Needs you is untouchable.** No pass reads it, acts on it, or offers it.
 - **Bob's Draft Notes is private.** Do not read it, do not list its contents, do not count it.
 - **Three lines a pass.** A loop that narrates itself is worse than no loop, because the human stops reading it.
+- **Never print the board.** Not the Done column, not a row count, not a tidy summary table. A pass says what it did.
+- **One hour, then stop.** Twelve passes, then CronDelete and a single line saying how to restart.
 - **Everything is in the issue.** Nothing a pass learns may live only in this session: it goes in the issue body, the spec, or `docs/solutions/`.
