@@ -51,7 +51,7 @@ Do not read `docs/outline.md` or `docs/progress.md` unless a card needs them.
 | /factory-create-spec | Run the `factory-create-spec` skill | **Alone.** Flags become DECISIONS rows, so nothing is decided without the human. |
 | /factory-retro | Run the `factory-retro` skill | **Alone.** It asks nothing by design. |
 | /factory-build | Run the `factory-build` skill | **Ask first.** It writes code and opens a PR. |
-| /factory-refine | Run the `factory-refine` skill | **Ask first.** Refinement is a conversation. |
+| /factory-refine | Run the `factory-refine` skill | **Alone.** It parks anything it cannot settle in Needs you. |
 
 One card per pass, from the first column in that list that has one. Finishing one card beats starting four.
 
@@ -96,7 +96,7 @@ They may:
 ## Rules
 
 - **One card per pass.** The loop is patient; you do not need to be.
-- **Ask before building or refining.** Those two write code or need a conversation. Spec and retro run alone.
+- **Ask before building.** It writes code and opens a PR. Refine, spec and retro run alone.
 - **Never answer a DECISIONS row yourself.** Transcribing the human's words is not answering.
 - **Never act on a human column.** Needs you is theirs. @coderabbitai is CodeRabbit's.
 - **Needs you is untouchable.** No pass reads it, acts on it, or offers it.

@@ -20,9 +20,10 @@ and report the criterion as unverified rather than passing.
   applies `factory`, and only a human drags a card onward. `/factory-refine` applies
   `factory` after the human has said the card is ready, and never before.
 - Bob's Draft Notes is a private scratchpad. Never read it, never act on it.
-- `/factory-expand` is the only column a draft card may be dragged into. One line is not enough
-  for refinement, so a draft in any other column skipped the step that writes it out. A command
-  that finds one names it and asks for it to be dragged back; it never moves it itself.
+- `/factory-refine` is the only column a draft card may be dragged into. It reads the repo, writes
+  the card out, converts and labels it, and either moves it on or parks it in Needs you with one
+  question. A command that finds a draft in any other column names it and asks for it to be dragged
+  back; it never moves it itself.
 - Needs you is the one human column. No command reads it, acts on it, or offers it.
   A command that needs a decision parks the card there with a bold ACTION line saying
   what it wants and a RETURN TO line naming the column it goes back to, then stops.
@@ -59,8 +60,8 @@ That is the allow-listed surface, so nothing else should call `gh project` direc
 - `.claude/skills/factory-watch/` is the same loop, but it scans before it schedules: an empty board
   ends the command instead of starting twelve passes of nothing. Use it to start a working session;
   use `/factory-run` when you want the loop up regardless.
-- `.claude/skills/factory-expand/` turns a one-line note into a paragraph.
-- `.claude/skills/factory-refine/` is the intake command. It is the admission gate.
+- `.claude/skills/factory-refine/` is the intake command and the admission gate. It takes a
+  one-liner, reads the repo, and runs alone: ready cards move on, unclear ones park in Needs you.
 - `.claude/skills/factory-create-spec/` writes the spec and the DECISIONS table.
 - `.claude/skills/factory-build/` implements an approved spec and stops at the PR.
 - `.claude/skills/factory-retro/` closes out a finished run and writes `docs/solutions/`.
@@ -77,7 +78,8 @@ That is the allow-listed surface, so nothing else should call `gh project` direc
 One piece at a time. A piece is done when it has been used on a real issue, not
 when it is written. Refine, spec and build have each run once, on issue #2.
 Current piece: `/factory-retro`. Nothing after it starts until that has run on
-real work. The order is in `docs/outline.md`; it is a best guess,
+real work. `/factory-watch` and the folded-in refine are both unproven: neither
+has driven a card end to end yet. The order is in `docs/outline.md`; it is a best guess,
 not a commitment.
 
 ## Standing chores

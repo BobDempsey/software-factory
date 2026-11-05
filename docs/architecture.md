@@ -16,7 +16,6 @@ flowchart TD
     classDef quiet fill:#d8d8d8,stroke:#888,stroke-width:1px,color:#000
 
     DRAFT["Bob's Draft Notes<br/>one line is enough"]
-    EXPAND["/factory-expand<br/>read the note against the repo"]
     REFINE["/factory-refine<br/>one unit of work"]
     SPEC["/factory-create-spec<br/>spec + DECISIONS"]
     DEV["/factory-build<br/>branch, commit, PR"]
@@ -25,9 +24,10 @@ flowchart TD
     YOU["Needs you<br/>ACTION + RETURN TO"]
     DONE["Done<br/>the archive"]
 
-    DRAFT -->|you drag| EXPAND
-    EXPAND --> REFINE
+    DRAFT -->|you drag| REFINE
     REFINE --> SPEC
+    REFINE -.->|one question| YOU
+    YOU -.->|answered| REFINE
     SPEC -->|DECISIONS written| YOU
     YOU -->|rows answered| DEV
     DEV -->|PR opened| REVIEW
@@ -39,7 +39,7 @@ flowchart TD
 
     class DRAFT quiet
     class YOU you
-    class EXPAND,REFINE,SPEC,DEV,REVIEW,RETRO agent
+    class REFINE,SPEC,DEV,REVIEW,RETRO agent
     class DONE quiet
 ```
 <!-- END board-diagram -->
@@ -48,8 +48,7 @@ flowchart TD
 
 | Step | Who | Produces |
 | --- | --- | --- |
-| `/factory-expand` | agent | A one-liner read against the repo and written out |
-| `/factory-refine` | agent | A real issue, labeled, one unit of work |
+| `/factory-refine` | agent | A real issue, labeled, one unit of work, or a park in Needs you with one question |
 | `/factory-create-spec` | agent | `specs/<N>-<slug>/`, the brief in the issue body, the DECISIONS table, then a park in Needs you |
 | You, in Needs you | you | Every DECISIONS row answered, and the card dragged to /factory-build |
 | `/factory-build` | agent | A branch, a commit, a PR that closes the issue |

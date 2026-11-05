@@ -65,23 +65,21 @@ and you name it by its `PVTI_...` item id.
 | --- | --- | --- |
 | /factory-create-spec | Run the `factory-create-spec` skill | **Alone.** Flags become DECISIONS rows, so nothing is decided without the human. |
 | /factory-retro | Run the `factory-retro` skill | **Alone.** It asks nothing by design. |
+| /factory-refine | Run the `factory-refine` skill | **Alone.** It parks anything it cannot settle in Needs you. |
 | /factory-build | Run the `factory-build` skill | **Ask first.** It writes code and opens a PR. |
-| /factory-refine | Run the `factory-refine` skill | **Ask first.** Refinement is a conversation. |
-| /factory-expand | Run the `factory-expand` skill | **Alone.** It only turns a line into a paragraph. |
 
 One card at a time, from the first column in that list that has one. Finishing one card beats
 starting four.
 
-**Follow your own move.** A finished card usually lands in the next agent column: `/factory-expand`
-hands to `/factory-refine`, `/factory-create-spec` hands to `/factory-build`. That card is not new
-work, it is the same card one step along, so re-read the board and keep going in the same pass
-rather than waiting five minutes to rediscover a move you just made.
+**Follow your own move.** A finished card usually lands in the next agent column: `/factory-refine`
+hands to `/factory-create-spec`, which hands to `/factory-build`. That card is not new work, it is
+the same card one step along, so re-read the board and keep going in the same pass rather than
+waiting five minutes to rediscover a move you just made.
 
 Keep following it while the next column is one that runs alone. Stop the chain and end the pass when
 the card lands in:
 
-- **an ask-first column** (`/factory-build`, `/factory-refine`) — ask the human, and that is the
-  pass;
+- **an ask-first column** (`/factory-build`) — ask the human, and that is the pass;
 - **a human column** (Needs you, @coderabbitai) — their turn;
 - **Done**, or a column with nothing in it.
 
@@ -98,11 +96,11 @@ CodeRabbit, and a pass that nudges them is a pass that lies about what is blocki
 
 ### 3. Hand back a misplaced draft
 
-**/factory-expand is the only column that may hold a draft.** A draft anywhere else was dragged past
-the step that writes it out, and one line is not enough for anything downstream to refine.
+**/factory-refine is the only column that may hold a draft.** Every column after it needs a
+written-out, labeled issue, so a draft further down the board skipped its intake.
 
 Do not move it, do not convert it, do not work it. Say so in one line, naming the column and the
-card, and ask the human to drag it back to /factory-expand. Then carry on with whatever else the
+card, and ask the human to drag it back to /factory-refine. Then carry on with whatever else the
 scan found.
 
 ### 4. Report the pass
@@ -139,12 +137,12 @@ immediately, with the board state in one line.
 - **Scan before you schedule.** No cron job exists until a scan has found a card. An idle board ends
   the command; it does not start a loop.
 - **Scan in this session.** One `board.sh list` call, no subagent, no background work.
-- **A draft outside /factory-expand is not work.** Name it, ask for it to be dragged back, and leave
+- **A draft outside /factory-refine is not work.** Name it, ask for it to be dragged back, and leave
   it where it is. Moving a human's card is the human's call.
 - **One card per pass, followed as far as it goes.** Chain onto a column your own move filled, and
   stop at the first ask-first or human column. Never pick up a second card that the pass did not
   create.
-- **Ask before building or refining.** Expand, spec and retro run alone.
+- **Ask before building.** Refine, spec and retro run alone.
 - **Never answer a DECISIONS row yourself.** Transcribing the human's words is not answering.
 - **Never act on a human column.** Needs you is theirs. @coderabbitai is CodeRabbit's.
 - **Bob's Draft Notes is private.** Do not read it, do not list it, do not count it.

@@ -17,6 +17,25 @@ What exists, and what is next. One line per thing, newest state at the top.
 
 No gates, no CI, no spec tooling. That is on purpose.
 
+## /factory-expand folded into /factory-refine (2026-11-05)
+
+Two commands read the same one-liner and neither could finish it alone.
+`/factory-expand` wrote the note out and asked nothing; `/factory-refine` then
+held a conversation to decide what it meant. A draft now goes straight to
+/factory-refine, which reads the repo first and runs alone: most notes never
+reach the human, because reading the repo answers what looked like a question.
+What it still cannot settle parks in Needs you as one ACTION line with a
+recommendation.
+
+The board lost a column. `/factory-create-spec` still writes a DECISIONS table
+and parks it, so nothing gets built on a guess refinement made.
+
+## /factory-watch added (2026-11-05)
+
+Same loop as `/factory-run`, except it reads the board before it schedules
+anything and ends the command when nothing is waiting. A pass also follows its
+own move instead of stalling five minutes at each column it just filled.
+
 ## A finished review parks the card (2026-11-05)
 
 `factory-approved.yml` became `factory-reviewed.yml` and now fires on any
