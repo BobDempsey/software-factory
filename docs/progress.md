@@ -42,6 +42,13 @@ Ready for dev, In review (PR), Needs retro, Done. Yellow means you, blue means a
 agent, gray means nothing pending, and every description opens with YOU or
 Agent. Merged was cut: it only ever asked for a second drag.
 
+## The board watcher (2026-11-05)
+
+`scripts/watch.mjs`, plain Node with no dependencies. Polls `scripts/board.sh
+list` and prints one line when a card moves, naming the command to run. No
+model call, no state on disk, dies with the terminal. It never offers work on
+a card in Stuck.
+
 ## CodeRabbit owns In review (PR) (2026-11-05)
 
 CodeRabbit is installed. In review (PR) became an agent column: it reviews,

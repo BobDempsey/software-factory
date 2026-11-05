@@ -23,6 +23,9 @@ That is the whole interaction. `/factory-start` does a single card instead of
 looping, and `node scripts/watch.mjs` in a second terminal prints when a card
 moves.
 
+Run `node scripts/watch.mjs` in a second terminal and it tells you when a card
+moves and what to run next.
+
 Agents propose work by filing issues labeled `factory:triage`. Only a human
 applies `factory`.
 

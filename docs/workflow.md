@@ -15,6 +15,16 @@ One column is yellow and it is the only one you watch. Everything blue moves its
 
 `/factory-start` is the first thing a session runs. It reads the board, prints one line per column that has cards, and asks whether to start on the first card in Needs refinement. It deliberately does not read `handoff.md`, `docs/outline.md` or `docs/progress.md`; the board already says what is in flight, and the handoff is for a session that has never seen this repo.
 
+## Watching the board
+
+Half the board moves itself: a merge, an approval, a request for changes. None of that reaches the terminal, and GitHub cannot push it, because user-owned projects emit no webhook.
+
+`node scripts/watch.mjs` in a second terminal closes that gap. It prints the board once, then stays silent until a card moves, and each line names the command to type. No model call, so leaving it running costs nothing. Closing the terminal ends it.
+
+`--interval 30` polls faster, floored at 15 seconds. `--once` prints the current state and exits.
+
+A card in Stuck is reported and never carries a command.
+
 ## The three ways work arrives
 
 **1. I think of something.** It goes in **Bob's Draft Notes** as a draft card. No issue, no labels, no ceremony. Half a sentence is fine. Agents never read this column, so nothing can act on it while it is still an idea.
