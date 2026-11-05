@@ -1,15 +1,22 @@
-name: factory-approved
+name: factory-reviewed
 
 on:
   pull_request_review:
 
 permissions:
   pull-requests: write
+  issues: write
 
 jobs:
   move-card:
-    # The webhook sends this lowercase, unlike the GraphQL enum.
-    if: github.event.review.state == 'approved'
+    # CodeRabbit signals it is finished with a 'commented' review, never an
+    # approval, so anything that is not a block counts as done. Together with
+    # factory-changes-requested.yml this partitions every submitted review.
+    # States arrive lowercase in the webhook, unlike the GraphQL enum.
+    if: >-
+      github.event.action == 'submitted' &&
+      github.event.review.state != 'changes_requested' &&
+      github.event.review.user.login != github.event.pull_request.user.login
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -18,6 +25,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.FACTORY_PROJECT_TOKEN }}
           PR: ${{ github.event.pull_request.number }}
+          STATE: ${{ github.event.review.state }}
         run: |
           set -euo pipefail
 
@@ -80,4 +88,32 @@ jobs:
             exit 1
           fi
 
-          echo "parked card in $COLUMN to merge"
+          # The card has to say what it wants. Needs you is the only column a
+          # human watches, and one that needs opening twice is a column that lies.
+          ISSUE=$(jq -r '
+            [ .data.repository.pullRequest.closingIssuesReferences.nodes[].number ][0]
+          ' refs.json)
+          COMMENTS=$(gh api "repos/$GITHUB_REPOSITORY/pulls/$PR" --jq '.review_comments')
+
+          gh issue view "$ISSUE" --json body --jq '.body' > body.md
+
+          # Strip any ACTION/RETURN TO pair already there, so a card that passes
+          # through twice carries one, the current one.
+          RETRO=$(jq -r '.retroColumn' .factory/board.json)
+
+          python3 - "$STATE" "$COMMENTS" "$PR" "$RETRO" <<'PY'
+          import io, re, sys
+          state, comments, pr, nxt = sys.argv[1], sys.argv[2], sys.argv[3], sys.argv[4]
+          body = io.open('body.md', encoding='utf-8').read()
+          body = re.sub(r'^\*\*ACTION:\*\*.*?\n\*\*RETURN TO:\*\*.*?\n(?:\s*---\s*\n)?\s*',
+                        '', body, count=1, flags=re.S)
+          plural = '' if comments == '1' else 's'
+          head = (f'**ACTION:** CodeRabbit finished with {state} and {comments} comment{plural}. '
+                  f'Read the diff and merge PR #{pr}.\n'
+                  f'**RETURN TO:** {nxt}\n\n---\n\n')
+          io.open('body.md', 'w', encoding='utf-8', newline='\n').write(head + body)
+          PY
+
+          gh issue edit "$ISSUE" --body-file body.md > /dev/null
+
+          echo "parked card in $COLUMN: $STATE, $COMMENTS comment(s)"

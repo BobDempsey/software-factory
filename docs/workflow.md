@@ -35,7 +35,9 @@ One column is yellow and it is the only one you watch. Everything blue moves its
 
 **Ready for dev.** `/factory-build` refuses to start while any DECISIONS row says `UNANSWERED`. Otherwise it branches, implements the spec and nothing else, commits, and opens a PR.
 
-**In review (PR).** CodeRabbit's. An approval parks the card in Needs you to merge; a request for changes sends it back to Ready for dev; the third failed round parks it in Needs you.
+**In review (PR).** CodeRabbit's. Any review that is not a request for changes parks the card in Needs you to merge, with an ACTION line naming the state it finished in and how many comments it left. A request for changes sends the card back to Ready for dev, and the third failed round parks it in Needs you.
+
+Finishing is not the same as approving. CodeRabbit has never submitted an approval on this repo; it comments. Waiting for an approval left three cards stranded before the workflow was widened.
 
 **/factory-retro.** `/factory-retro` rebuilds the run from the issue, spec, PR and commits, writes `docs/solutions/<N>-<slug>.md`, adds a rule to `AGENTS.md` if the run earned one, and moves the card to Done.
 

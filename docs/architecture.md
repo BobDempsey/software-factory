@@ -32,7 +32,7 @@ flowchart TD
     YOU -->|rows answered| DEV
     DEV -->|PR opened| REVIEW
     REVIEW -.->|changes requested| DEV
-    REVIEW -->|approved| YOU
+    REVIEW -->|review finished| YOU
     REVIEW -->|third failed round| YOU
     YOU -->|you merge| RETRO
     RETRO --> DONE
@@ -54,6 +54,7 @@ flowchart TD
 | You, in Needs you | you | Every DECISIONS row answered, and the card dragged to Ready for dev |
 | `/factory-build` | agent | A branch, a commit, a PR that closes the issue |
 | CodeRabbit, on the PR | agent | An approval, or a request for changes |
+| `factory-reviewed.yml` | GitHub | A finished PR parked in Needs you, with an ACTION line naming the review state |
 | `factory-changes-requested.yml` | GitHub | A reviewed-down card sent back to Ready for dev, or parked in Needs you on the third round |
 | You, in Needs you | you | A merge |
 | `factory-merged.yml` | GitHub | The card moved to /factory-retro, no tokens spent |

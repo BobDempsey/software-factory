@@ -17,6 +17,16 @@ What exists, and what is next. One line per thing, newest state at the top.
 
 No gates, no CI, no spec tooling. That is on purpose.
 
+## A finished review parks the card (2026-11-05)
+
+`factory-approved.yml` became `factory-reviewed.yml` and now fires on any
+submitted review that is not `changes_requested`, from anyone but the PR
+author. CodeRabbit never approves; it comments, which stranded #4, #7 and #11
+in In review (PR).
+
+It is also the first workflow to write the ACTION line, so a card parked in
+Needs you says what CodeRabbit found and what to do about it.
+
 ## The watcher retired (2026-11-05)
 
 `scripts/watch.mjs` is gone. `/factory-run` reads the same board, prints the
