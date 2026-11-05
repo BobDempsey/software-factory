@@ -37,8 +37,9 @@ Before touching code, all of these must hold. If any fails, say which one and st
 - The card is a real issue, not a draft.
 - It carries the `factory` label and exactly one `deliverable:*` label.
 - `specs/<N>-<slug>/spec.md` exists.
-- The issue body carries the brief under a `# SPEC` heading.
-- The body carries a `## DECISIONS` table at the bottom, and **no row says `UNANSWERED`**. A flag the human never answered is not approval, however good the spec looks.
+- The body links the spec directory, in the shape `docs/issue-body.md` describes. The brief itself
+  lives in `specs/<N>-<slug>/spec-brief.md`, not in the issue.
+- The body carries a `## DECISIONS` table, and **no row says `UNANSWERED`**. A flag the human never answered is not approval, however good the spec looks.
 
 ```bash
 gh issue view <N>
@@ -93,6 +94,17 @@ gh pr create --title "<one sentence>" --body-file <file>
 ```
 
 The body says `Closes #<N>`, links the spec directory, and lists each acceptance criterion with how it was checked. Anything you could not verify goes in its own section, named.
+
+### 8b. Write the log line
+
+Add one line at the **top** of the issue's `## LOG` section, newest first, as `docs/issue-body.md`
+says. Clear the ACTION block while you are there: the card is no longer parked.
+
+```markdown
+**/factory-build** — branch `13-park-on-review`, PR #14, 2 files.
+```
+
+Name the branch, the PR and the file count. Never touch another command's line.
 
 ### 9. Move the card to @coderabbitai
 

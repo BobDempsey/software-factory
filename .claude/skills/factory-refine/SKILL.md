@@ -88,9 +88,10 @@ words and the refinement is a reading of them.
 
 **Give it a title that is one sentence.** No trailing colons, no ticket prefixes.
 
-**Write the body as a short paragraph plus a few bullets**, three to six lines, answering: what
-exists today, named by path; what the note wants changed; anything nearby the change obviously
-touches.
+**Write the body in the shape `docs/issue-body.md` describes.** One sentence saying what the card
+is, then the DELIVERABLE line. Three to six lines of detail at most: what exists today, named by
+path, and what the note wants changed. The long version is the spec step's job, and a card that
+needs more than a screen here is a card that should have been split.
 
 **If the card is still a draft note**, convert it so it can carry labels:
 
@@ -120,6 +121,12 @@ gh issue edit <N> --add-label factory --remove-label "factory:triage"
 ```
 
 Refinement is the admission gate. There is no second pass behind it.
+
+**Write the log line.** One line at the top of `## LOG`, creating the section:
+
+```markdown
+**/factory-refine** — one unit of work, labeled `deliverable:workflow`.
+```
 
 ### 5a. Ready: move it to /factory-create-spec
 

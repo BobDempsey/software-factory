@@ -30,8 +30,12 @@ and report the criterion as unverified rather than passing.
   and only because the human typed it. No loop invokes it and no pass offers it.
 - Every admitted issue carries exactly one `deliverable:*` label naming what it
   produces, and repeats it as one bold DELIVERABLE line near the top of the body.
-- A specced issue carries its brief in the body under `# SPEC` and a `## DECISIONS`
-  table at the bottom. An agent never fills in an answer; `UNANSWERED` blocks the build.
+- An issue body has one shape, in `docs/issue-body.md`: the ACTION block while parked, one
+  sentence, the deliverable and a link to `specs/<N>-<slug>/`, the `## DECISIONS` table, then
+  `## LOG`. The brief lives in the spec directory and is never pasted into the body. An agent never
+  fills in a DECISIONS answer; `UNANSWERED` blocks the build.
+- Every command that touches an issue adds one line to the top of `## LOG`, newest first, naming
+  what it produced. It never edits another command's line.
 - An agent never writes a `Signed-off-by` trailer. Only a human can certify the DCO.
 - Agent-authored commits carry a single `Assisted-by:` line. No banner, no emoji.
 - Before committing on a factory branch, check `git diff --cached --stat` against the
@@ -71,6 +75,7 @@ That is the allow-listed surface, so nothing else should call `gh project` direc
 - `docs/outline.md` is the full design. Read it before proposing structural changes.
 - `docs/progress.md` is what exists today. Read it first, and update it when a piece lands.
 - `docs/board-setup.md` is the board install procedure, including the one manual step.
+- `docs/issue-body.md` is the shape of an issue body and the rules for its log.
 - `docs/solutions/` holds learnings from completed runs, and `traps.md` holds the
   ones that bite twice. Read both during spec work.
 - `template/` will hold what gets installed into other repos. It is empty until piece two.

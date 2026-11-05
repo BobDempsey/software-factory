@@ -74,19 +74,30 @@ Hard cap: the brief fits one screen down to the end of acceptance criteria. If i
 
 **Flag rather than decide.** Every choice the issue did not make is an `ASSUMPTION` flag. You do not resolve your own assumptions. A brief with no flags on a non-trivial change means the spec work was shallow.
 
-### 5. Put the brief in the issue body
+### 5. Point the issue at the brief
 
-The brief lives in the issue body, not in a comment. A comment scrolls away; the body is what a reader sees first.
+The brief lives in `specs/<N>-<slug>/spec-brief.md`, not in the issue body. An issue carrying a card
+that touches a frontend and a backend would run to several screens, and the one thing the human has
+to act on would be below the fold.
 
-Append the brief below the original card text, under a `# SPEC` heading, keeping what the human wrote above it.
+`docs/issue-body.md` is the shape. Keep the one-sentence summary the card already has, and set the
+deliverable and spec line beneath it:
+
+```markdown
+**DELIVERABLE:** workflow · **Spec:** [specs/13-park-on-review/](../specs/13-park-on-review/)
+```
 
 ```bash
 gh issue edit <N> --body-file <assembled body>
 ```
 
+Never paste the brief into the body, and never leave a `# SPEC` section behind.
+
 ### 5b. Write the DECISIONS table
 
-Every flag in the brief gets a row, and the table goes at the **bottom of the issue body** under `## DECISIONS`. This is the record of what the human decided, and `/factory-build` refuses to run while any row is unanswered.
+Every flag in the brief gets a row, and the table goes under `## DECISIONS`, above the `## LOG`
+section. It is the one thing the human edits, so nothing sits between it and the ACTION line but
+the summary. This is the record of what the human decided, and `/factory-build` refuses to run while any row is unanswered.
 
 ```markdown
 ## DECISIONS
@@ -131,6 +142,18 @@ For this card the two lines are always the same shape:
 ```
 
 Stop there and ask the human to approve, and to answer the DECISIONS rows. Every row has to say something other than `UNANSWERED` before the card can move again.
+
+### 5d. Write the log line
+
+Add one line at the **top** of `## LOG`, creating the section if the issue has none. Newest first,
+as `docs/issue-body.md` says:
+
+```markdown
+**/factory-create-spec** — spec written against `factory-reviewed.yml`, 1 row open.
+```
+
+Name what it produced: the file the spec is written against, and how many rows are open. Never
+touch another command's line.
 
 ### 6. Move it to /factory-build
 

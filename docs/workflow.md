@@ -31,7 +31,7 @@ Neither reads `docs/outline.md` or `docs/progress.md` to get going. The board al
 
 **/factory-refine.** `/factory-refine` reads the one-liner against the repo, writes out what exists today and what the note wants changed, sharpens it into one unit of work, converts it to an issue, and applies `factory` plus one `deliverable:*` label. It runs alone: most notes never need me, because reading the repo answers what looked like a question. Anything it still cannot settle parks in /factory-needs-you with one question and a recommendation.
 
-**/factory-create-spec.** `/factory-create-spec` writes `specs/<N>-<slug>/spec.md` and the brief, puts the brief in the issue body under `# SPEC`, writes the `## DECISIONS` table, then parks the card in /factory-needs-you.
+**/factory-create-spec.** `/factory-create-spec` writes `specs/<N>-<slug>/spec.md` and the brief, links that directory from the issue, writes the `## DECISIONS` table, then parks the card in /factory-needs-you. The brief stays in the spec directory: the issue is the index, and `docs/issue-body.md` is the shape it keeps.
 
 **/factory-build.** `/factory-build` refuses to start while any DECISIONS row says `UNANSWERED`. Otherwise it branches, implements the spec and nothing else, commits, and opens a PR.
 

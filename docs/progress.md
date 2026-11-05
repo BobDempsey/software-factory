@@ -17,6 +17,24 @@ What exists, and what is next. One line per thing, newest state at the top.
 
 No gates, no CI, no spec tooling. That is on purpose.
 
+## The issue became an index (2026-11-05)
+
+An issue carried the whole spec brief under `# SPEC`, which worked while every
+card was one small file. A card touching a frontend and a backend would have
+run to several screens, with the one thing the human had to act on below the
+fold.
+
+`docs/issue-body.md` is the shape now: the ACTION block while the card is
+parked, one sentence, the deliverable and a link to `specs/<N>-<slug>/`, the
+DECISIONS table, then a LOG. The brief stays in the spec directory.
+
+Each command adds one line to the top of the log saying what it produced, so
+opening a card shows what has happened to it, newest first, without opening
+anything else. The review stages write no line; /factory-retro names the rounds
+in its own.
+
+The issue template shrank to match.
+
 ## The human column got a command (2026-11-05)
 
 Needs you is now **/factory-needs-you**, named after the command that works

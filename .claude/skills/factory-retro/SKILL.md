@@ -47,7 +47,8 @@ gh pr list --state merged --search "<N>"
 
 Read, in this order:
 
-- The issue body: the original card text, the `# SPEC` brief, and the `## DECISIONS` table with its answers.
+- The issue body: the summary, the `## DECISIONS` table with its answers, and the `## LOG`.
+- `specs/<N>-<slug>/spec-brief.md` and `spec.md`, which the issue links rather than carries.
 - `specs/<N>-<slug>/spec.md`, and what it said was out of scope.
 - The merged PR: its body, its review comments, and what it said it could not verify.
 - The commits on the branch.
@@ -126,6 +127,19 @@ Most lessons fail that bar. The default is to write them in the solution file an
 When a lesson does clear the bar, edit `AGENTS.md` in place under the right section, one line, in the voice of the lines around it. Then say in your report exactly what you added and which run first hit it, so the human can revert it in one edit if they disagree.
 
 Add traps that do not clear the bar to `docs/solutions/traps.md`, which is a living list rather than a rule file. A trap is written symptom first, because the symptom is what the next agent meets.
+
+### 6b. Write the log line
+
+Add one line at the **top** of the issue's `## LOG` section, newest first, as `docs/issue-body.md`
+says. It is the last line the issue gets, so it is the first one a reader sees.
+
+```markdown
+**/factory-retro** — `docs/solutions/13-park-on-review.md`, one rule added to AGENTS.md, 2 review rounds.
+```
+
+Name the solution file, any rule you added, and how many review rounds the PR took. The review
+stages write no log line of their own, so this is where the board's time in @coderabbitai is
+recorded.
 
 ### 7. Move the card to Done
 
