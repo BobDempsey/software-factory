@@ -48,6 +48,7 @@ Then read, in this order:
 - `docs/progress.md` for what already exists.
 - `docs/solutions/` for learnings from earlier runs. Past traps belong in this spec, not rediscovered in the build.
 - `AGENTS.md` for the conventions the implementation must follow.
+- `.specify/memory/constitution.md`, the Spec Kit constitution. It copies its rules from `AGENTS.md`.
 
 If the issue contradicts any of these, say so and stop. The contradiction is the human's to resolve.
 
@@ -58,7 +59,11 @@ Write two files under `specs/<N>-<short-slug>/`, both generated in this one pass
 - `spec.md` — the full technical spec the implementation is built against.
 - `spec-brief.md` — the human review document.
 
-`spec.md` covers the problem, the approach, every file touched, the data or config shape, the acceptance criteria in EARS form, and the rollback. It is written for the agent that builds, so it may be long.
+`spec.md` is written from GitHub Spec Kit's template, `.specify/templates/spec-template.md`. Read the template and fill in its header first: `Feature Branch` is `<N>-<slug>`, the branch `/factory-build` will create, and `Input` is the issue title and link, never a leftover `$ARGUMENTS`. Then fill in each of its sections; this skill does not define a layout of its own. Remove any section the template marks optional that the card does not need, as the template itself says. The spec is written for the agent that builds, so it may be long.
+
+- **Unresolved questions** go in the spec as `[NEEDS CLARIFICATION: question]` markers, at most three, chosen in this order: scope, then security and privacy, then user experience, then technical detail. Each marker is an `OPEN` flag in the brief and an `OPEN` row in DECISIONS.
+- **The directory is `specs/<N>-<slug>/`**, where N is the issue number, not Spec Kit's own counter. The issue number is what ties the branch, the PR and the spec together.
+- **End `spec.md` with two appendix sections**, `## Files touched` (a table of file and change) and `## Rollback`. Spec Kit keeps both in `plan.md`, but `/factory-build` and the pre-commit check in `AGENTS.md` read the file table from `spec.md`.
 
 `spec-brief.md` follows the structure in `docs/outline.md` under "The spec brief", widest to narrowest:
 
@@ -185,4 +190,5 @@ Then one line of totals. Nothing else. No preamble, no restating these instructi
 - **Never invent scope.** The spec implements what the issue says, plus whatever `docs/` requires of it. Nothing else.
 - **Bob's Draft Notes is private.** Do not read it, do not list its contents, do not act on anything in it.
 - **The board is not the record.** It shows state. If a card and the issue disagree, the issue wins, and say so.
+- **Never run `.specify/scripts/bash/create-new-feature.sh`.** It numbers the directory with Spec Kit's own `001-` counter instead of the issue number, and writes `.specify/feature.json`, which nothing here reads.
 - **Do not go further than /factory-build.** Building is a separate piece, and it does not exist yet.
