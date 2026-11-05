@@ -17,6 +17,21 @@ What exists, and what is next. One line per thing, newest state at the top.
 
 No gates, no CI, no spec tooling. That is on purpose.
 
+## One orchestrator, one agent per card (2026-11-05)
+
+`/factory` replaced `/factory-run` and `/factory-watch`. It scans the
+board before it schedules anything, then starts one background subagent
+per card in an agent column, up to `agentCap` in `.factory/board.json`
+(3), and each subagent runs the stage skill for its column unchanged. A
+card an agent holds carries a yellow `working` label until the agent
+stops, and `/factory` clears any left behind when it starts. Building
+still waits for the human's yes, retros run one at a time, and a pass
+with no state change prints nothing.
+
+Parallel agents came off the shelf for this, by the human's call on
+#26: proving the single-card loop first would have been work spent on
+a command this one replaces.
+
 ## Builds run in their own worktree (2026-11-05)
 
 `/factory-build` now enters `.claude/worktrees/worktree-<N>` with Claude Code's
@@ -237,7 +252,7 @@ The first CI gate, red-first replay, `agent-approval-check`, worktree isolation,
 the weekly monitor, and `template/`. The order is in `docs/outline.md` and is a
 best guess rather than a commitment.
 
-On the shelf, decided but not built: parallel agents, mutation testing, fiberplane/drift, a second reviewer, the cost guard, the test-tamper hook, post-merge verification.
+On the shelf, decided but not built: mutation testing, fiberplane/drift, a second reviewer, the cost guard, the test-tamper hook, post-merge verification.
 
 ## Standing chores
 

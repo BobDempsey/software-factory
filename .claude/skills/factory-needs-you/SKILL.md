@@ -10,7 +10,7 @@ The one command the human runs on their own column.
 
 Every other command treats **/factory-needs-you** as untouchable, because a card there is waiting on a
 decision no agent may make. This is the exception, and it is an exception because the human invoked
-it: it never runs from a loop, and `/factory-run` and `/factory-watch` still never offer it.
+it: it never runs from a loop, and `/factory` never offers it.
 
 It answers one question per card: what do you want, and where does this go. Then it writes the
 answer down in the human's own words and moves the card.

@@ -25,5 +25,6 @@
   "reviewColumn": "@coderabbitai",
   "retroColumn": "/factory-retro",
   "doneColumn": "Done",
-  "reviewRoundCap": 3
+  "reviewRoundCap": 3,
+  "agentCap": 3
 }

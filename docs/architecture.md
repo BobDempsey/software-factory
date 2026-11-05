@@ -59,7 +59,7 @@ flowchart TD
 | `factory-merged.yml` | GitHub | The card moved to /factory-retro, no tokens spent |
 | `/factory-retro` | agent | `docs/solutions/<N>-<slug>.md`, a rule in `AGENTS.md` if the run earned one, and Done |
 
-`/factory-run` drives all of it on a loop. `/factory-refresh` runs at any point. It diffs the board against the last snapshot and offers to run whatever command the move handed over.
+`/factory` drives all of it, one background agent per card. `/factory-refresh` runs at any point. It diffs the board against the last snapshot and offers to run whatever command the move handed over.
 
 ## The two rules the shape rests on
 

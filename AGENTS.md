@@ -69,12 +69,10 @@ That is the allow-listed surface, so nothing else should call `gh project` direc
 
 ## Where things are
 
-- The board is the record of what is in flight. `/factory-run` is how a session starts.
+- The board is the record of what is in flight. `/factory` is how a session starts.
 - `docs/workflow.md` is how the board is driven. Read it before touching the board.
-- `.claude/skills/factory-run/` drives the whole board on a loop. The usual entry point.
-- `.claude/skills/factory-watch/` is the same loop, but it scans before it schedules: an empty board
-  ends the command instead of starting twelve passes of nothing. Use it to start a working session;
-  use `/factory-run` when you want the loop up regardless.
+- `.claude/skills/factory/` drives the whole board: it scans first, then runs one background
+  subagent per card, up to `agentCap` in `.factory/board.json`, and marks each held card `working`.
 - `.claude/skills/factory-refine/` is the intake command and the admission gate. It takes a
   one-liner, reads the repo, and runs alone: ready cards move on, unclear ones park in /factory-needs-you.
 - `.claude/skills/factory-create-spec/` writes the spec, plan, tasks and the DECISIONS table.
@@ -97,7 +95,7 @@ That is the allow-listed surface, so nothing else should call `gh project` direc
 One piece at a time. A piece is done when it has been used on a real issue, not
 when it is written. Refine, spec and build have each run once, on issue #2.
 Current piece: `/factory-retro`. Nothing after it starts until that has run on
-real work. `/factory-watch` and the folded-in refine are both unproven: neither
+real work. `/factory` and the folded-in refine are both unproven: neither
 has driven a card end to end yet. The order is in `docs/outline.md`; it is a best guess,
 not a commitment.
 

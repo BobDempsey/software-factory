@@ -8,7 +8,7 @@ allowed-tools: Bash(gh:*), Bash(./scripts/board.sh:*), Read, Write, Edit
 
 The refresh button for the board. Read it, say what moved since the last read, and offer to pick up anything a human has handed over.
 
-`/factory-run` drives the board on a loop. This is for the middle of a session, after you have been dragging cards in the browser and want to know what changed.
+`/factory` drives the board on a loop. This is for the middle of a session, after you have been dragging cards in the browser and want to know what changed.
 
 ## Board constants
 
@@ -108,7 +108,7 @@ Write it from the board read in step 1, not from what you think the board should
 
 ## Rules
 
-- **Report only what moved.** A list of everything is what a pass of `/factory-run` prints, not this.
+- **Report only what moved.** A list of everything is what `/factory` reports, not this.
 - **Only a move into an agent column is an offer.** A card sitting still is not work being handed over.
 - **Never act on a human column.** /factory-needs-you waits on a person. @coderabbitai waits on CodeRabbit.
 - **/factory-needs-you is untouchable.** No command reads it, acts on it, or offers it. The human moves a card out, back to whatever its RETURN TO line names, either by dragging it or by running `/factory-needs-you` themselves.
