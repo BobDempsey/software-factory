@@ -22,6 +22,8 @@ and report the criterion as unverified rather than passing.
 - File them with `scripts/board.sh file`, never bare `gh issue create`. The bare call
   leaves the issue off the board, where nobody sees it. `board.sh add <N>` fixes one
   that was filed the other way.
+- `/factory-retro` files a `factory:triage` card for each Major CodeRabbit finding the merged
+  PR left open. Otherwise the finding disappears at merge. Hit on #18 and #26.
 - Bob's Draft Notes is a private scratchpad. Never read it, never act on it.
 - `/factory-refine` is the only column a draft card may be dragged into. It reads the repo, writes
   the card out, converts and labels it, and either moves it on or parks it in /factory-needs-you with one
