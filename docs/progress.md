@@ -17,6 +17,17 @@ What exists, and what is next. One line per thing, newest state at the top.
 
 No gates, no CI, no spec tooling. That is on purpose.
 
+## The watcher retired (2026-11-05)
+
+`scripts/watch.mjs` is gone. `/factory-run` reads the same board, prints the
+same thing, and then runs the command, so the watcher was the smaller half of
+the loop and a second place every column rename had to be mirrored. It shipped
+with three dead column keys within hours of the Needs you redesign, and issue
+#10 was opened to fix that and closed as not planned.
+
+The entry below, recording it landing, stays. `specs/4-board-watcher/` and
+`docs/solutions/4-board-watcher.md` are untouched.
+
 ## One human column (2026-11-05)
 
 Needs spec approval, Needs merging and Stuck collapsed into a single yellow
