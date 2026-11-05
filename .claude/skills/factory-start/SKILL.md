@@ -1,6 +1,6 @@
 ---
 name: factory-start
-description: Start a session on the board instead of the handoff. Reads the Software Factory board, reports where every card sits, then asks whether to start on the first card in Needs refinement. Use when the user says to start, start the factory, sync with the board, pick up where we left off, or run factory status at the beginning of a session.
+description: Start a session on one card. Reads the Software Factory board, reports where every card sits, then asks whether to start on the first card in Needs refinement. Use when the user says to start, start the factory, sync with the board, pick up where we left off, or run factory status at the beginning of a session.
 allowed-tools: Bash(gh:*), Bash(./scripts/board.sh:*), Read, Write, Edit
 ---
 
@@ -8,7 +8,7 @@ allowed-tools: Bash(gh:*), Bash(./scripts/board.sh:*), Read, Write, Edit
 
 Open a session on the board. Read it, say where things stand in a few lines, then start work on the first card that is waiting.
 
-This replaces reading `handoff.md` at the top of a session. The handoff is the cold-start brief for someone who has never seen the repo; this is for the normal case, where the board already says what is in flight.
+`/factory-run` loops over the whole board. This does one card and stops, for when you want to drive it by hand.
 
 ## Board constants
 
@@ -26,7 +26,7 @@ cat .factory/board.json
 ./scripts/board.sh list
 ```
 
-That is the whole context load. Do not read `handoff.md`, `docs/outline.md`, or `docs/progress.md` unless something below needs them, and do not read `Bob's Draft Notes` at all; it is private.
+That is the whole context load. Do not read `docs/outline.md` or `docs/progress.md` unless something below needs them, and do not read `Bob's Draft Notes` at all; it is private.
 
 ### 2. Report where things stand
 
@@ -92,7 +92,7 @@ If the whole board is quiet, say that in one line and stop. An empty board is a 
 
 ## Rules
 
-- **Do not read the handoff.** If the session turns out to need deep history, say so and let the human ask for it.
+- **The board is the context.** If the session turns out to need deep history, say so and let the human ask for it.
 - **Bob's Draft Notes is private.** Do not read it, do not list its contents, do not count it.
 - **Do not act on a human's column.** Needs refinement, Needs you wait on a person. In review (PR) waits on CodeRabbit.
 - **Needs you is untouchable.** No command reads it, acts on it, or offers it. Only the human moves a card out, back to whatever its RETURN TO line names.

@@ -32,7 +32,7 @@ Say the interval once, on the first pass only. After that the loop is assumed an
 ./scripts/board.sh list
 ```
 
-One call. Do not read `handoff.md`, `docs/outline.md`, or `docs/progress.md`, and never read Bob's Draft Notes.
+One call. Do not read `docs/outline.md` or `docs/progress.md` unless a card needs them, and never read Bob's Draft Notes.
 
 ### 2. Pick up to one card, in this order
 

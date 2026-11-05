@@ -13,7 +13,9 @@ One column is yellow and it is the only one you watch. Everything blue moves its
 
 ## Starting a session
 
-`/factory-start` is the first thing a session runs. It reads the board, prints one line per column that has cards, and asks whether to start on the first card in Needs refinement. It deliberately does not read `handoff.md`, `docs/outline.md` or `docs/progress.md`; the board already says what is in flight, and the handoff is for a session that has never seen this repo.
+`/factory-run` is the first thing a session runs. It loops over the board, takes one card a pass, and reports in a few lines. `/factory-start` does a single card instead, for driving it by hand.
+
+Neither reads `docs/outline.md` or `docs/progress.md` to get going. The board already says what is in flight, and a session that loads the history before it loads the work has spent its context on the wrong thing.
 
 ## The three ways work arrives
 

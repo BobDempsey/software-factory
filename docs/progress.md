@@ -38,6 +38,16 @@ with three dead column keys within hours of the Needs you redesign, and issue
 The entry below, recording it landing, stays. `specs/4-board-watcher/` and
 `docs/solutions/4-board-watcher.md` are untouched.
 
+## handoff.md and tasks.md retired (2026-11-05)
+
+The board is the record of what is in flight, `docs/solutions/` of what runs
+taught us, and this file of what exists. A fourth document describing all three
+was a thing to keep in step for no gain.
+
+Its gotchas are now `docs/solutions/traps.md`, which `/factory-retro` writes.
+Its decisions and the notes on working with Bob moved to the top of
+`docs/outline.md`. `tasks.md` went with it: the board tracks the work.
+
 ## One human column (2026-11-05)
 
 Needs spec approval, Needs merging and Stuck collapsed into a single yellow

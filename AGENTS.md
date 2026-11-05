@@ -50,12 +50,10 @@ That is the allow-listed surface, so nothing else should call `gh project` direc
 
 ## Where things are
 
-- `handoff.md` is the cold-start brief, for a session that has never seen this repo.
-  The normal start is `/factory-start`, which reads the board instead.
-- `tasks.md` is the remaining phases, regenerated from the handoff.
+- The board is the record of what is in flight. `/factory-run` is how a session starts.
 - `docs/workflow.md` is how the board is driven. Read it before touching the board.
 - `.claude/skills/factory-run/` drives the whole board on a loop. The usual entry point.
-- `.claude/skills/factory-start/` opens a session on one card instead of the handoff.
+- `.claude/skills/factory-start/` opens a session on one card instead of looping.
 - `.claude/skills/factory-expand/` turns a one-line note into a paragraph.
 - `.claude/skills/factory-refine/` is the intake command. It is the admission gate.
 - `.claude/skills/factory-create-spec/` writes the spec and the DECISIONS table.
@@ -65,7 +63,8 @@ That is the allow-listed surface, so nothing else should call `gh project` direc
 - `docs/outline.md` is the full design. Read it before proposing structural changes.
 - `docs/progress.md` is what exists today. Read it first, and update it when a piece lands.
 - `docs/board-setup.md` is the board install procedure, including the one manual step.
-- `docs/solutions/` holds learnings from completed runs. Read it during spec work.
+- `docs/solutions/` holds learnings from completed runs, and `traps.md` holds the
+  ones that bite twice. Read both during spec work.
 - `template/` will hold what gets installed into other repos. It is empty until piece two.
 
 ## Build order

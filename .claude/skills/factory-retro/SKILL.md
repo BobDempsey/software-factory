@@ -125,7 +125,7 @@ Most lessons fail that bar. The default is to write them in the solution file an
 
 When a lesson does clear the bar, edit `AGENTS.md` in place under the right section, one line, in the voice of the lines around it. Then say in your report exactly what you added and which run first hit it, so the human can revert it in one edit if they disagree.
 
-Add traps that do not clear the bar to the gotchas section of `handoff.md`, which is a living record rather than a rule file.
+Add traps that do not clear the bar to `docs/solutions/traps.md`, which is a living list rather than a rule file. A trap is written symptom first, because the symptom is what the next agent meets.
 
 ### 7. Move the card to Done
 
@@ -153,7 +153,7 @@ Then one line of totals, and the full text of anything you added to `AGENTS.md` 
 - **No finished run, no retro.** An open issue or unmerged PR stops the run.
 - **Never invent a lesson.** If nothing was learned, the file says so.
 - **Never ask the human what happened.** The evidence is in the repo, and they have moved on.
-- **Apply the rule, do not propose it.** And hold the bar: most lessons belong in `docs/solutions/` or the handoff gotchas, not in `AGENTS.md`.
+- **Apply the rule, do not propose it.** And hold the bar: most lessons belong in the run's own solution file or in `docs/solutions/traps.md`, not in `AGENTS.md`.
 - **Never archive a card.** Moving it to Done is the end of your job.
 - **Needs you is untouchable.** No command reads it, acts on it, or offers it. Only the human moves a card out, back to whatever its RETURN TO line names.
 - **Bob's Draft Notes is private.** Do not read it, do not list its contents, do not act on anything in it.

@@ -4,6 +4,43 @@ Working draft, started 2026-11-04. Goal: a repeatable pipeline that takes an ide
 from spec to deployed, reviewed, tested code with AI agents doing most of the
 mechanical work and me approving at the gates.
 
+
+## Decisions that shape day-to-day work
+
+The full ledger is the rest of this document. These are the ones a session needs
+in the first minute, moved here when `handoff.md` was retired.
+
+- **One piece at a time, and a piece is done when it has been used on a real issue, not when it is written.** Never build three pieces before using any of them.
+- **Spec Kit stays** as the spec framework. Steal `[NEEDS CLARIFICATION]` capped at three, the constitution file, and BMAD's `risk:` frontmatter, without adopting BMAD.
+- **Skills, not `.claude/commands/`.** Commands are the legacy format.
+- **Prose is a request; hooks are enforcement.** Anything absolute goes in a `PreToolUse` hook, never in `AGENTS.md`.
+- **The reviewer must not be Claude.** Claude reviewing Claude is a second pass, not a second opinion. CodeRabbit plus self-hosted PR-Agent on a non-Claude model.
+- **Red-first replay gates; mutation testing only reports** until there is a baseline.
+- **`Assisted-by:` trailer, one line.** An agent never writes `Signed-off-by`.
+- **The board shows state; git holds the truth.** Approval is a committed `spec.json` flag plus `agent-approval-check`, never a column.
+- **Only a human admits work.** Agents may file `factory:triage`; they never apply `factory`.
+- **Refinement is its own column and its own command.** A draft that is not ready goes to Needs refinement, and `/factory-refine` sharpens it with the human until it is one unit of work. Not refined means it stays in that column rather than moving on.
+- **Refinement is also the admission gate.** There is no second pass behind it. `/factory-refine` applies `factory` once the human says the card is ready.
+- **The spec brief lives in the issue body, not a comment.** A comment scrolls away. The body is what a reader sees first.
+- **Approval is the `## DECISIONS` table** at the bottom of the issue body: one row per flag, every answer starting as the literal word `UNANSWERED`. The human replaces each one. An agent never fills in an answer, and `/factory-build` refuses to run while a row still says `UNANSWERED`. This stands in for `spec.json` for now.
+- **Dragging to Ready for dev is the approval of the spec.** The build command trusts that drag plus the answered table.
+- **Every column names the command or the person that acts on it.** A column nobody acts on should not exist. Merged was cut for exactly that: it asked for a second drag and nothing else.
+- **The retro does not ask the human anything.** By the time a card reaches the retro column they have moved on, and a question they cannot answer makes a worse retro than silence. The friction is on disk: amended commits, unverified PR sections, files the spec never named.
+- **A session opens on the board.** `/factory-run` is one `board.sh list` call and a loop. A document describing the state grows every session, and reading it before the work is context spent on the wrong thing.
+- **The retro applies its own rule changes to `AGENTS.md`** rather than proposing them, and says in its report what it added so one edit reverts it. A proposal the human skims is the same as no rule.
+- **Bob's Draft Notes is private.** Agents do not read it.
+
+## Working with this user
+
+- **Answer in one sentence.** Yes or no when asked for yes or no, with the qualifier after it only when the plain answer would mislead.
+- **Do not build ahead.** Asked for one piece means one piece. The build order exists to stop scope creep, and offering extras works against it.
+- **Verify before claiming.** They check the board and the repo against what you said. An API read is not proof that the UI agrees.
+- **They pin down a design with long chains of yes-or-no questions.** Answer the question asked, in one word, and add a qualifier only when the bare answer would mislead. Do not volunteer the next step.
+- **They screenshot the board and ask whether it is right.** Read the screenshot against the repo, not against memory.
+- **Prose rules are in the user's global `CLAUDE.md`** and they apply to every markdown file here. No em dashes, no padded triads, no "leverage" or "robust" or "comprehensive".
+- **No AI attribution in commits** beyond a single `Assisted-by:` line. No banner, no emoji, no co-author trailer.
+
+
 ## 1. Spec and planning
 
 - Spec-driven development with GitHub Spec Kit as the entry point for every change.
@@ -31,7 +68,7 @@ mechanical work and me approving at the gates.
 
 ## 5. Handoff and memory
 
-- handoff.md per repo so the next session picks up where the last one stopped.
+- The board per repo, so the next session picks up where the last one stopped.
 - Persistent memory for preferences and standing decisions.
 - Global todo list for the cross-project picture.
 
@@ -116,7 +153,7 @@ Atlan's five-stage version is the tightest published form: work intake, specific
 Agent Baseline's framing is the one most worth adopting: **the agent proposes, policy authorizes, infrastructure enforces.** Four layers wrap every stage.
 
 1. **Orchestration (the "agent harness").** BCG and Gartner both use the word harness: rule files, tooling, and hooks that tell agents how to behave at each stage. Locally this is CLAUDE.md, skills, slash commands, subagents, and hooks.
-2. **Context and memory.** Specs, code context, and project context, plus persistence of validated decisions. Locally: handoff.md, auto memory, path-scoped rules.
+2. **Context and memory.** Specs, code context, and project context, plus persistence of validated decisions. Locally: the board, `docs/solutions/`, auto memory, path-scoped rules.
 3. **Governance.** Sandbox, network egress, supply chain, and identity boundaries enforced outside the agent. Locally: Claude Code sandboxing, deny rules on secrets, a registry allowlist, branch protection.
 4. **Observability and evaluation.** Enough record to reconstruct a run: tool calls, diffs, test results, cost. Plus evaluation kept separate from testing.
 
@@ -314,7 +351,7 @@ Other sources are allowed, but they all have to become a labeled issue before an
 - Runtime errors and deploy logs from the Operate stage, filed automatically.
 - Scheduled chores (dependency bumps, stale branch cleanup).
 - Review findings from a prior run that were deferred rather than fixed.
-- `handoff.md` leftovers, converted to issues rather than left as prose.
+- Deferred work from an earlier run, filed as issues rather than left as prose.
 
 Keeping the funnel narrow is what makes the queue honest, and it is also what makes work-in-progress limits enforceable: the number of open `factory` issues in progress is the dial that caps concurrency, matching the 3 to 4 concurrent writing agents ceiling.
 
@@ -372,7 +409,7 @@ Everything below is that sentence expanded. None of it needs new infrastructure,
 
 **7. Baseline measurement.** Churn rate, PR revert rate, review load, and the DORA four, captured before agents are turned loose so there is something to compare against.
 
-**8. Handoff.** `handoff.md` in the pilot repo so a run that stops mid-flight can be resumed.
+**8. Handoff.** The board in the pilot repo, so a run that stops mid-flight can be resumed from the column it stopped in.
 
 ### Order of operations
 
