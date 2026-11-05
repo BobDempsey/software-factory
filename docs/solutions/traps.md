@@ -33,3 +33,4 @@ symptom is what you meet.
 - **`uv` from winget is not on the Git Bash PATH.** Symptom: `which uv` is empty while winget says it is installed. Call `~/AppData/Local/Microsoft/WinGet/Packages/astral-sh.uv_Microsoft.Winget.Source_8wekyb3d8bbwe/uv.exe` directly.
 - **A blob for `git update-index --cacheinfo` must be LF here.** Symptom: staging one hunk of a file that carries a human's uncommitted edits shows the whole file changed. `core.autocrlf` is true, so build the blob from `git show HEAD:<file>` and insert with `
 `.
+- **Local master lags origin after a GitHub merge.** Symptom: `git checkout master` refuses because of a human's uncommitted edits, though origin/master matches the current branch. `git branch -f master origin/master`, then check out. Hit on #16 and #17.
