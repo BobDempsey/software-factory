@@ -95,9 +95,9 @@ Never paste the brief into the body, and never leave a `# SPEC` section behind.
 
 ### 5b. Write the DECISIONS table
 
-Every flag in the brief gets a row, and the table goes under `## DECISIONS`, above the `## LOG`
-section. It is the one thing the human edits, so nothing sits between it and the ACTION line but
-the summary. This is the record of what the human decided, and `/factory-build` refuses to run while any row is unanswered.
+Every flag in the brief gets a row, and the table goes under `## DECISIONS`, above the
+`## LOG (newest first)` section. It is the one thing the human edits, so nothing sits between it
+and the ACTION line but the summary. This is the record of what the human decided, and `/factory-build` refuses to run while any row is unanswered.
 
 ```markdown
 ## DECISIONS
@@ -145,7 +145,8 @@ Stop there and ask the human to approve, and to answer the DECISIONS rows. Every
 
 ### 5d. Write the log line
 
-Add one line at the **top** of `## LOG`, creating the section if the issue has none. Newest first,
+Add one line at the **top** of `## LOG (newest first)`, creating the section if the issue has none,
+and swapping a bare `## LOG` for the marked heading in the same edit. Newest first,
 as `docs/issue-body.md` says:
 
 ```markdown

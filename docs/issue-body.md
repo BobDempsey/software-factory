@@ -21,7 +21,7 @@ Park a card in /factory-needs-you when CodeRabbit finishes reviewing it.
 | --- | --- | --- | --- |
 | 1 | ASSUMPTION | Fire on any review that is not a request for changes? | UNANSWERED |
 
-## LOG
+## LOG (newest first)
 
 **/factory-create-spec** — spec written against `factory-reviewed.yml`, 1 row open.
 **/factory-refine** — one unit of work, labeled `deliverable:workflow`.
@@ -37,7 +37,7 @@ Top to bottom:
    brief, the file table, the acceptance criteria, the rollback.
 4. **`## DECISIONS`**, once the spec step has written it. This is the one thing the human edits, so
    it sits above the log rather than below it.
-5. **`## LOG`**, last.
+5. **`## LOG (newest first)`**, last.
 
 Nothing else. No `# SPEC` section, no brief pasted into the body, no restated acceptance criteria.
 A card carrying frontend work and backend work is still one short issue and one long spec.
@@ -48,7 +48,7 @@ One line per command that has run, **newest first**, so the last thing that happ
 top of the section and the card's history reads downward.
 
 ```markdown
-## LOG
+## LOG (newest first)
 
 **/factory-retro** — `docs/solutions/13-park-on-review.md`, one rule added to AGENTS.md.
 **/factory-build** — branch `13-park-on-review`, PR #14, 2 files.
@@ -64,6 +64,9 @@ Rules:
 - **Append, never rewrite.** A command edits its own line only to correct it, and never touches
   another command's.
 - **Names, not prose.** Someone scanning the log should be able to open everything it mentions.
+- **The heading carries the order.** `## LOG (newest first)` says it once, so no log line repeats
+  it. A command that finds a bare `## LOG` adds its line there and swaps in the marked heading in
+  the same edit.
 
 The review stages write ACTION lines but no log line: `factory-reviewed.yml` and
 `factory-changes-requested.yml` run on GitHub without the repo in hand. `/factory-retro` names the

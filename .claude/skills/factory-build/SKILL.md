@@ -97,8 +97,9 @@ The body says `Closes #<N>`, links the spec directory, and lists each acceptance
 
 ### 8b. Write the log line
 
-Add one line at the **top** of the issue's `## LOG` section, newest first, as `docs/issue-body.md`
-says. Clear the ACTION block while you are there: the card is no longer parked.
+Add one line at the **top** of the issue's `## LOG (newest first)` section, as
+`docs/issue-body.md` says. A bare `## LOG` gets the marker in the same edit. Clear the ACTION
+block while you are there: the card is no longer parked.
 
 ```markdown
 **/factory-build** — branch `13-park-on-review`, PR #14, 2 files.
