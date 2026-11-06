@@ -13,7 +13,7 @@ One column is yellow and it is the only one you watch. Everything blue moves its
 
 ## Starting a session
 
-`/factory` is the first thing a session runs, and the only one it needs. It reads the board, gives each card in an agent column its own background agent, marks the cards it holds `working`, and speaks only when a card changes state. `/factory-refresh` is there for the middle of a session, when you have been dragging cards and want to know what changed.
+`/factory` is the first thing a session runs, and the only one it needs. It reads the board, gives each card in an agent column its own background agent, marks the cards it holds `working`, and speaks only when a card changes state. `/factory step #N` works one card with me instead, and asks before every column move, which is how a test card goes through the factory by hand. `/factory-refresh` is there for the middle of a session, when you have been dragging cards and want to know what changed.
 
 Neither reads `docs/outline.md` or `docs/progress.md` to get going. The board already says what is in flight, and a session that loads the history before it loads the work has spent its context on the wrong thing.
 

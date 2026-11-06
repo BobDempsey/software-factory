@@ -1,7 +1,7 @@
 ---
 name: factory
-description: Run the factory. Scans the Software Factory board, stops at once if nothing is waiting, and otherwise starts one background agent per card in an agent column, so several cards move at the same time. Marks each card an agent holds with a `working` label, asks before building, and speaks only when a card changes state. Use when the user says to start the factory, run the factory, watch the board, keep the board moving, or work whatever is queued.
-allowed-tools: Bash(gh:*), Bash(git:*), Bash(./scripts/board.sh:*), Read, Write, Edit, Glob, Grep, Skill, Agent, TaskStop, CronCreate, CronDelete
+description: Run the factory. Scans the Software Factory board, stops at once if nothing is waiting, and otherwise starts one background agent per card in an agent column, so several cards move at the same time. Marks each card an agent holds with a `working` label, asks before building, and speaks only when a card changes state. `/factory step #N` works one card with the human, asking before every column move. Use when the user says to start the factory, run the factory, watch the board, keep the board moving, or work whatever is queued.
+allowed-tools: Bash(gh:*), Bash(git:*), Bash(./scripts/board.sh:*), Read, Write, Edit, Glob, Grep, Skill, Agent, SendMessage, TaskStop, CronCreate, CronDelete
 ---
 
 # factory
@@ -45,6 +45,39 @@ On a later pass, fired by the loop, skip this section: the loop already exists.
 Count passes. At pass 12, delete the cron job with CronDelete. Subagents already running finish and
 report as usual; nothing new starts. Say it once, in one line:
 `factory stopped after 1h, 12 passes. /factory to restart.`
+
+## Step mode
+
+`/factory step #N` works one card alongside the human, for testing the factory on a test card. It is
+the same orchestrator with three changes, and everything not named here works as in a normal run.
+
+- **One card, no loop.** Only #N is worked. Clear its stale hold as usual, but create no CronCreate
+  job and start nothing for any other card. The run ends when the card reaches Done or the human
+  says stop.
+- **The subagent asks before every move.** Its prompt gets this paragraph appended:
+
+  ```
+  STEP MODE. Before any command that changes this card's column (board.sh move, board.sh park,
+  or a move a stage skill makes on its own), stop without running it. Finish with one line:
+  PROPOSE <#N> -> <column>, and one sentence on why. Then end your turn: the orchestrator
+  resumes you with the human's answer. On approval, run the move and carry on into the next column's
+  skill. On anything else, do what the answer says and propose again.
+  ```
+
+  A stage skill that says it runs alone does not, here. This paragraph overrides it.
+- **The orchestrator narrates.** It tells the human, in a line or two, what the subagent did at each
+  stop (what it read, what it wrote on the issue, any file it made), then asks in one line:
+
+  ```
+  #34 -> /factory-create-spec? refined, labeled deliverable:script.
+  ```
+
+  The human may answer, ask about the card, or say no. Questions are answered from the issue and the
+  subagent's report. The answer goes to the same subagent through SendMessage, so it keeps its
+  context; the `working` label stays on the card until the run ends.
+
+Step mode still never answers a DECISIONS row, and the build still needs the human's yes, which the
+move proposal into /factory-build now carries.
 
 ## Board constants
 
