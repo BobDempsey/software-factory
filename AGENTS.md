@@ -45,6 +45,10 @@ and report the criterion as unverified rather than passing.
 - Agent-authored commits carry a single `Assisted-by:` line. No banner, no emoji.
 - `/factory-build` works in a git worktree, `.claude/worktrees/worktree-<N>`, made with Claude
   Code's `EnterWorktree`, never in the main checkout. `/factory-retro` removes it after the merge.
+- A build run as a `/factory` subagent cannot call `EnterWorktree`: it refuses to create one from a
+  pinned working directory, and refuses to switch into one too. Run `git worktree add -b <N>-<slug>
+  .claude/worktrees/worktree-<N> origin/master`, then `git branch --unset-upstream`, and work by
+  absolute path. First hit on #34.
 - Before committing on a factory branch, check `git diff --cached --stat` against the
   spec's file table, from inside the worktree.
 - After a factory PR merges, the main checkout still holds the build's spec folder untracked, and
