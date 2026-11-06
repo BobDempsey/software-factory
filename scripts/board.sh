@@ -10,6 +10,7 @@
 #   board.sh add <N>                put issue N on the board, No Status
 #   board.sh file <TITLE> <BODYFILE> file a factory:triage issue and add it
 #   board.sh park <N> <needs:LABEL> move issue N's card to the needs-you column, one needs:* label
+#   board.sh help                   print this usage and exit 0
 set -euo pipefail
 
 CFG="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)/.factory/board.json"
@@ -138,7 +139,11 @@ file)
   "$0" add "${URL##*/}"
   ;;
 
+help)
+  sed -n '2,13p' "${BASH_SOURCE[0]}"; exit 0
+  ;;
+
 *)
-  sed -n '2,12p' "${BASH_SOURCE[0]}"; exit 1
+  sed -n '2,13p' "${BASH_SOURCE[0]}"; exit 1
   ;;
 esac
