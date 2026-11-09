@@ -95,7 +95,7 @@ Check every acceptance criterion in the spec by name, and say which ones you con
 
 ### 7. Commit
 
-One commit unless the spec asks for more. Conventional message, body wrapped at 72.
+One commit unless the spec asks for more. The title is one plain sentence, in the shape `git log --oneline` shows: imperative, sentence case, no trailing period, and no type or scope prefix such as `feat(board):`. Body wrapped at 72.
 
 `AGENTS.md` governs the trailer: a single `Assisted-by:` line, no banner, no emoji. **Never write `Signed-off-by:`.** Only a human can certify the DCO.
 
