@@ -15,14 +15,12 @@ and report the criterion as unverified rather than passing.
 ## Conventions
 
 - Prose rules live in the user-level CLAUDE.md. Follow them for every markdown file here.
-- One issue is one unit of work. No `factory` label, no run.
-- Agents may propose work by filing real issues labeled `factory:triage`. Only a human
-  applies `factory`, and only a human drags a card onward. `/factory-refine` applies
-  `factory` after the human has said the card is ready, and never before.
-- File them with `scripts/board.sh file`, never bare `gh issue create`. The bare call
-  leaves the issue off the board, where nobody sees it. `board.sh add <N>` fixes one
-  that was filed the other way.
-- `/factory-retro` files a `factory:triage` card for each Major CodeRabbit finding the merged
+- One issue is one unit of work. A card is admitted by being dragged out of Bob's Draft Notes.
+- Agents may propose work by filing real issues labeled `agent-created`, which stays on the
+  card for good. Only a human drags a card onward.
+- File them with `scripts/board.sh file`, never bare `gh issue create`. The project's auto-add
+  puts any open issue on the board, but the bare call leaves off `agent-created`.
+- `/factory-retro` files an `agent-created` card for each Major CodeRabbit finding the merged
   PR left open. Otherwise the finding disappears at merge. Hit on #18 and #26.
 - Bob's Draft Notes is a private scratchpad. Never read it, never act on it.
 - `/factory-refine` is the only column a draft card may be dragged into. It reads the repo, writes

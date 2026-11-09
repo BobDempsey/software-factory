@@ -18,9 +18,9 @@ in the first minute, moved here when `handoff.md` was retired.
 - **Red-first replay gates; mutation testing only reports** until there is a baseline.
 - **`Assisted-by:` trailer, one line.** An agent never writes `Signed-off-by`.
 - **The board shows state; git holds the truth.** Approval is a committed `spec.json` flag plus `agent-approval-check`, never a column.
-- **Only a human admits work.** Agents may file `factory:triage`; they never apply `factory`.
+- **Only a human admits work.** Agents may file `agent-created` issues; only a human drags a card out of Bob's Draft Notes.
 - **Refinement is its own column and its own command.** A draft that is not ready goes to Needs refinement, and `/factory-refine` sharpens it with the human until it is one unit of work. Not refined means it stays in that column rather than moving on.
-- **Refinement is also the admission gate.** There is no second pass behind it. `/factory-refine` applies `factory` once the human says the card is ready.
+- **Refinement is also the admission gate.** There is no second pass behind it.
 - **The spec brief lives in the issue body, not a comment.** A comment scrolls away. The body is what a reader sees first.
 - **Approval is the `## DECISIONS` table** at the bottom of the issue body: one row per flag, every answer starting as the literal word `UNANSWERED`. The human replaces each one. An agent never fills in an answer, and `/factory-build` refuses to run while a row still says `UNANSWERED`. This stands in for `spec.json` for now.
 - **Dragging to Ready for dev is the approval of the spec.** The build command trusts that drag plus the answered table.
@@ -331,6 +331,8 @@ NOT in: <list>
 ```
 
 ## Input channels
+
+> Update 2026-11-09: the `factory` label is gone and `factory:triage` is now `agent-created`. The board column is the admission control. Mentions of those labels below are the original design.
 
 **Decision: one intake channel. Every item enters the factory as a single GitHub Issue labeled `factory`, and that issue is the parent record for everything downstream.**
 

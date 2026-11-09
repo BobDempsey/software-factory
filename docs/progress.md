@@ -2,6 +2,15 @@
 
 What exists, and what is next. One line per thing, newest state at the top.
 
+## Labels simplified (2026-11-09)
+
+- Removed `factory`; a card's column now shows admission
+- `factory:triage` is now `agent-created`, kept on the card for good
+- `needs:answer` is now `needs:decisions`, and `needs:help` is now `needs:blocked`
+- Deleted GitHub's 10 default labels
+- The project's auto-add puts every open issue in Bob's Draft Notes
+- `/factory step #N` walked #34 through every column by hand
+
 ## Bootstrap: done (2026-11-04)
 
 - Repo created, public: https://github.com/BobDempsey/software-factory

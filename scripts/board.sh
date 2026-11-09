@@ -8,7 +8,7 @@
 #   board.sh convert <ITEM_ID>      turn a draft card into a real issue
 #   board.sh check                  verify board.json matches the live board
 #   board.sh add <N>                put issue N on the board, in the private drafts column
-#   board.sh file <TITLE> <BODYFILE> file a factory:triage issue and add it
+#   board.sh file <TITLE> <BODYFILE> file an agent-created issue and add it
 #   board.sh park <N> <needs:LABEL> move issue N's card to the needs-you column, one needs:* label
 #   board.sh help                   print this usage and exit 0
 set -euo pipefail
@@ -93,7 +93,7 @@ print(hit[0])
   ;;
 
 park)
-  N="${2:?issue number}"; LABEL="${3:?needs:merge, needs:answer or needs:help}"
+  N="${2:?issue number}"; LABEL="${3:?needs:merge, needs:decisions or needs:blocked}"
   case "$LABEL" in needs:*) ;; *) echo "park takes a needs:* label, got '$LABEL'" >&2; exit 1 ;; esac
   ITEM=$(gh api graphql -f query="query{repository(owner:\"${REPO%/*}\",name:\"${REPO#*/}\"){issue(number:$N){projectItems(first:10){nodes{id project{number}}}}}}" \
     -q "[.data.repository.issue.projectItems.nodes[] | select(.project.number == $NUMBER) | .id][0] // empty")
@@ -142,7 +142,7 @@ add)
 
 file)
   TITLE="${2:?title}"; BODY="${3:?body file}"
-  URL=$(gh issue create --repo "$REPO" --title "$TITLE" --body-file "$BODY" --label "factory:triage")
+  URL=$(gh issue create --repo "$REPO" --title "$TITLE" --body-file "$BODY" --label "agent-created")
   "$0" add "${URL##*/}"
   ;;
 

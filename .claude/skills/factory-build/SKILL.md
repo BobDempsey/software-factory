@@ -35,7 +35,7 @@ Take the first card whose status is **/factory-build**. If that column is empty,
 Before touching code, all of these must hold. If any fails, say which one and park the card as step 9b says. Fixing it is a different command's job.
 
 - The card is a real issue, not a draft.
-- It carries the `factory` label and exactly one `deliverable:*` label.
+- It carries exactly one `deliverable:*` label.
 - `specs/<N>-<slug>/spec.md` exists.
 - The body links the spec directory, in the shape `docs/issue-body.md` describes. The brief itself
   lives in `specs/<N>-<slug>/spec-brief.md`, not in the issue.
@@ -141,10 +141,10 @@ chat. Put the two bold lines from `docs/issue-body.md` at the top of the issue b
 **RETURN TO:** /factory-build
 ```
 
-Add your LOG line naming what blocked it, then park the card with the `needs:help` label:
+Add your LOG line naming what blocked it, then park the card with the `needs:blocked` label:
 
 ```bash
-./scripts/board.sh park <N> needs:help
+./scripts/board.sh park <N> needs:blocked
 ```
 
 Stop there. The human clears the blocker and sends the card back.

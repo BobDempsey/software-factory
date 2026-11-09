@@ -21,7 +21,7 @@ Neither reads `docs/outline.md` or `docs/progress.md` to get going. The board al
 
 **1. I think of something.** It goes in **Bob's Draft Notes** as a draft card. No issue, no labels, no ceremony. Half a sentence is fine. Agents never read this column, so nothing can act on it while it is still an idea.
 
-**2. An agent or an outside source proposes something.** A performance scan, an error triage run, a scheduled dependency check. These file **real issues** labeled `factory:triage` through `scripts/board.sh file`, which puts them on the board in Bob's Draft Notes. They wait for my yes or no.
+**2. An agent or an outside source proposes something.** A performance scan, an error triage run, a scheduled dependency check. These file **real issues** labeled `agent-created` through `scripts/board.sh file`, which puts them on the board in Bob's Draft Notes. They wait for my yes or no.
 
 **3. Something is already a well-formed issue.** It goes straight to /factory-create-spec.
 
@@ -29,7 +29,7 @@ Neither reads `docs/outline.md` or `docs/progress.md` to get going. The board al
 
 **Bob's Draft Notes.** Mine, private, never read by an agent. One line is enough. I drag it to /factory-refine to start it.
 
-**/factory-refine.** `/factory-refine` reads the one-liner against the repo, writes out what exists today and what the note wants changed, sharpens it into one unit of work, converts it to an issue, and applies `factory` plus one `deliverable:*` label. It runs alone: most notes never need me, because reading the repo answers what looked like a question. Anything it still cannot settle parks in /factory-needs-you with one question and a recommendation.
+**/factory-refine.** `/factory-refine` reads the one-liner against the repo, writes out what exists today and what the note wants changed, sharpens it into one unit of work, converts it to an issue, and applies one `deliverable:*` label. It runs alone: most notes never need me, because reading the repo answers what looked like a question. Anything it still cannot settle parks in /factory-needs-you with one question and a recommendation.
 
 **/factory-create-spec.** `/factory-create-spec` writes `specs/<N>-<slug>/spec.md` and the brief, links that directory from the issue, writes the `## DECISIONS` table, then parks the card in /factory-needs-you. The brief stays in the spec directory: the issue is the index, and `docs/issue-body.md` is the shape it keeps.
 
@@ -87,7 +87,7 @@ A draft card goes to /factory-refine and nowhere else. Every column after it nee
 
 Two kinds, and both are visible on the card face.
 
-**Admission:** `factory` means admitted. `factory:triage` means proposed and not yet admitted. Agents may apply `factory:triage`; only a human applies `factory`, and `/factory-refine` applies it only after I have said the card is ready.
+**Admission:** dragging a card out of Bob's Draft Notes admits it. `agent-created` records that an agent filed the card, and it stays on for good. The project's auto-add workflow puts every open issue on the board, wherever it came from, and sets it to Bob's Draft Notes.
 
 **Deliverable:** exactly one per admitted issue, so the card says what it produces without being opened.
 

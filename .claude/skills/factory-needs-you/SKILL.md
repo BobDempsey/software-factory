@@ -59,7 +59,7 @@ A spec is written and every file it touches is listed; it is waiting on two DECI
 QUESTION
 
 1. Markdown template rather than a YAML issue form?
-2. Does the template apply the `factory` label on filing?
+2. Does the template apply a `deliverable:*` label on filing?
 
 RECOMMENDATION
 

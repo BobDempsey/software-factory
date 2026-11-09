@@ -176,10 +176,10 @@ chat. Put the two bold lines from `docs/issue-body.md` at the top of the issue b
 **RETURN TO:** /factory-retro
 ```
 
-Add your LOG line naming what blocked it, then park the card with the `needs:help` label:
+Add your LOG line naming what blocked it, then park the card with the `needs:blocked` label:
 
 ```bash
-./scripts/board.sh park <N> needs:help
+./scripts/board.sh park <N> needs:blocked
 ```
 
 Stop there. The human clears the blocker and sends the card back.

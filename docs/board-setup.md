@@ -19,13 +19,9 @@ That opens a browser for a one-time code, so run it in your own terminal rather 
 Two labels, and the distinction between them is the admission rule: agents may propose work, only a human admits it.
 
 ```bash
-gh label create factory \
-  --color 0E8A16 \
-  --description "Admitted into the factory. One issue, one unit of work."
-
-gh label create "factory:triage" \
+gh label create agent-created \
   --color FBCA04 \
-  --description "Agent-proposed. Needs a human label to be admitted."
+  --description "Filed by an agent. Stays on the card for good."
 ```
 
 ### Deliverable labels
@@ -142,7 +138,7 @@ Dragging the card in the UI does the same thing, and is more reliable right afte
 
 | Column | Who moves the card in | What it means |
 | --- | --- | --- |
-| Bob's Draft Notes | You | Your own notes, one line each. No `factory` label, and agents never read this column. |
+| Bob's Draft Notes | You | Your own notes, one line each. Agents never read this column. |
 | /factory-needs-you | Any command | The only column you watch. Each card opens with a bold ACTION and a RETURN TO. `/factory-needs-you` walks the queue for you. |
 | /factory-refine | You, by dragging | A one-liner waiting to be read against the repo and sharpened into one unit of work. |
 | /factory-create-spec | `/factory-refine` | A real issue, labeled. Waiting on the spec. |
@@ -155,13 +151,20 @@ One yellow column answers whether anything is blocking on you.
 
 ## Draft notes versus the rest
 
-Bob's Draft Notes is where you write yourself notes, paste half-formed ideas, and leave things unfinished. Nothing there is admitted, nothing has the `factory` label, and no agent reads it.
+Bob's Draft Notes is where you write yourself notes, paste half-formed ideas, and leave things unfinished. Nothing there is admitted, and no agent reads it.
 
-Admission happens at refinement: `/factory-refine` applies `factory` once the card is one unit of work. Until then the item is a note, not work. A card in the draft notes does not even have to be an issue; a plain board note works, and it becomes one when it is worth one.
+Admission happens when you drag a card to /factory-refine. Until then the item is a note, not work. A card in the draft notes does not even have to be an issue; a plain board note works, and it becomes one when it is worth one.
 
 ## The token the workflows need
 
 `.github/workflows/factory-merged.yml` writes to the project, and `GITHUB_TOKEN` cannot: a user-owned project is outside the repo's scope. Create a PAT with the `project` and `repo` scopes and store it as the repo secret `FACTORY_PROJECT_TOKEN`. Nothing else in the factory needs it.
+
+## Project workflows
+
+Two built-in workflows catch every issue, and GitHub only lets you set them in the project's Workflows page:
+
+- **Auto-add to project**: repository `software-factory`, filter `is:issue is:open`.
+- **Item added to project**: set Status to Bob's Draft Notes.
 
 ## The board is not the record
 

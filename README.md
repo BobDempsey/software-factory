@@ -25,8 +25,12 @@ You touch two columns. Everything between them moves itself.
    moves the card. Dragging it yourself works just as well.
 5. Repeat step 4 until the card reaches **Done**.
 
-Agents propose work by filing issues labeled `factory:triage`. Only a human
-applies `factory`.
+Every open issue in this repo lands in **Bob's Draft Notes** on its own, wherever
+it was created. Issues agents file carry `agent-created`. Dragging a card out of
+that column is what admits it.
+
+To walk one card through by hand, run `/factory step #N`. It asks before every
+column move.
 
 Full detail in [docs/workflow.md](docs/workflow.md).
 

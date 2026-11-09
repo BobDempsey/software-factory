@@ -113,12 +113,8 @@ gh issue edit <N> --add-label deliverable:<kind>
 Pick it from what the card produces. If two are genuinely arguable, that is a question, and the card
 stops in /factory-needs-you rather than carrying a coin-flip label.
 
-**Apply the `factory` label**, and drop `factory:triage` if it is there. An issue carrying both
-reads as proposed and admitted at once:
-
-```bash
-gh issue edit <N> --add-label factory --remove-label "factory:triage"
-```
+**Leave `agent-created` on the card** if it is there. It records who filed the card and stays for
+the card's whole life.
 
 Refinement is the admission gate. There is no second pass behind it.
 
@@ -156,11 +152,11 @@ Carry a recommendation with it wherever you have one, so the human can answer wi
 **RETURN TO:** /factory-refine
 ```
 
-Then park it. `park` moves the card and gives it the `needs:answer` label, so the card says what it
+Then park it. `park` moves the card and gives it the `needs:decisions` label, so the card says what it
 wants on its face:
 
 ```bash
-./scripts/board.sh park <N> needs:answer
+./scripts/board.sh park <N> needs:decisions
 ```
 
 One question per card. A card parked with three questions is a conversation the human has to hold in

@@ -6,7 +6,7 @@ Every principle here is copied from `AGENTS.md`, which stays the source. This fi
 
 ### I. One issue is one unit of work
 
-No `factory` label, no run. Agents may propose work by filing issues labeled `factory:triage` through `scripts/board.sh file`. Only a human applies `factory`, and only a human drags a card onward; `/factory-refine` applies it after the human has said the card is ready.
+A card is admitted by being dragged out of Bob's Draft Notes. Agents may propose work by filing issues through `scripts/board.sh file`, which labels them `agent-created`. Only a human drags a card onward.
 
 ### II. The human decides
 

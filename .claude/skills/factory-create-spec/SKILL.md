@@ -119,7 +119,7 @@ and the ACTION line but the summary. This is the record of what the human decide
 | # | Flag | Question | Answer |
 | --- | --- | --- | --- |
 | 1 | ASSUMPTION | Markdown template rather than a YAML issue form? | UNANSWERED |
-| 2 | CRITICAL | Does the template apply the `factory` label on filing? | UNANSWERED |
+| 2 | CRITICAL | Does the template apply a `deliverable:*` label on filing? | UNANSWERED |
 ```
 
 Rules for the table:
@@ -142,10 +142,10 @@ Rules for the table:
 **RETURN TO:** <the column the card goes back to once they have done it>
 ```
 
-Replace them rather than stacking them: a card that comes back a second time has one ACTION line, the current one. Then park the card, which moves it and gives it the `needs:answer` label:
+Replace them rather than stacking them: a card that comes back a second time has one ACTION line, the current one. Then park the card, which moves it and gives it the `needs:decisions` label:
 
 ```bash
-./scripts/board.sh park <N> needs:answer
+./scripts/board.sh park <N> needs:decisions
 ```
 
 For this card the two lines are always the same shape:
