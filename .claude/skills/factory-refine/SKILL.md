@@ -35,6 +35,8 @@ stored; `scripts/board.sh` looks them up by name.
 ./scripts/board.sh list
 ```
 
+If your prompt or arguments name a card, by issue number or `PVTI_...` item id, work that card and no other, and stop when it is finished. If it is not in **/factory-refine**, say so in one line and stop. With no card named, carry on below.
+
 Work only on cards whose status is **/factory-refine**. If that column is empty, say so in one line
 and stop. Take one card at a time: finish it, report it, then move to the next.
 

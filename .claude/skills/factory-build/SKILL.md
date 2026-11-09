@@ -28,6 +28,8 @@ It holds the project number, owner, project id, and the Status field id. Column 
 ./scripts/board.sh list
 ```
 
+If your prompt or arguments name a card, by issue number or `PVTI_...` item id, work that card and no other, and stop when it is finished. If it is not in **/factory-build**, say so in one line and stop. With no card named, carry on below.
+
 Take the first card whose status is **/factory-build**. If that column is empty, say so in one line and stop.
 
 ### 2. Confirm it has a spec
